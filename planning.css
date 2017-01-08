@@ -1,0 +1,36 @@
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
+.timeline {
+    padding: 10px;
+}
+.timeline ul{
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+.timeline li {
+    list-style-type: none;
+    font-size: 0.7em;
+    flex: 1 1 auto;
+    
+}
+.timeline li span {
+    position: absolute;
+    border-left: 2px solid #000;
+    height: 30px;
+    margin-top: -10px;
+}
+
+.timeline li li {
+    border : 1px solid blue;
+    border-left: none;
+    font-size: 1em;
+    text-align: center;
+    cursor: pointer;
+
+}
+
+.monthDetail{
+    display: none;
+}

@@ -3,26 +3,30 @@
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="planning.css" />
+    <script type="text/javascript" src="d3.v4.js"></script>
+    <script type="text/javascript" src="d3-time-format.js"></script>
     <script>
     function draw(data) {
         "use strict";
         
-        console.log(data)
+        //console.log(data)
         data = data.map(function(entry){
             return { "date" :new Date (entry.date), "type": entry.type };
         })
 
-        var formatWeek = d3.timeFormat("%W"),   // Monday-based week of the year as a decimal number [00,53].
-        formatMonth = d3.timeFormat("%m"),      // month as a decimal number [01,12].
-        formatDayMonth = d3.timeFormat("%e"),   // space-padded day of the month as a decimal number [ 1,31]; equivalent to %_d.
-        formatMonthName = d3.timeFormat("%B"),  // full month name.
-        formatYear = d3.timeFormat("%Y"),       // year with century as a decimal number.
+        console.log(d3)
+        var formatWeek = d3.timeFormat("%W"),       // Monday-based week of the year as a decimal number [00,53].
+        formatMonth = d3.timeFormat("%m"),          // month as a decimal number [01,12].
+        formatMonthName = d3.timeFormat("%b"),      // abbreviated month name.
+        formatDayMonth = d3.timeFormat("%e"),       // space-padded day of the month as a decimal number [ 1,31]; equivalent to %_d.
+        formatMonthName = d3.timeFormat("%B"),      // full month name.
+        formatYear = d3.timeFormat("%Y"),           // year with century as a decimal number.
         formatYearMonth = d3.timeFormat("%Y-%m");
         
 
         var navData = d3.nest()
         .key(function(d) { return formatYear(d.date); })
-        .key(function(d) { return formatMonth(d.date);  })
+        .key(function(d) { return formatMonthName(d.date);  })
         .entries(data);
 
         var calendarData = d3.nest()
@@ -30,30 +34,34 @@
         .key(function(d) { return formatWeek(d.date);  })
         .entries(data);
 
-        console.log(navData)
-        console.log(calendarData)
-
-        d3.select(".timeline")
+        //console.log(navData)
+        //console.log(calendarData)
+        var navYears = d3.select(".timeline")
             .append("ul")
             .selectAll("li")
             .data(navData)
             .enter()
+                .append("li");
+
+        navYears
+            .append("span")
+            .attr("class", function(d){ return d.key; })
+            .text(function(d){ return d.key; });
+        
+        navYears        
+            .append("ul")
+            .selectAll("li") 
+            .data(function(d){ return d.values; })
+            .enter()
                 .append("li")
-                .attr("class", function(d){ return d.key; })
-                .text(function(d){ return d.key; })
-                .append("ul")
-                .selectAll("li") 
-                .data(function(d){ return d.values; })
-                .enter()
-                    .append("li")
-                    .text(function(d){ return d.key; })
+                .text(function(d){ return d.key.substr( 0, 3); })
 
         d3.select(".monthDetail")
             .selectAll("div")
             .data(calendarData)
             .enter()
                 .append("div")
-                .attr("class", function(d){ console.log(d); return d.key; })
+                .attr("class", function(d){ return ( new Date("Y-m") == d.key) ?  "visible " + d.key : d.key; })
                 .selectAll(".row")
                 .data(function(d){ return d.values; })
                 .enter()
@@ -66,14 +74,14 @@
                         .attr("class", "day" )
                         .text(function(d){ return formatDayMonth(d.date); })
        
+       
             
             
     }
     </script>
 </head>
 <body>
-    <script type="text/javascript" src="d3.v4.js"></script>
-    <script type="text/javascript" src="d3-time-format.js"></script>
+
     <script>
         d3.json('planning.json', draw);
     </script>
