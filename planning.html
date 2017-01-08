@@ -8,14 +8,26 @@
         "use strict";
         
         console.log(data)
+        data = data.map(function(entry){
+            return { "date" :new Date (entry.date), "type": entry.type };
+        })
+
+        var formatWeek = d3.timeFormat("%W"),   // Monday-based week of the year as a decimal number [00,53].
+        formatMonth = d3.timeFormat("%m"),      // month as a decimal number [01,12].
+        formatDayMonth = d3.timeFormat("%e"),   // space-padded day of the month as a decimal number [ 1,31]; equivalent to %_d.
+        formatMonthName = d3.timeFormat("%B"),  // full month name.
+        formatYear = d3.timeFormat("%Y"),       // year with century as a decimal number.
+        formatYearMonth = d3.timeFormat("%Y-%m");
         
+
         var navData = d3.nest()
-        .key(function(d) { return new Date(d.date).getFullYear(); })
-        .key(function(d) { return new Date(d.date).getMonth();  })
+        .key(function(d) { return formatYear(d.date); })
+        .key(function(d) { return formatMonth(d.date);  })
         .entries(data);
 
         var calendarData = d3.nest()
-        .key(function(d) { var monthYear = new Date(d.date).getFullYear() + "-" +  new Date(d.date).getMonth(); return monthYear; })
+        .key(function(d) { return formatYearMonth(d.date);  })
+        .key(function(d) { return formatWeek(d.date);  })
         .entries(data);
 
         console.log(navData)
@@ -36,42 +48,32 @@
                     .append("li")
                     .text(function(d){ return d.key; })
 
-        /*d3.select(".monthDetail")
+        d3.select(".monthDetail")
             .selectAll("div")
-            .attr("class", function(d){ return d.key; })
             .data(calendarData)
             .enter()
-                .append("ul")
-                    .selectAll("li") 
-                .attr("class", function(d){ return d.year; })
-                .text(function(d){ return d.year; })
-                .append("ul")
-                .selectAll("li") 
-                .data(function(d){ return d.months; })
+                .append("div")
+                .attr("class", function(d){ console.log(d); return d.key; })
+                .selectAll(".row")
+                .data(function(d){ return d.values; })
                 .enter()
-                    .append("li")
-                    .text(function(d){ return d.name; })
-       */
-
-    
-        /*d3.selectAll("div.line")
-            .append("div")
-            .attr("class","label")
-            .text(function(d){return d.name})
-        
-        d3.selectAll("div.line")
-            .append("div")
-            .attr("class","bar")
-            .style("width", function(d){return d.count/100 + "px"})
-            .text(function(d){return Math.round(d.count)});*/
-    
+                    .append("div")
+                    .attr("class", "row" )
+                    .selectAll(".day")
+                    .data(function(d){ return d.values; })
+                    .enter()
+                        .append("div")
+                        .attr("class", "day" )
+                        .text(function(d){ return formatDayMonth(d.date); })
+       
             
             
     }
     </script>
 </head>
 <body>
-    <script type="text/javascript" src="d3.js"></script>
+    <script type="text/javascript" src="d3.v4.js"></script>
+    <script type="text/javascript" src="d3-time-format.js"></script>
     <script>
         d3.json('/planning.json', draw);
     </script>
