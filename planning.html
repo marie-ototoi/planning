@@ -9,6 +9,8 @@
     function draw(data) {
         "use strict";
         
+        var dateStart = new Date(data[0].date);
+        var dateEnd = new Date(data[data.length -1].date);
         //console.log(data)
         data = data.map(function(entry){
             return { "date" :new Date (entry.date), "type": entry.type };
@@ -17,17 +19,12 @@
         console.log(d3)
         var formatWeek = d3.timeFormat("%W"),       // Monday-based week of the year as a decimal number [00,53].
         formatMonth = d3.timeFormat("%m"),          // month as a decimal number [01,12].
-        formatMonthName = d3.timeFormat("%b"),      // abbreviated month name.
+        formatShortMonthName = d3.timeFormat("%b"), // abbreviated month name.
         formatDayMonth = d3.timeFormat("%e"),       // space-padded day of the month as a decimal number [ 1,31]; equivalent to %_d.
         formatMonthName = d3.timeFormat("%B"),      // full month name.
         formatYear = d3.timeFormat("%Y"),           // year with century as a decimal number.
         formatYearMonth = d3.timeFormat("%Y-%m");
         
-
-        var navData = d3.nest()
-        .key(function(d) { return formatYear(d.date); })
-        .key(function(d) { return formatMonthName(d.date);  })
-        .entries(data);
 
         var calendarData = d3.nest()
         .key(function(d) { return formatYearMonth(d.date);  })
@@ -36,32 +33,30 @@
 
         //console.log(navData)
         //console.log(calendarData)
-        var navYears = d3.select(".timeline")
+        var navItem = d3.select(".timeline")
             .append("ul")
             .selectAll("li")
-            .data(navData)
-            .enter()
-                .append("li");
-
-        navYears
-            .append("span")
-            .attr("class", function(d){ return d.key; })
-            .text(function(d){ return d.key; });
-        
-        navYears        
-            .append("ul")
-            .selectAll("li") 
-            .data(function(d){ return d.values; })
+            .data(calendarData)
             .enter()
                 .append("li")
-                .text(function(d){ return d.key.substr( 0, 3); })
+                .attr("class", function(d){ return d.key; });
+        navItem        
+            .append("span")
+            .attr("class", function(d,i){ return (i == 0 || d.key.substr(5,2) == "01") ? "year": "year hidden"; })
+            .text(function(d){ return d.key.substr(0,4); });
+                
+        navItem
+            .append("span")
+            .attr("class", "month")
+            .text(function(d){ return formatShortMonthName(new Date(d.key)); });
+
 
         d3.select(".monthDetail")
             .selectAll("div")
             .data(calendarData)
             .enter()
                 .append("div")
-                .attr("class", function(d){ return ( new Date("Y-m") == d.key) ?  "visible " + d.key : d.key; })
+                .attr("class", function(d, i){ var now = new Date(); return ( formatYearMonth(now) == d.key || ((dateStart>now ||dateEnd<now) && i == 0) ) ?  d.key : "hidden " + d.key; })
                 .selectAll(".row")
                 .data(function(d){ return d.values; })
                 .enter()
@@ -74,7 +69,7 @@
                         .attr("class", "day" )
                         .text(function(d){ return formatDayMonth(d.date); })
        
-       
+
             
             
     }
