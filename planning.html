@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="planning.css" />
+    <script>
+    function draw(data) {
+        "use strict";
+        
+        console.log(data)
+        
+        var navData = d3.nest()
+        .key(function(d) { return new Date(d.date).getFullYear(); })
+        .key(function(d) { return new Date(d.date).getMonth();  })
+        .entries(data);
+
+        var calendarData = d3.nest()
+        .key(function(d) { var monthYear = new Date(d.date).getFullYear() + "-" +  new Date(d.date).getMonth(); return monthYear; })
+        .entries(data);
+
+        console.log(navData)
+        console.log(calendarData)
+
+        d3.select(".timeline")
+            .append("ul")
+            .selectAll("li")
+            .data(navData)
+            .enter()
+                .append("li")
+                .attr("class", function(d){ return d.key; })
+                .text(function(d){ return d.key; })
+                .append("ul")
+                .selectAll("li") 
+                .data(function(d){ return d.values; })
+                .enter()
+                    .append("li")
+                    .text(function(d){ return d.key; })
+
+        /*d3.select(".monthDetail")
+            .selectAll("div")
+            .attr("class", function(d){ return d.key; })
+            .data(calendarData)
+            .enter()
+                .append("ul")
+                    .selectAll("li") 
+                .attr("class", function(d){ return d.year; })
+                .text(function(d){ return d.year; })
+                .append("ul")
+                .selectAll("li") 
+                .data(function(d){ return d.months; })
+                .enter()
+                    .append("li")
+                    .text(function(d){ return d.name; })
+       */
+
+    
+        /*d3.selectAll("div.line")
+            .append("div")
+            .attr("class","label")
+            .text(function(d){return d.name})
+        
+        d3.selectAll("div.line")
+            .append("div")
+            .attr("class","bar")
+            .style("width", function(d){return d.count/100 + "px"})
+            .text(function(d){return Math.round(d.count)});*/
+    
+            
+            
+    }
+    </script>
+</head>
+<body>
+    <script type="text/javascript" src="d3.js"></script>
+    <script>
+        d3.json('/planning.json', draw);
+    </script>
+
+    <nav class="timeline"></nav>
+    <main class="monthDetail"></main>
+</body>
+</html>

@@ -1,0 +1,31 @@
+[
+	{
+		"year":2017,
+		"months":[
+			{
+				"name":"avril",
+				"no":4,
+				"firstDay":5,
+				"days":[
+					{"no":1,"type":"IL"},
+					{"no":2,"type":"LO"},
+					{"no":3,"type":"LO"},
+					{"no":4,"type":"WE"},
+					{"no":5,"type":"HO"}
+				]
+			}
+		]
+	},
+	{
+		"year":2018,
+		"months":[]
+	},
+	{
+		"year":2019,
+		"months":[]
+	},
+	{
+		"year":2020,
+		"months":[]
+	}
+]
