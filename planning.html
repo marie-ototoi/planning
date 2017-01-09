@@ -51,23 +51,29 @@
             .text(function(d){ return formatShortMonthName(new Date(d.key)); });
 
 
-        d3.select(".monthDetail")
-            .selectAll("div")
+        var calendarItem = d3.select(".calendars")
+            .selectAll("section")
             .data(calendarData)
             .enter()
+                .append("section")
+                .attr("class", function(d, i){ var now = new Date(); return ( formatYearMonth(now) == d.key || ((dateStart>now ||dateEnd<now) && i == 0) ) ? "monthDetail " + d.key : "monthDetail hidden " + d.key; });
+
+        calendarItem
+            .append("h1")
+            .text(function(d){ return (d.key); });
+
+        calendarItem
+            .selectAll(".row")
+            .data(function(d){ return d.values; })
+            .enter()
                 .append("div")
-                .attr("class", function(d, i){ var now = new Date(); return ( formatYearMonth(now) == d.key || ((dateStart>now ||dateEnd<now) && i == 0) ) ?  d.key : "hidden " + d.key; })
-                .selectAll(".row")
+                .attr("class", function(d,i){ return (i == 0) ? "row first-row" : "row"; })
+                .selectAll(".day")
                 .data(function(d){ return d.values; })
                 .enter()
                     .append("div")
-                    .attr("class", "row" )
-                    .selectAll(".day")
-                    .data(function(d){ return d.values; })
-                    .enter()
-                        .append("div")
-                        .attr("class", "day" )
-                        .text(function(d){ return formatDayMonth(d.date); })
+                    .attr("class", function(d){ return  "day " + d.type; })
+                    .text(function(d){ return formatDayMonth(d.date); })
        
 
             
@@ -82,6 +88,19 @@
     </script>
 
     <nav class="timeline"></nav>
-    <main class="monthDetail"></main>
+    <main class="calendar">
+        <div class="previous">&lsaquo;</div>
+        <div class="calendars"></div>
+        <div class="next">&rsaquo;</div>
+    </main>
+    <footer>
+        <ul>
+            <li class="IL">ILDA</li>
+            <li class="LO">Logilab</li>
+            <li class="SC">Université</li>
+            <li class="CO">Conférence</li>
+            <li class="HO">Congés</li>
+        </ul>
+    </footer>
 </body>
 </html>
