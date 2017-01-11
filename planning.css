@@ -40,12 +40,19 @@ body{
 .timeline li span.month {
     cursor: pointer;
 }
+.timeline li.active  {
+    color: #ff0096;
+}
+.timeline li.active span {
+    border-color: #ff0096;
+}
 
 .calendar {
     padding: 15px 0;
     display: flex;
     justify-content: space-between;    
     align-items: center;
+
 }
 .previous,
 .next {
@@ -54,17 +61,24 @@ body{
     font-weight: bold;
     flex: 1 0 50px;
     text-align: center;
+    cursor: pointer;
 }
 
 .calendars {
-    flex: 0 1 514px;
+    flex: 0 0 524px; /* 10 + ( (70 + 2) x 7 ) + 10 */
     
 }
-.monthDetail{
-    
-    border:5px solid #e6e6e6;
-    border-radius: 3px;
-
+.calendars h1 {
+    color: #c6c6c6;
+    text-align: center;
+    font-weight: normal;
+    font-size: 1.3em;
+}
+.rows{
+    border:10px solid #f6f6f6;
+    border-radius: 5px;
+    background: #f6f6f6;
+    min-height: 420px;
 }
 .row{
     display: flex;
@@ -80,12 +94,13 @@ body{
     background: #e6e6e6;
     border-radius: 3px;
     border:1px solid #fff;
+    color: #333;
 }
 .IL {
-    background: #6a9ab8;
+    background: #93b9d1;
 }
 .LO {
-    background: #a2c09d;
+    background: #b9d1b5;
 }
 .CO {
     background: #d38571;
@@ -114,7 +129,7 @@ footer .HO {
     background: none;
 }
 footer .IL {
-    border-color: #6a9ab8;
+    border-color: #93b9d1;
 }
 footer .LO {
      border-color: #a2c09d;
