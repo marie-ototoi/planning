@@ -1,0 +1,27 @@
+{
+  "name": "planning",
+  "version": "1.0.0",
+  "description": "affichage du planning CIFRE",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marie-ototoi/planning.git"
+  },
+  "keywords": [
+    "CIFRE",
+    "planning"
+  ],
+  "author": "marie@ototoi.fr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marie-ototoi/planning/issues"
+  },
+  "dependencies": {
+    "express": "~4.14.0",
+    "pug": "^2.0.0-beta6"
+  },
+  "homepage": "https://github.com/marie-ototoi/planning#readme"
+}

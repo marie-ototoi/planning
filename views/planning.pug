@@ -1,0 +1,28 @@
+html
+    head
+        meta(charset='utf-8')
+        title #{title}
+        link(rel='stylesheet' type='text/css' href='/styles/planning.css')
+        script(type='text/javascript' src='/scripts/d3.v4.js')
+        script(type='text/javascript' src='/scripts/d3-time-format.js')
+        script(type='text/javascript').
+            document.requestedDate = '#{requestedDate}'
+        script(type='text/javascript' src='/scripts/planning.js')
+    
+    body
+
+        header
+            nav(class='timeline')
+        
+        main(class='calendar')
+            div(class='previous' id='previous') &lsaquo;
+            div(class='calendars')
+            div(class='next' id='next') &rsaquo;
+        
+        footer
+            ul
+                li(class='IL') ILDA
+                li(class='LO') Logilab
+                li(class='SC') Université
+                li(class='CO') Conférence
+                li(class='HO') Congés
