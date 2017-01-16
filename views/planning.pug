@@ -13,6 +13,12 @@ html
 
         header
             nav(class='timeline')
+            if user
+                p Welcome, #{user.name}!
+                if user.rights == 1
+                    a(href='/') Request a change?
+                if user.rights == 2
+                    a(href='/') Edit ?
         
         main(class='calendar')
             div(class='previous' id='previous') &lsaquo;
@@ -23,6 +29,6 @@ html
             ul
                 li(class='IL') ILDA
                 li(class='LO') Logilab
-                li(class='SC') Université
-                li(class='CO') Conférence
-                li(class='HO') Congés
+                li(class='SC') University
+                li(class='CO') Conference
+                li(class='HO') Off

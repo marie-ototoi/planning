@@ -1,20 +1,35 @@
-var express = require('express')
+var express = require('express'),
+app = express(),
+session = require('express-session'),
+passport = require('passport'),
+dbConnect = require('./models/connection')
 
-var app = express()
+
 
 app.set('port', (process.env.PORT || 5000));
 app.set('view engine', 'pug');
-app.use('/data', express.static('public/data'));
-app.use('/images', express.static('public/images'));
-app.use('/scripts', express.static('public/scripts'));
-app.use('/styles', express.static('public/styles'));
+app.use(express.static(__dirname + '/public'))
 
-app.get('/', function(req, res){
-	res.render('planning.pug',{title : 'Planning CIFRE'})
+
+app.use(session({
+	name : 'otoplanning',
+	resave: false,
+  	saveUninitialized: true,
+  	secret: 'totoi',
+  	cookie: { }
+}))
+
+app.use(passport.initialize())
+app.use(passport.session()) 
+
+app.use((req, res, next) => {
+  	res.locals.user = req.user
+  	console.log(req.user)
+  	next()
 })
-app.get('/:requestedDate', function(req, res){
-	res.render('planning.pug',{title : 'Planning CIFRE', requestedDate: req.params.requestedDate})
-})
+
+app.use(require('./controllers'))
+
 
 app.listen(app.get('port'), function() {
   //console.log('Node app is running on port', app.get('port'));
