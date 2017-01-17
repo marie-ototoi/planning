@@ -13,9 +13,9 @@ app.use(express.static(__dirname + '/public'))
 
 app.use(session({
 	name : 'otoplanning',
-	resave: false,
-  	saveUninitialized: true,
   	secret: 'totoi',
+  	resave: true,
+  	saveUninitialized : true,
   	cookie: { }
 }))
 
@@ -23,8 +23,8 @@ app.use(passport.initialize())
 app.use(passport.session()) 
 
 app.use((req, res, next) => {
-  	res.locals.user = req.user
   	console.log(req.user)
+  	res.locals.user = req.user
   	next()
 })
 

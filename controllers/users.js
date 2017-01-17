@@ -5,6 +5,10 @@ var express = require('express'),
 	User = require('../models/user')
 	//,
 
+router.get('/login', function(req, res){
+	res.render('login.pug',{title : 'Planning CIFRE - Authentification'})
+})
+
 passport.use(new TwitterStrategy({
   	// ** keys defined in heroku environment or private/passport.js **
   	consumerKey: process.env.twitter_consumerKey  ,
@@ -17,10 +21,10 @@ passport.use(new TwitterStrategy({
 const PROVIDERS = ['twitter']
 PROVIDERS.forEach((provider) => {
   	router.get(`/login/${provider}`, passport.authenticate(provider))
-  	router.get(`/auth/${provider}/callback`, passport.authenticate(provider, {
-    	successRedirect: '/',
-    	failureRedirect: '/'
-  	}))
+  	router.get(`/auth/${provider}/callback`, passport.authenticate(provider, { failureRedirect: '/login' }), function(req, res){
+  		console.log(req)
+  		res.redirect('/');
+  	})
 })
 
 passport.serializeUser((id, done) => {

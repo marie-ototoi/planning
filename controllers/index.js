@@ -6,28 +6,31 @@ var express = require('express'),
 router.use('/users', require('./users'))
 
 
-
-router.get('/users/login', function(req, res){
-	res.render('login.pug',{title : 'Planning CIFRE - Authentification'})
+router.use('/:requestedDate', function(req, res, next){
+	console.log('get 1')
+	if(req.user && isAuthorizedUser(req.user) > 0){
+		req.user.rights = isAuthorizedUser(req.user)
+		res.render('planning.pug',{title : 'Planning CIFRE', requestedDate: req.params.requestedDate})
+		res.end()
+	}else{
+		//req.flash('error', 'You are not allowed to access this page. Please contact marie@ototoi.fr')
+  		res.redirect('/users/login')
+  	}
 })
+
 
 router.get('/', function(req, res){
+	console.log('get 2')
 	if(req.user && isAuthorizedUser(req.user) > 0){
 		req.user.rights = isAuthorizedUser(req.user)
-		res.render('planning.pug',{title : 'Planning CIFRE'})
-	}
-	//req.flash('error', 'You are not allowed to access this page. Please contact marie@ototoi.fr')
-  	res.redirect('/users/login')
+		res.render('planning.pug',{title : 'Planning CIFRE', requestedDate: req.params.requestedDate})
+		res.end()
+	}else{
+		//req.flash('error', 'You are not allowed to access this page. Please contact marie@ototoi.fr')
+  		res.redirect('/users/login')
+  	}
 })
 
-router.get('/:requestedDate', function(req, res){
-	if(req.user && isAuthorizedUser(req.user) > 0){
-		req.user.rights = isAuthorizedUser(req.user)
-		return res.render('planning.pug',{title : 'Planning CIFRE', requestedDate: req.params.requestedDate}) 
-	}
-	//req.flash('error', 'You are not allowed to access this page. Please contact marie@ototoi.fr')
-  	res.redirect('/users/login')
-})
 
 
 
