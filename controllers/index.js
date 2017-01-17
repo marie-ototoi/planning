@@ -1,6 +1,5 @@
 var express = require('express'), 
-	router = express.Router(),
-	credentials = require('../private/passport')
+	router = express.Router()
 	//,
 	//auth = require('../middlewares/auth')
 
@@ -11,14 +10,16 @@ router.use('/users', require('./users'))
 router.get('/users/login', function(req, res){
 	res.render('login.pug',{title : 'Planning CIFRE - Authentification'})
 })
+
 router.get('/', function(req, res){
 	if(req.user && isAuthorizedUser(req.user) > 0){
 		req.user.rights = isAuthorizedUser(req.user)
-		return res.render('planning.pug',{title : 'Planning CIFRE'})
+		res.render('planning.pug',{title : 'Planning CIFRE'})
 	}
 	//req.flash('error', 'You are not allowed to access this page. Please contact marie@ototoi.fr')
   	res.redirect('/users/login')
 })
+
 router.get('/:requestedDate', function(req, res){
 	if(req.user && isAuthorizedUser(req.user) > 0){
 		req.user.rights = isAuthorizedUser(req.user)
@@ -31,11 +32,9 @@ router.get('/:requestedDate', function(req, res){
 
 
 function isAuthorizedUser(user){
-	if( (process.env.autorized_users && process.env.autorized_users.includes(user._id)) 
-		|| (credentials.autorized_users && credentials.autorized_users.includes(user._id)) ){
+	if( process.env.autorized_users && process.env.autorized_users.includes(user._id) ){
 		return 1
-	}else if( (process.env.admin_users && process.env.admin_users.includes(user._id)) 
-		|| (credentials.admin_users && credentials.admin_users.includes(user._id)) ){
+	}else if( process.env.admin_users && process.env.admin_users.includes(user._id)){
 		return 2
 	}
 	return 0

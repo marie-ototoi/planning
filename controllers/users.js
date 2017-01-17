@@ -2,14 +2,13 @@ var express = require('express'),
 	router = express.Router(),
 	passport = require('passport'),
 	TwitterStrategy = require('passport-twitter'),
-	User = require('../models/user'),
-	credentials = require('../private/passport')
+	User = require('../models/user')
 	//,
 
 passport.use(new TwitterStrategy({
   	// ** keys defined in heroku environment or private/passport.js **
-  	consumerKey: process.env.twitter_consumerKey || credentials.twitter_consumerKey ,
-  	consumerSecret: process.env.twitter_consumerSecret || credentials.twitter_consumerSecret,
+  	consumerKey: process.env.twitter_consumerKey  ,
+  	consumerSecret: process.env.twitter_consumerSecret ,
   	callbackURL: '/users/auth/twitter/callback'
 }, (token, tokenSecret, profile, done) => {
   	User.findOrCreateByAuth(`@${profile.username}`, profile.displayName, 'twitter', done)
