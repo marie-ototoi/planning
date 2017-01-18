@@ -7,6 +7,7 @@ html
         script(type='text/javascript' src='/scripts/d3-time-format.js')
         script(type='text/javascript').
             document.requestedDate = '#{requestedDate}'
+            document.userRights = user.rights
         script(type='text/javascript' src='/scripts/planning.js')
     
     body
@@ -16,9 +17,8 @@ html
             if user
                 p Welcome, #{user.name}!
                 if user.rights == 1
-                    a(href='/') Request a change?
-                if user.rights == 2
-                    a(href='/') Edit ?
+                    - var mailto =  'mailto:marie@ototoi.fr?subject=[otoplanning] Change%20in%20your%20schedule&body=Dear%20Marie,%0D%0A%0D%0AWould%20you%20please%20consider%20working%20at%20...%20instead%20of%20...%20on%20the%20../../20..?%0D%0A%0D%0A...%0D%0A%0D%0AHave%20a%20nice%20day,%0D%0AThank%20you!%0D%0A%0D%0A' + user.name
+                    a(href=mailto) Change request
         
         main(class='calendar')
             div(class='previous' id='previous') &lsaquo;
@@ -26,6 +26,9 @@ html
             div(class='next' id='next') &rsaquo;
         
         footer
+            if user.rights == 2
+                button Save Changes
+
             ul
                 li(class='IL') ILDA
                 li(class='LO') Logilab

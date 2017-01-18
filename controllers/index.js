@@ -7,7 +7,6 @@ router.use('/users', require('./users'))
 
 
 router.use('/:requestedDate', function(req, res, next){
-	console.log('get 1')
 	if(req.user && isAuthorizedUser(req.user) > 0){
 		req.user.rights = isAuthorizedUser(req.user)
 		res.render('planning.pug',{title : 'Planning CIFRE', requestedDate: req.params.requestedDate})
@@ -20,18 +19,15 @@ router.use('/:requestedDate', function(req, res, next){
 
 
 router.get('/', function(req, res){
-	console.log('get 2')
 	if(req.user && isAuthorizedUser(req.user) > 0){
 		req.user.rights = isAuthorizedUser(req.user)
-		res.render('planning.pug',{title : 'Planning CIFRE', requestedDate: req.params.requestedDate})
+		res.render('planning.pug',{title : 'Planning CIFRE'})
 		res.end()
 	}else{
 		//req.flash('error', 'You are not allowed to access this page. Please contact marie@ototoi.fr')
   		res.redirect('/users/login')
   	}
 })
-
-
 
 
 function isAuthorizedUser(user){
@@ -42,5 +38,6 @@ function isAuthorizedUser(user){
 	}
 	return 0
 }
+
 
 module.exports = router

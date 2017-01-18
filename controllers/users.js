@@ -22,7 +22,6 @@ const PROVIDERS = ['twitter']
 PROVIDERS.forEach((provider) => {
   	router.get(`/login/${provider}`, passport.authenticate(provider))
   	router.get(`/auth/${provider}/callback`, passport.authenticate(provider, { failureRedirect: '/login' }), function(req, res){
-  		console.log(req)
   		res.redirect('/');
   	})
 })
