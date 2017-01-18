@@ -3,6 +3,7 @@ mongoose = require('mongoose')
 const userSchema = new mongoose.Schema({
     _id: { type: String, required: true },
     name: String,
+    stayLoggedIn: { type: Boolean, default : false },
     provider: { type: String, required: true },
     joinedAt: { type: Date, default: Date.now }
 })
@@ -18,6 +19,10 @@ userSchema.statics.findOrCreateByAuth = function findOrCreateByAuth (id, name, p
     // Forwarder l'erreur éventuelle, mais à défaut transmettre l'id comme valeur résultante.
     (err) => done(err, id)
   )
+}
+
+userSchema.statics.getEntry = function getEntry (id){
+    return this.findById(id).populate('_id name provider joinedAt').exec()
 }
 
 const Model = mongoose.model('User', userSchema)

@@ -1,26 +1,32 @@
 var express = require('express'), 
-	router = express.Router()
-	//,
-	//auth = require('../middlewares/auth')
+	router = express.Router(),
+	User = require('../models/user')
+
+
+router.use('/', function(req, res, next){
+	req.session.currentUrl = req.path
+	next()
+})
+
 
 router.use('/users', require('./users'))
 
 
-router.use('/:requestedDate', function(req, res, next){
+router.get('/:requestedDate', function(req, res, next){
 	if(req.user && isAuthorizedUser(req.user) > 0){
-		req.user.rights = isAuthorizedUser(req.user)
+		req.user.rights = isAuthorizedUser(req.user) 
 		res.render('planning.pug',{title : 'Planning CIFRE', requestedDate: req.params.requestedDate})
 		res.end()
 	}else{
+		req.session.redirect = '/' + req.params.requestedDate
 		//req.flash('error', 'You are not allowed to access this page. Please contact marie@ototoi.fr')
   		res.redirect('/users/login')
   	}
 })
 
-
 router.get('/', function(req, res){
 	if(req.user && isAuthorizedUser(req.user) > 0){
-		req.user.rights = isAuthorizedUser(req.user)
+		req.user.rights = isAuthorizedUser(req.user) 
 		res.render('planning.pug',{title : 'Planning CIFRE'})
 		res.end()
 	}else{
@@ -31,13 +37,12 @@ router.get('/', function(req, res){
 
 
 function isAuthorizedUser(user){
-	if( process.env.autorized_users && process.env.autorized_users.includes(user._id) ){
-		return 1
-	}else if( process.env.admin_users && process.env.admin_users.includes(user._id)){
+	if( process.env.admin_users && process.env.admin_users.includes(user._id)){
 		return 2
+	}else if( process.env.autorized_users && process.env.autorized_users.includes(user._id) ){
+		return 1
 	}
 	return 0
 }
-
 
 module.exports = router
