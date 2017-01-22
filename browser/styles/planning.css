@@ -1,3 +1,4 @@
+
 body{
     font-family: Arial, Helvetica, sans-serif;
     padding: 0;
@@ -19,7 +20,7 @@ body{
 }
 .timeline li {
     list-style-type: none;
-    font-size: 0.7em;
+    font-size: 0.8em;
     flex: 1 1 20px;
     display: flex;
     flex-direction: column;
@@ -46,7 +47,14 @@ body{
 .timeline li.active span {
     border-color: #ff0096;
 }
-
+p.welcome {
+    color:  #ff0096;
+    text-align:center;
+    margin: 0;
+    padding: 15px 0 0 0;
+    font-size: 0.85em;
+    font-weight: bold;
+}
 .calendar {
     padding: 15px 0;
     display: flex;
@@ -54,8 +62,8 @@ body{
     align-items: center;
 
 }
-.previous,
-.next {
+.calendar__previous,
+.calendar__next {
     color: #e6e6e6;
     font-size: 10em;
     font-weight: bold;
@@ -64,30 +72,31 @@ body{
     cursor: pointer;
 }
 
-.calendars {
-    flex: 0 0 524px; /* 10 + ( (70 + 2) x 7 ) + 10 */
-    
+.calendar__list {
+    flex: 0 0 510px;     
 }
-.calendars h1 {
+.calendar__list h1 {
     color: #c6c6c6;
     text-align: center;
     font-weight: normal;
     font-size: 1.3em;
+    padding: 0 0 10px 0;
+    margin: 0;
 }
-.rows{
+.calendar__rows{
     border:10px solid #f6f6f6;
     border-radius: 5px;
     background: #f6f6f6;
     min-height: 420px;
 }
-.row{
+.calendar__row{
     display: flex;
     justify-content: flex-start;
 }
-.first-row{
+.calendar__row_first{
     justify-content: flex-end;
 }
-.day{
+.calendar__day{
     flex: 0 1 70px;
     padding: 25px 0;
     text-align: center;
@@ -96,7 +105,7 @@ body{
     border:1px solid #fff;
     color: #333;
 }
-.today {
+.calendar__day_today {
     font-weight: bold;
     border: 1px solid #333;
 }
@@ -120,7 +129,7 @@ footer ul {
 footer li {
     border-left: 10px solid #e6e6e6;
     list-style-type: none;
-    font-size: 0.7em;
+    font-size: 0.8em;
     padding:5px;
     margin-right: 25px; 
     color: #666;

@@ -4,7 +4,15 @@ var express = require('express'),
 
 
 router.use('/', function(req, res, next){
+	if (req.path === '/favicon.ico') {
+	    res.writeHead(200, {'Content-Type': 'image/x-icon'} )
+	    res.end()
+	    return
+	}
+	console.log(req.user, req.path)
+	res.locals.req = req
 	req.session.currentUrl = req.path
+	console.log("currentUrl", req.path)
 	next()
 })
 
@@ -12,10 +20,12 @@ router.use('/', function(req, res, next){
 router.use('/users', require('./users'))
 
 
+
 router.get('/:requestedDate', function(req, res, next){
 	if(req.user && isAuthorizedUser(req.user) > 0){
-		req.user.rights = isAuthorizedUser(req.user) 
-		res.render('planning.pug',{title : 'Planning CIFRE', requestedDate: req.params.requestedDate})
+		req.user.rights = isAuthorizedUser(req.user)
+		console.log("requestedDate param", req.params.requestedDate)
+		res.render('planning.pug',{title : 'Planning CIFRE', requestedDate: req.params.requestedDate, user: req.user})
 		res.end()
 	}else{
 		req.session.redirect = '/' + req.params.requestedDate
@@ -27,7 +37,8 @@ router.get('/:requestedDate', function(req, res, next){
 router.get('/', function(req, res){
 	if(req.user && isAuthorizedUser(req.user) > 0){
 		req.user.rights = isAuthorizedUser(req.user) 
-		res.render('planning.pug',{title : 'Planning CIFRE'})
+		console.log("requestedDate no param", req.params.requestedDate)
+		res.render('planning.pug',{title : 'Planning CIFRE', user: req.user})
 		res.end()
 	}else{
 		//req.flash('error', 'You are not allowed to access this page. Please contact marie@ototoi.fr')

@@ -2,9 +2,9 @@ html
     head
         meta(charset='utf-8')
         title #{title}
-        link(rel='stylesheet' type='text/css' href='/styles/planning.css')
+        script(type='text/javascript' src='/scripts/calendar.js' defer)
 
     body
-        main(class='calendar')
-            Bonjour
-            a(href='/users/login/twitter') Login with twitter
+        header
+            p.welcome Welcome ! Please
+            a(href='/users/login/twitter') login with twitter

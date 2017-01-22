@@ -12,7 +12,7 @@ app.use(express.static(__dirname + '/public'))
 
 
 app.use(session({
-	name : 'otoplanning',
+	name : 'otocalendar',
   	secret: 'totoi',
   	resave: true,
   	saveUninitialized : true,
@@ -22,11 +22,6 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session()) 
 
-app.use((req, res, next) => {
-  	console.log(req.user)
-  	res.locals.user = req.user
-  	next()
-})
 
 app.use(require('./controllers'))
 

@@ -1,7 +1,10 @@
- document.addEventListener("DOMContentLoaded", function(event) {
-        var rawData;
-        var nestedData;
-        var currentDate = new Date(2017, 3);
+var d3 = require('d3'),
+timeformat = require('d3-time-format')
+
+
+var rawData;
+var nestedData;
+var currentDate = new Date(2017, 3);
 
         var formatDay = d3.timeFormat("%Y-%m-%d"),
             formatWeek = d3.timeFormat("%W"),       // Monday-based week of the year as a decimal number [00,53].
@@ -56,7 +59,7 @@
                 })
 
 
-            var calendarItem = d3.select(".calendars")
+            var calendarItem = d3.select(".calendar__list")
                 .selectAll("section")
                 .data(nestedData)
                 .enter()
@@ -71,17 +74,17 @@
 
             calendarItem
                 .append("div")
-                .attr("class", "rows")
-                .selectAll(".row")
+                .attr("class", "calendar__rows")
+                .selectAll(".calendar__row")
                 .data(function(d){ return d.values; })
                 .enter()
                     .append("div")
-                    .attr("class", function(d,i){ return (i == 0) ? "row first-row" : "row"; })
-                    .selectAll(".day")
+                    .attr("class", function(d,i){ return (i == 0) ? "calendar__row calendar__row_first" : "calendar__row"; })
+                    .selectAll(".calendar__day")
                     .data(function(d){ return d.values; })
                     .enter()
                         .append("div")
-                        .attr("class", function(d){ return  (formatDay(d.date) === formatDay(new Date()) ) ? "day today " + d.type : "day " + d.type; })
+                        .attr("class", function(d){ return  (formatDay(d.date) === formatDay(new Date()) ) ? "calendar__day calendar__day_today " + d.type : "calendar__day " + d.type; })
                         .text(function(d){ return formatDayMonth(d.date); })
             
             if(document.requestedDate && document.requestedDate.length==7){
@@ -122,21 +125,25 @@
             d3.select("header li.ym"+ requestedFormatted + "").classed("active", true);
             currentDate = requestedDate;
 
-            window.history.pushState({}, formatMonthNameYear(requestedDate), "/" + formatYearMonth(requestedDate));
+            //console.log(reqDate, requestedDate)
+            if(reqDate !== requestedDate){
+            	window.history.pushState({}, formatMonthNameYear(requestedDate), "/" + formatYearMonth(requestedDate));
+            }
         }
 
         
         //previous and next button
-        var previousButton = document.getElementById('previous');
-        var nextButton = document.getElementById('next');
+        var previousButton =  d3.select('.calendar__previous');
+        var nextButton =  d3.select('.calendar__next');
 
-        previousButton.addEventListener('click', function() {
+        previousButton.on('click', function() {
             showCalendar(null, "previous");
         }, false);
-        nextButton.addEventListener('click', function() {
+        nextButton.on('click', function() {
             showCalendar(null, "next");
         }, false);
 
         // calls the draw function once the data is loaded
         d3.json('/data/planning.json', draw);
-});
+
+module.exports = rawData

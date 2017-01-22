@@ -3,7 +3,6 @@ mongoose = require('mongoose')
 const userSchema = new mongoose.Schema({
     _id: { type: String, required: true },
     name: String,
-    stayLoggedIn: { type: Boolean, default : false },
     provider: { type: String, required: true },
     joinedAt: { type: Date, default: Date.now }
 })

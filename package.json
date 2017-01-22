@@ -4,8 +4,9 @@
   "description": "affichage du planning CIFRE",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "watchify -t browserify-css browser/main.js -o public/scripts/calendar.js -dv",
+    "build": "browserify -g browserify-css browser/main.js > public/scripts/calendar.js",
+    "start": "npm run watch && node app.js"
   },
   "repository": {
     "type": "git",
@@ -21,8 +22,11 @@
     "url": "https://github.com/marie-ototoi/planning/issues"
   },
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "cookie-session": "^2.0.0-alpha.2",
     "csurf": "^1.9.0",
+    "d3": "^4.4.3",
+    "d3-time-format": "^2.0.3",
     "express": "~4.14.0",
     "express-session": "^1.14.2",
     "mongoose": "^4.7.7",
@@ -30,5 +34,15 @@
     "passport-twitter": "^1.0.4",
     "pug": "^2.0.0-beta6"
   },
-  "homepage": "https://github.com/marie-ototoi/planning#readme"
+  "homepage": "https://github.com/marie-ototoi/planning#readme",
+  "devDependencies": {
+    "browserify-css": "^0.9.2",
+    "watchify": "^3.8.0"
+  },
+  "browser": "./calendar.js",
+  "browserify-css": {
+    "autoInject": true,
+    "minify": true,
+    "rootDir": "."
+  }
 }

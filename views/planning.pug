@@ -2,36 +2,33 @@ html
     head
         meta(charset='utf-8')
         title #{title}
-        link(rel='stylesheet' type='text/css' href='/styles/planning.css')
-        script(type='text/javascript' src='/scripts/d3.v4.js')
-        script(type='text/javascript' src='/scripts/d3-time-format.js')
         script(type='text/javascript').
-            document.requestedDate = '#{requestedDate}'
-            document.userRights = user.rights
-        script(type='text/javascript' src='/scripts/planning.js')
+            document.req = '!{req}'
+            document.requestedDate = '#{requestedDate}'       
+        script(type='text/javascript' src='/scripts/calendar.js' defer)
     
     body
 
         header
-            nav(class='timeline')
+            nav.timeline
             if user
-                p(class='welcome') Welcome, #{user.name}! 
+                p.welcome Welcome, #{user.name}! 
                 if user.rights == 1
                     - var mailto =  'mailto:marie@ototoi.fr?subject=[otoplanning] Change%20in%20your%20schedule&body=Dear%20Marie,%0D%0A%0D%0AWould%20you%20please%20consider%20working%20at%20...%20instead%20of%20...%20on%20the%20../../20..?%0D%0A%0D%0A...%0D%0A%0D%0AHave%20a%20nice%20day,%0D%0AThank%20you!%0D%0A%0D%0A' + user.name
                     a(href=mailto, class='change') Change request
         
-        main(class='calendar')
-            div(class='previous' id='previous') &lsaquo;
-            div(class='calendars')
-            div(class='next' id='next') &rsaquo;
+        main.calendar
+            div#previous.calendar__previous &lsaquo;
+            div.calendar__list
+            div#next.calendar__next &rsaquo;
         
         footer
             if user.rights == 2
                 button Save Changes
 
             ul
-                li(class='IL') ILDA
-                li(class='LO') Logilab
-                li(class='SC') University
-                li(class='CO') Conference
-                li(class='HO') Off
+                li.IL ILDA
+                li.LO Logilab
+                li.SC University
+                li.CO Conference
+                li.HO Off
