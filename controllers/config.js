@@ -20,7 +20,6 @@ router.get('/', function getConfig(req, res){
 	
 })
 
-
 router.post('/', function setConfig (req, res) {
 	console.log('query', req.query,'body', req.body,'params', req.headers)
 	req.checkBody('dateStart', 'Invalid starting date').notEmpty().isDate()

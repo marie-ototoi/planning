@@ -12,9 +12,10 @@ const formatDay = d3.timeFormat("%Y-%m-%d"),
     formatMonthNameYear = d3.timeFormat("%B %Y");
 
 let dateStart,
-dateEnd,
+dateEnd, 
 dateNow
 
+console.log(document.data, document, window)
 if(document.data){
     dateStart = new Date(document.data[0].date);
     dateEnd = new Date(document.data[document.data.length -1].date);
@@ -136,4 +137,4 @@ d3.select('.calendar__next').on('click', function() {
     }, false)
 
 
-module.exports = d3
+module.exports = this

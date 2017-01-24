@@ -4,8 +4,7 @@
   "description": "affichage du planning CIFRE",
   "main": "app.js",
   "scripts": {
-    "build": "browserify -g browserify-css browser/calendar.js > public/scripts/calendar.js && browserify -g browserify-css browser/config.js > public/scripts/config.js ",
-    "start": "npm run watch && node app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
@@ -44,13 +43,8 @@
   },
   "homepage": "https://github.com/marie-ototoi/planning#readme",
   "devDependencies": {
-    "browserify": "^13.3.0",
-    "browserify-css": "^0.9.2"
-  },
-  "browser": "./calendar.js",
-  "browserify-css": {
-    "autoInject": true,
-    "minify": true,
-    "rootDir": "."
+    "brunch": "^2.10.2",
+    "css-brunch": "^2.6.1",
+    "javascript-brunch": "^2.0.0"
   }
 }
