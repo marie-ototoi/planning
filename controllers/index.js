@@ -1,32 +1,37 @@
-var express = require('express'), 
+const express = require('express'), 
 	router = express.Router(),
-	User = require('../models/user')
+	User = require('../models/user'),
+	Day = require('../models/day')
 
 
-router.use('/', function(req, res, next){
-	if (req.path === '/favicon.ico') {
-	    res.writeHead(200, {'Content-Type': 'image/x-icon'} )
-	    res.end()
-	    return
-	}
-	console.log(req.user, req.path)
-	res.locals.req = req
-	req.session.currentUrl = req.path
-	console.log("currentUrl", req.path)
-	next()
-})
 
 
 router.use('/users', require('./users'))
 
 
+router.use('/config', function(req, res, next){
+	if(req.user && isAuthorizedUser(req.user) >= 2){
+		req.user.rights = isAuthorizedUser(req.user)
+		next()
+	}else{
+		req.session.redirect = '/config'
+  		res.redirect('/users/login')
+  	}
+})
+router.use('/config', require('./config'))
+
 
 router.get('/:requestedDate', function(req, res, next){
 	if(req.user && isAuthorizedUser(req.user) > 0){
 		req.user.rights = isAuthorizedUser(req.user)
-		console.log("requestedDate param", req.params.requestedDate)
-		res.render('planning.pug',{title : 'Planning CIFRE', requestedDate: req.params.requestedDate, user: req.user})
-		res.end()
+		 Day.getDays().then((data) => {
+		 	data = data.map((element)=>{
+		 		return {type : element.type, date: element._id}
+		 	})
+		 	res.render('planning.pug',{title : 'Planning CIFRE', requestedDate: req.params.requestedDate, user: req.user, data : JSON.stringify(data)})
+			res.end()
+		 })
+		
 	}else{
 		req.session.redirect = '/' + req.params.requestedDate
 		//req.flash('error', 'You are not allowed to access this page. Please contact marie@ototoi.fr')
@@ -36,10 +41,14 @@ router.get('/:requestedDate', function(req, res, next){
 
 router.get('/', function(req, res){
 	if(req.user && isAuthorizedUser(req.user) > 0){
-		req.user.rights = isAuthorizedUser(req.user) 
-		console.log("requestedDate no param", req.params.requestedDate)
-		res.render('planning.pug',{title : 'Planning CIFRE', user: req.user})
-		res.end()
+		req.user.rights = isAuthorizedUser(req.user)
+		 Day.getDays().then((data) => {
+		 	data = data.map((element)=>{
+		 		return {type : element.type, date: element._id}
+		 	})
+			res.render('planning.pug',{title : 'Planning CIFRE', user: req.user, data : JSON.stringify(data)})
+			res.end()
+		})
 	}else{
 		//req.flash('error', 'You are not allowed to access this page. Please contact marie@ototoi.fr')
   		res.redirect('/users/login')

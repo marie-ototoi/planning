@@ -4,8 +4,7 @@
   "description": "affichage du planning CIFRE",
   "main": "app.js",
   "scripts": {
-    "watch": "watchify -t browserify-css browser/main.js -o public/scripts/calendar.js -dv",
-    "build": "browserify -g browserify-css browser/main.js > public/scripts/calendar.js",
+    "build": "browserify -g browserify-css browser/calendar.js > public/scripts/calendar.js && browserify -g browserify-css browser/config.js > public/scripts/config.js ",
     "start": "npm run watch && node app.js"
   },
   "repository": {
@@ -22,22 +21,31 @@
     "url": "https://github.com/marie-ototoi/planning/issues"
   },
   "dependencies": {
+    "body-parser": "^1.16.0",
     "bootstrap": "^3.3.7",
+    "connect-flash": "^0.1.1",
     "cookie-session": "^2.0.0-alpha.2",
     "csurf": "^1.9.0",
     "d3": "^4.4.3",
     "d3-time-format": "^2.0.3",
     "express": "~4.14.0",
+    "express-json": "^1.0.0",
     "express-session": "^1.14.2",
+    "express-validator": "^3.1.2",
+    "method-override": "^2.3.7",
+    "moment": "^2.17.1",
+    "moment-range": "^3.0.0",
     "mongoose": "^4.7.7",
+    "multer": "^1.2.1",
     "passport": "^0.3.2",
     "passport-twitter": "^1.0.4",
-    "pug": "^2.0.0-beta6"
+    "pug": "^2.0.0-beta6",
+    "util": "^0.10.3"
   },
   "homepage": "https://github.com/marie-ototoi/planning#readme",
   "devDependencies": {
-    "browserify-css": "^0.9.2",
-    "watchify": "^3.8.0"
+    "browserify": "^13.3.0",
+    "browserify-css": "^0.9.2"
   },
   "browser": "./calendar.js",
   "browserify-css": {

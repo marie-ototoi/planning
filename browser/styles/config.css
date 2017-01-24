@@ -1,0 +1,11 @@
+.config {
+    background: #ededed;
+    padding-top: 30px;
+}
+
+form {
+	width: 100%;
+	background: #fff;
+    padding: 60px 30px 60px 30px;
+    border-radius: 10px;
+}

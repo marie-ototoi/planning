@@ -2,19 +2,19 @@ html
     head
         meta(charset='utf-8')
         title #{title}
-        script(type='text/javascript').
-            document.req = '!{req}'
-            document.requestedDate = '#{requestedDate}'       
         script(type='text/javascript' src='/scripts/calendar.js' defer)
-    
+        script(type='text/javascript' defer).
+            document.requestedDate = '#{requestedDate}'
+            document.data = !{data}
     body
 
         header
             nav.timeline
             if user
                 p.welcome Welcome, #{user.name}! 
+                    a(href='/users/logout') logout
                 if user.rights == 1
-                    - var mailto =  'mailto:marie@ototoi.fr?subject=[otoplanning] Change%20in%20your%20schedule&body=Dear%20Marie,%0D%0A%0D%0AWould%20you%20please%20consider%20working%20at%20...%20instead%20of%20...%20on%20the%20../../20..?%0D%0A%0D%0A...%0D%0A%0D%0AHave%20a%20nice%20day,%0D%0AThank%20you!%0D%0A%0D%0A' + user.name
+                    - let mailto =  'mailto:marie@ototoi.fr?subject=[otoplanning]%20Change%20in%20your%20schedule&body=Dear%20Marie,%0D%0A%0D%0AWould%20you%20please%20consider%20working%20at%20...%20instead%20of%20...%20on%20the%20../../20..?%0D%0A%0D%0A...%0D%0A%0D%0AHave%20a%20nice%20day,%0D%0AThank%20you!%0D%0A%0D%0A' + user.name
                     a(href=mailto, class='change') Change request
         
         main.calendar
@@ -23,12 +23,9 @@ html
             div#next.calendar__next &rsaquo;
         
         footer
-            if user.rights == 2
-                button Save Changes
-
-            ul
-                li.IL ILDA
-                li.LO Logilab
-                li.SC University
-                li.CO Conference
-                li.HO Off
+            ul.legend
+                li.legend__item.IL ILDA
+                li.legend__item.LO Logilab
+                li.legend__item.SC University
+                li.legend__item.CO Conference
+                li.legend__item.HO Off

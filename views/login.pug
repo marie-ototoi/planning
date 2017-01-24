@@ -1,10 +1,14 @@
 html
-    head
-        meta(charset='utf-8')
-        title #{title}
-        script(type='text/javascript' src='/scripts/calendar.js' defer)
+	head
+		meta(charset='utf-8')
+		title #{title}
+		script(type='text/javascript' src='/scripts/calendar.js' defer)
 
-    body
-        header
-            p.welcome Welcome ! Please
-            a(href='/users/login/twitter') login with twitter
+	body.container.login
+		header.login__header.col-sm-6.col-sm-offset-3.text-center
+			p.welcome 
+				| Please login with one of the following services.<br />
+				| If you are not a authorized user yet,  <br />
+				a(href='mailto:marie@ototoi.fr?subject=[otoplanning]%Access%20request&body=Dear%20Marie,%0D%0A%0D%0AWould%20you%20please%20grant%20me%20access%20to%20your%20calendar?%0D%0A%0D%0AMy%20twitter%20id%20is%20 ...%0D%0A%0D%0AHave%20a%20nice%20day,%0D%0AThank%20you!%0D%0A%0D%0A') contact me
+			
+			a(href='/users/login/twitter').btn.btn-info login with twitter

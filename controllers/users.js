@@ -1,4 +1,4 @@
-var express = require('express'), 
+const express = require('express'), 
 	router = express.Router(),
 	passport = require('passport'),
 	TwitterStrategy = require('passport-twitter'),
@@ -20,15 +20,15 @@ passport.use(new TwitterStrategy({
 
 const PROVIDERS = ['twitter']
 PROVIDERS.forEach((provider) => {
-  	router.get(`/login/${provider}`, passport.authenticate(provider))
-  	router.get(`/auth/${provider}/callback`, passport.authenticate(provider, { failureRedirect: '/login' }), function(req, res){
-  		if(req.session.redirect) {
+	router.get(`/login/${provider}`, passport.authenticate(provider))
+	router.get(`/auth/${provider}/callback`, passport.authenticate(provider, { failureRedirect: '/login' }), function(req, res){
+		if(req.session.redirect) {
 			res.redirect(req.session.redirect)
 			req.session.redirect = null
 		}else{
 			res.redirect('/')
 		}
-  	})
+	})
 })
 
 passport.serializeUser((id, done) => {
@@ -38,7 +38,6 @@ passport.serializeUser((id, done) => {
 passport.deserializeUser((id, done) => {
   	User.findById(id, done)
 })
-
 
 router.get('/logout', function logout (req, res) {
   	req.logout()

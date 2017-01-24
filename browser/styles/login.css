@@ -1,0 +1,13 @@
+.login {
+    background: #ededed;
+    padding-top: 30px;
+}
+
+.login__header {
+    background: #fff;
+    padding: 60px 30px 60px 30px;
+    border-radius: 10px;
+}
+.login__header p{
+    padding-bottom: 30px;
+}
