@@ -6,16 +6,16 @@ html
         script(type='text/javascript' defer).
             document.requestedDate = '#{requestedDate}'
             document.data = !{data}
-    body
+    body.container-fluid
 
         header
             nav.timeline
             if user
                 p.welcome Welcome, #{user.name}! 
-                    a(href='/users/logout') logout
-                if user.rights == 1
+                    if user.rights == 1
                     - let mailto =  'mailto:marie@ototoi.fr?subject=[otoplanning]%20Change%20in%20your%20schedule&body=Dear%20Marie,%0D%0A%0D%0AWould%20you%20please%20consider%20working%20at%20...%20instead%20of%20...%20on%20the%20../../20..?%0D%0A%0D%0A...%0D%0A%0D%0AHave%20a%20nice%20day,%0D%0AThank%20you!%0D%0A%0D%0A' + user.name
-                    a(href=mailto, class='change') Change request
+                    a(href=mailto).change.btn.btn-info.btn-sm Change request
+                    a(href='/users/logout').btn.btn-link.btn-sm logout 
         
         main.calendar
             div#previous.calendar__previous &lsaquo;
