@@ -4,8 +4,6 @@ const express = require('express'),
 	Day = require('../models/day')
 
 
-
-
 router.use('/users', require('./users'))
 
 

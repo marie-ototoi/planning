@@ -39,7 +39,7 @@ router.post('/', function setConfig (req, res) {
 })
 
 router.post('/day/:id', function setDay (req, res) {
-  	
+  	//reloas ? 
 })
 
 module.exports = router

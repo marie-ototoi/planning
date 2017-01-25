@@ -17558,7 +17558,6 @@ if(document.data){
     }
 }
 
-        
 function draw(data) {
 
     data = data.map(function(entry){
@@ -17623,13 +17622,14 @@ function draw(data) {
                 .enter()
                     .append("div")
                     .attr("class", function(d){ return  (formatDay(d.date) === formatDay(new Date()) ) ? "calendar__day calendar__day_today " + d.type : "calendar__day " + d.type; })
-                    .text(function(d){ return formatDayMonth(d.date) })
-                            
+                    .text(function(d){ return formatDayMonth(d.date) })        
 }
+
 
 function showCalendar(reqDate, direction){
             //
     let requestedDate
+    
     if (reqDate){
         requestedDate = reqDate
 

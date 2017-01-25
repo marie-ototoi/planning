@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1/otoplanning')
+mongoose.connect(process.env.MONGODB_URI)
 
 const db = mongoose.connection
 db.on('error', () => {

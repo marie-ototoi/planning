@@ -16550,7 +16550,6 @@ Object.defineProperty(exports, '__esModule', { value: true });
 require.register("browser/scripts/config.js", function(exports, require, module) {
 const d3 = require('d3')
 
-
 module.exports = this
 });
 

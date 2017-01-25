@@ -18,5 +18,9 @@ exports.config = {
         'autoRequire': {
             'scripts/calendar.js': ['browser/scripts/calendar']
         }
+    },
+    'server': {
+        'port': 5000,
+        'path': 'app.js'
     }
 }
