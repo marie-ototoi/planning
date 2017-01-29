@@ -11,11 +11,11 @@ const formatDay = d3.timeFormat("%Y-%m-%d"),
     formatYearMonth = d3.timeFormat("%Y-%m"),    
     formatMonthNameYear = d3.timeFormat("%B %Y");
 
+
 let dateStart,
 dateEnd, 
 dateNow
 
-console.log(document.data, document, window)
 if(document.data){
     dateStart = new Date(document.data[0].date);
     dateEnd = new Date(document.data[document.data.length -1].date);
@@ -99,9 +99,9 @@ function draw(data) {
 
 
 function showCalendar(reqDate, direction){
-            //
+    //
     let requestedDate
-    
+
     if (reqDate){
         requestedDate = reqDate
 

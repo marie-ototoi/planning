@@ -1,13 +1,13 @@
 (function() {
   'use strict';
 
-  var globals = typeof window === 'undefined' ? global : window;
+  var globals = typeof global === 'undefined' ? self : global;
   if (typeof globals.require === 'function') return;
 
   var modules = {};
   var cache = {};
   var aliases = {};
-  var has = ({}).hasOwnProperty;
+  var has = {}.hasOwnProperty;
 
   var expRe = /^\.\.?(\/|$)/;
   var expand = function(root, name) {
@@ -36,8 +36,7 @@
   };
 
   var initModule = function(name, definition) {
-    var hot = null;
-    hot = hmr && hmr.createHot(name);
+    var hot = hmr && hmr.createHot(name);
     var module = {id: name, exports: {}, hot: hot};
     cache[name] = module;
     definition(module.exports, localRequire(name), module);
@@ -85,7 +84,7 @@
   };
 
   require.register = require.define = function(bundle, fn) {
-    if (typeof bundle === 'object') {
+    if (bundle && typeof bundle === 'object') {
       for (var key in bundle) {
         if (has.call(bundle, key)) {
           require.register(key, bundle[key]);
@@ -1130,14 +1129,14 @@ Object.defineProperty(exports, '__esModule', { value: true });
 require.register("d3/build/d3.js", function(exports, require, module) {
   require = __makeRelativeRequire(require, {}, "d3");
   (function() {
-    // https://d3js.org Version 4.4.4. Copyright 2017 Mike Bostock.
+    // https://d3js.org Version 4.5.0. Copyright 2017 Mike Bostock.
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
 	(factory((global.d3 = global.d3 || {})));
 }(this, (function (exports) { 'use strict';
 
-var version = "4.4.4";
+var version = "4.5.0";
 
 var ascending = function(a, b) {
   return a < b ? -1 : a > b ? 1 : a >= b ? 0 : NaN;
@@ -10524,6 +10523,19 @@ var cluster = function() {
   return cluster;
 };
 
+function count(node) {
+  var sum = 0,
+      children = node.children,
+      i = children && children.length;
+  if (!i) sum = 1;
+  else while (--i >= 0) sum += children[i].value;
+  node.value = sum;
+}
+
+var node_count = function() {
+  return this.eachAfter(count);
+};
+
 var node_each = function(callback) {
   var node = this, current, next = [node], children, i, n;
   do {
@@ -10702,6 +10714,7 @@ function Node(data) {
 
 Node.prototype = hierarchy.prototype = {
   constructor: Node,
+  count: node_count,
   each: node_each,
   eachAfter: node_eachAfter,
   eachBefore: node_eachBefore,
@@ -10862,7 +10875,13 @@ function intersects(a, b) {
   var dx = b.x - a.x,
       dy = b.y - a.y,
       dr = a.r + b.r;
-  return dr * dr > dx * dx + dy * dy;
+  return dr * dr - 1e-6 > dx * dx + dy * dy;
+}
+
+function distance1(a, b) {
+  var l = a._.r;
+  while (a !== b) l += 2 * (a = a.next)._.r;
+  return l - b._.r;
 }
 
 function distance2(circle, x, y) {
@@ -10912,35 +10931,27 @@ function packEnclose(circles) {
   pack: for (i = 3; i < n; ++i) {
     place(a._, b._, c = circles[i]), c = new Node$1(c);
 
-    // If there are only three elements in the front-chain…
-    if ((k = a.previous) === (j = b.next)) {
-      // If the new circle intersects the third circle,
-      // rotate the front chain to try the next position.
-      if (intersects(j._, c._)) {
-        a = b, b = j, --i;
-        continue pack;
-      }
-    }
-
     // Find the closest intersecting circle on the front-chain, if any.
-    else {
-      sj = j._.r, sk = k._.r;
-      do {
-        if (sj <= sk) {
-          if (intersects(j._, c._)) {
-            b = j, a.next = b, b.previous = a, --i;
-            continue pack;
-          }
-          j = j.next, sj += j._.r;
-        } else {
-          if (intersects(k._, c._)) {
-            a = k, a.next = b, b.previous = a, --i;
-            continue pack;
-          }
-          k = k.previous, sk += k._.r;
+    // “Closeness” is determined by linear distance along the front-chain.
+    // “Ahead” or “behind” is likewise determined by linear distance.
+    j = b.next, k = a.previous, sj = b._.r, sk = a._.r;
+    do {
+      if (sj <= sk) {
+        if (intersects(j._, c._)) {
+          if (sj + a._.r + b._.r > distance1(j, b)) a = j; else b = j;
+          a.next = b, b.previous = a, --i;
+          continue pack;
         }
-      } while (j !== k.next);
-    }
+        sj += j._.r, j = j.next;
+      } else {
+        if (intersects(k._, c._)) {
+          if (distance1(a, k) > sk + a._.r + b._.r) a = k; else b = k;
+          a.next = b, b.previous = a, --i;
+          continue pack;
+        }
+        sk += k._.r, k = k.previous;
+      }
+    } while (j !== k.next);
 
     // Success! Insert the new circle c between a and b.
     c.previous = a, c.next = b, a.next = b.previous = b = c;
@@ -17539,11 +17550,11 @@ const formatDay = d3.timeFormat("%Y-%m-%d"),
     formatYearMonth = d3.timeFormat("%Y-%m"),    
     formatMonthNameYear = d3.timeFormat("%B %Y");
 
+
 let dateStart,
 dateEnd, 
 dateNow
 
-console.log(document.data, document, window)
 if(document.data){
     dateStart = new Date(document.data[0].date);
     dateEnd = new Date(document.data[document.data.length -1].date);
@@ -17627,9 +17638,9 @@ function draw(data) {
 
 
 function showCalendar(reqDate, direction){
-            //
+    //
     let requestedDate
-    
+
     if (reqDate){
         requestedDate = reqDate
 

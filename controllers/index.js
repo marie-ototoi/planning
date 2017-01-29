@@ -37,6 +37,7 @@ router.get('/:requestedDate', function(req, res, next){
   	}
 })
 
+
 router.get('/', function(req, res){
 	if(req.user && isAuthorizedUser(req.user) > 0){
 		req.user.rights = isAuthorizedUser(req.user)

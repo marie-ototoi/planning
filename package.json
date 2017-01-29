@@ -4,7 +4,7 @@
   "description": "affichage du planning CIFRE",
   "main": "app.js",
   "scripts": {
-    "start": "brunch watch --server"
+    "start": "brunch watch --server & nodemon"
   },
   "repository": {
     "type": "git",
@@ -35,7 +35,6 @@
     "method-override": "^2.3.7",
     "moment": "^2.17.1",
     "moment-range": "^3.0.0",
-    "mongoose": "^4.7.7",
     "multer": "^1.2.1",
     "passport": "^0.3.2",
     "passport-twitter": "^1.0.4",
@@ -47,6 +46,7 @@
   "devDependencies": {
     "brunch": "^2.10.2",
     "css-brunch": "^2.6.1",
-    "javascript-brunch": "^2.0.0"
+    "javascript-brunch": "^2.0.0",
+    "mongoose": "^4.7.7"
   }
 }

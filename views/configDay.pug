@@ -7,17 +7,20 @@ html
 		script(type='text/javascript').
 			const dateStart=#{dateStart}
 			const dateEnd=#{dateEnd}
+			const types=#{types}
 
 	body.config
 		main.container
 			include _flashes
-			form(action='/config', method='POST')#config
+			form(action='/config/day', method='POST')#config
 				div.form-group.row
-					label(for='dateStart').col-sm-2.col-sm-offset-3.col-form-label Date start
+					label(for='day').col-sm-2.col-sm-offset-3.col-form-label Date 
 					div.col-sm-4
-						input(type='date', name='dateStart', value=dateStart)#dateStart.form-control
+						input(type='date', name='day', value=day)#day.form-control
 				div.form-group.row
-					label(for='dateEnd').col-sm-2.col-sm-offset-3.col-form-label Date start
+					label(for='type').col-sm-2.col-sm-offset-3.col-form-label Lieu
 					div.col-sm-4
-						input(type='date', name='dateEnd', value=dateEnd)#dateEnd.form-control
-				input(type='submit', value='Save config').btn.btn-large
+						select(type='date', name='dateEnd', value=dateEnd)#dateEnd.form-control
+							each type in types
+								option(value=type.key)= type.val
+				input(type='submit', value='Save day').btn.btn-large
