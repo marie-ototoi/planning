@@ -26,7 +26,7 @@ router.get('/:requestedDate', function(req, res, next){
 		 	data = data.map((element)=>{
 		 		return {type : element.type, date: element._id}
 		 	})
-		 	res.render('planning.pug',{title : 'Planning CIFRE', requestedDate: req.params.requestedDate, user: req.user, data : JSON.stringify(data)})
+		 	res.render('calendar.pug',{title : 'Planning CIFRE', requestedDate: req.params.requestedDate, user: req.user, data : JSON.stringify(data)})
 			res.end()
 		 })
 		
@@ -45,7 +45,7 @@ router.get('/', function(req, res){
 		 	data = data.map((element)=>{
 		 		return {type : element.type, date: element._id}
 		 	})
-			res.render('planning.pug',{title : 'Planning CIFRE', user: req.user, data : JSON.stringify(data)})
+			res.render('calendar.pug',{title : 'Planning CIFRE', user: req.user, data : JSON.stringify(data)})
 			res.end()
 		})
 	}else{
