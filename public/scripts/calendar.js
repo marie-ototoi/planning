@@ -17536,7 +17536,25 @@ Object.defineProperty(exports, '__esModule', { value: true });
 })));
   })();
 });
-require.register("browser/scripts/calendar.js", function(exports, require, module) {
+require.register("browser/app.js", function(exports, require, module) {
+const calendar = require('./scripts/calendar')
+
+
+const App = {
+  	init(data, requestedDate) {
+    	calendar(data, requestedDate)
+  	}
+}
+
+module.exports = App
+});
+
+;require.register("browser/scripts/bootstrap.js", function(exports, require, module) {
+const bootstrap = require('bootstrap/dist/css/bootstrap.css')
+module.exports = this
+});
+
+;require.register("browser/scripts/calendar.js", function(exports, require, module) {
 const d3 = require('d3'),
     timeformat = require('d3-time-format')
 
@@ -17554,35 +17572,53 @@ const formatDay = d3.timeFormat("%Y-%m-%d"),
 let dateStart,
 dateEnd, 
 dateNow,
+nestedData,
 currentDate
 
-if(document.data){
-    dateStart = new Date(document.data[0].date);
-    dateEnd = new Date(document.data[document.data.length -1].date);
-    dateNow = new Date()
-    draw(document.data)
-    if(document.requestedDate && document.requestedDate.length==7){
-        let year = Number(document.requestedDate.substr(0,4))
-        let month = Number(document.requestedDate.substr(5,2))-1
+
+const initAndLoad = function initAndLoad(data, requestedDate){
+    init(data)
+    draw()
+    if(requestedDate && requestedDate.length==7){
+        let year = Number(requestedDate.substr(0,4))
+        let month = Number(requestedDate.substr(5,2))-1
         showCalendar(new Date(year, month))
+
     }else{
         showCalendar()
     }
 }
 
-function draw(data) {
-
+//if(document.data){
+const init = function init(data){
+         
+    dateStart = new Date(data[0].date);
+    dateEnd = new Date(data[data.length -1].date);
+    dateNow = new Date()
     data = data.map(function(entry){
         return { "date" :new Date (entry.date), "type": entry.type }
     })
-          
+
     nestedData = d3.nest()
         .key(function(d) { return formatYearMonth(d.date) })
         .key(function(d) { return formatWeek(d.date) })
         .entries(data)
+  
+    
+    /*draw(data)
+    if(requestedDate && requestedDate.length==7){
+        let year = Number(requestedDate.substr(0,4))
+        let month = Number(requestedDate.substr(5,2))-1
+        showCalendar(new Date(year, month))
 
-            //console.log(nestedData)
-            //console.log(calendarData)
+    }else{
+        showCalendar()
+    }*/
+}
+
+
+const draw = function draw() {
+
         let navItem = d3.select(".timeline")
             .append("ul")
             .attr("class", "timeline__list")
@@ -17590,7 +17626,7 @@ function draw(data) {
             .data(nestedData)
             .enter()
                 .append("li")
-                .attr("class", function(d){ return "timeline__item ym" + d.key; })
+                .attr("class", function(d){ return "timeline__item ym" + d.key })
         navItem        
             .append("span")
             .attr("class", function(d,i){ return (i == 0 || d.key.substr(5,2) == "01") ? "timeline__year": "timeline__year hidden" })
@@ -17616,7 +17652,6 @@ function draw(data) {
                 .attr("class", function(d, i){ "monthDetail ym" + d.key })
                 .attr("id", function(d, i){ return "ym" + d.key; })
 
-
         calendarItem
             .append("h1")
             .text(function(d){ return formatMonthNameYear(d.values[0].values[0].date) })
@@ -17638,7 +17673,7 @@ function draw(data) {
 }
 
 
-function showCalendar(reqDate, direction){
+const showCalendar = function showCalendar(reqDate, direction){
     //
     let requestedDate
 
@@ -17676,8 +17711,20 @@ d3.select('.calendar__next').on('click', function() {
         showCalendar(null, "next")
     }, false)
 
+module.exports = initAndLoad
+module.exports.init = init
+module.exports.draw = draw
+module.exports.show = showCalendar
+});
+
+;require.register("browser/scripts/config.js", function(exports, require, module) {
+const d3 = require('d3')
 
 module.exports = this
+});
+
+;require.register("browser/styles/bootstrap.js", function(exports, require, module) {
+const bootstrap = require('bootstrap/dist/css/bootstrap.css')
 });
 
 ;require.alias("d3/build/d3.js", "d3");
@@ -17686,5 +17733,5 @@ require.alias("d3-time-format/build/d3-time-format.js", "d3-time-format");requir
   
 });})();require('___globals___');
 
-require('browser/scripts/calendar');
+
 //# sourceMappingURL=calendar.js.map
