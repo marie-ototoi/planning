@@ -14,7 +14,8 @@ const formatDay = d3.timeFormat("%Y-%m-%d"),
 
 let dateStart,
 dateEnd, 
-dateNow
+dateNow,
+currentDate
 
 if(document.data){
     dateStart = new Date(document.data[0].date);
@@ -106,7 +107,7 @@ function showCalendar(reqDate, direction){
         requestedDate = reqDate
 
     }else if(direction === "previous" || direction === "next"){
-       requestedDate = dateNow
+       requestedDate = currentDate
         let increment = (direction === "previous") ? -1 : 1
         requestedDate.setMonth(requestedDate.getMonth() + increment)
     }else{
@@ -120,9 +121,9 @@ function showCalendar(reqDate, direction){
 
     d3.selectAll("header li:not(.ym"+ requestedFormatted + ")").classed("active", false)
     d3.select("header li.ym"+ requestedFormatted + "").classed("active", true)
-    dateNow = requestedDate
-
-   if(reqDate !== requestedDate){
+    
+    if(currentDate !== requestedDate){
+        currentDate = requestedDate
         window.history.pushState({}, formatMonthNameYear(requestedDate), "/" + formatYearMonth(requestedDate))
     }
 }
