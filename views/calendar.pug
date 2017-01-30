@@ -3,12 +3,13 @@ html
         meta(charset='utf-8')
         title #{title}
         link(rel='stylesheet', href='/styles/calendar.css')
-        script(type='text/javascript' src='/scripts/calendar.js' defer)
+        script(type='text/javascript' src='/scripts/calendar.js')
         script(type='text/javascript').
-            document.requestedDate = '#{requestedDate}'
-            document.data = !{data}
-    body.container-fluid
+            document.addEventListener("DOMContentLoaded", function(event) {
+                require('browser/app').init(!{data}, '#{requestedDate}')
+            })
 
+    body.container-fluid
         header
             nav.timeline
             if user
