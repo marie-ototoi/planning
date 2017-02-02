@@ -4,7 +4,8 @@
   "description": "affichage du planning CIFRE",
   "main": "app.js",
   "scripts": {
-    "start": "brunch watch --server & nodemon"
+    "start": "brunch watch --server & nodemon",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -12,7 +13,7 @@
   },
   "keywords": [
     "CIFRE",
-    "planning"
+    "calendar"
   ],
   "author": "marie@ototoi.fr",
   "license": "ISC",
@@ -46,7 +47,9 @@
   "homepage": "https://github.com/marie-ototoi/planning#readme",
   "devDependencies": {
     "brunch": "^2.10.2",
+    "chai-datetime": "^1.4.1",
     "css-brunch": "^2.6.1",
-    "javascript-brunch": "^2.0.0"
+    "javascript-brunch": "^2.0.0",
+    "mock-browser": "^0.92.12"
   }
 }

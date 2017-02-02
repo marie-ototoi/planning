@@ -17572,6 +17572,8 @@ const formatDay = d3.timeFormat("%Y-%m-%d"),
 let dateStart,
 dateEnd, 
 dateNow,
+rawData,
+newData,
 nestedData,
 currentDate
 
@@ -17595,15 +17597,17 @@ const init = function init(data){
     dateStart = new Date(data[0].date);
     dateEnd = new Date(data[data.length -1].date);
     dateNow = new Date()
-    data = data.map(function(entry){
+    rawData = data
+    newData = data.map(function(entry){
         return { "date" :new Date (entry.date), "type": entry.type }
     })
 
     nestedData = d3.nest()
         .key(function(d) { return formatYearMonth(d.date) })
         .key(function(d) { return formatWeek(d.date) })
-        .entries(data)
-  
+        .entries(newData)
+    
+    return { dateStart, dateEnd, dateNow, data, newData, nestedData }
     
     /*draw(data)
     if(requestedDate && requestedDate.length==7){

@@ -21,7 +21,7 @@ router.get('/', function getConfig(req, res){
 })
 
 router.post('/', function setConfig (req, res) {
-	console.log('query', req.query,'body', req.body,'params', req.headers)
+	//console.log('query', req.query,'body', req.body,'params', req.headers)
 	req.checkBody('dateStart', 'Invalid starting date').notEmpty().isDate()
 	req.checkBody('dateEnd', 'Invalid ending date').notEmpty().isDate()
 	req.getValidationResult()
