@@ -13,12 +13,16 @@ const daySchema = new mongoose.Schema({
     modifiedAt : { type: Date }
 })
 
-daySchema.statics.findOrCreate = function findOrCreate (id, type, done) {
+daySchema.statics.findOrCreate = function findOrCreate (id, type) {
     return this.update(
         { _id: id },
         { $set: { date : id, type, modifiedAt : Date.now() }, $setOnInsert: { createdAt: Date.now() } },
         { upsert: true }
     )
+}
+
+daySchema.statics.getDay = function getDay (id) {
+    return this.findById(id).exec()
 }
 
 daySchema.statics.getDays = function getDays (properties) {

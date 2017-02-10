@@ -4,22 +4,21 @@ html
 		title #{title}
 		link(rel='stylesheet', href='/styles/calendar.css')
 		script(type='text/javascript').
-			const dateStart=#{dateStart}
-			const dateEnd=#{dateEnd}
+			const day=#{day}
 			const types=#{types}
 
 	body.config
 		main.container
 			include _flashes
-			form(action='/config/day', method='POST')#config
+			form(action='/config/day/' + day._id, method='POST')#config
 				div.form-group.row
 					label(for='day').col-sm-2.col-sm-offset-3.col-form-label Date 
 					div.col-sm-4
-						input(type='date', name='day', value=day)#day.form-control
+						input(type='date', name='day', value=day._id)#day.form-control
 				div.form-group.row
 					label(for='type').col-sm-2.col-sm-offset-3.col-form-label Lieu
 					div.col-sm-4
-						select(type='date', name='dateEnd', value=dateEnd)#dateEnd.form-control
+						select(name='type')#type.form-control
 							each type in types
-								option(value=type.key)= type.val
+								option(value=type.key, selected=(day.type === type.key))= type.val
 				input(type='submit', value='Save day').btn.btn-large

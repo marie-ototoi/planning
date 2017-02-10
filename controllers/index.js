@@ -12,7 +12,7 @@ router.use('/config', function(req, res, next){
 		req.user.rights = isAuthorizedUser(req.user)
 		next()
 	}else{
-		req.session.redirect = '/config'
+		req.session.redirect = '/config'+req.path
   		res.redirect('/users/login')
   	}
 })
@@ -22,11 +22,17 @@ router.use('/config', require('./config'))
 router.get('/:requestedDate', function(req, res, next){
 	if(req.user && isAuthorizedUser(req.user) > 0){
 		req.user.rights = isAuthorizedUser(req.user)
-		 Day.getDays().then((data) => {
+		Day.getDays()
+		.then((data) => {
 		 	data = data.map((element)=>{
 		 		return {type : element.type, date: element._id}
 		 	})
-		 	res.render('calendar.pug',{title : 'Planning CIFRE', requestedDate: req.params.requestedDate, user: req.user, data : JSON.stringify(data)})
+		 	res.render('calendar.pug',{
+		 		title : 'Planning CIFRE', 
+		 		requestedDate: req.params.requestedDate, 
+		 		user: req.user, 
+		 		data : JSON.stringify(data)
+		 	})
 			res.end()
 		 })
 		
@@ -41,11 +47,16 @@ router.get('/:requestedDate', function(req, res, next){
 router.get('/', function(req, res){
 	if(req.user && isAuthorizedUser(req.user) > 0){
 		req.user.rights = isAuthorizedUser(req.user)
-		 Day.getDays().then((data) => {
+		Day.getDays()
+		.then((data) => {
 		 	data = data.map((element)=>{
 		 		return {type : element.type, date: element._id}
 		 	})
-			res.render('calendar.pug',{title : 'Planning CIFRE', user: req.user, data : JSON.stringify(data)})
+			res.render('calendar.pug',{
+				title : 'Planning CIFRE', 
+				user: req.user, 
+				data : JSON.stringify(data)
+			})
 			res.end()
 		})
 	}else{

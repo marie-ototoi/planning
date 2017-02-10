@@ -17584,10 +17584,10 @@ const initAndLoad = function initAndLoad(data, requestedDate){
     if(requestedDate && requestedDate.length==7){
         let year = Number(requestedDate.substr(0,4))
         let month = Number(requestedDate.substr(5,2))-1
-        showCalendar(new Date(year, month))
+        showCalendar(requestCalendar(new Date(year, month)))
 
     }else{
-        showCalendar()
+        showCalendar(requestCalendar())
     }
 }
 
@@ -17597,6 +17597,7 @@ const init = function init(data){
     dateStart = new Date(data[0].date);
     dateEnd = new Date(data[data.length -1].date);
     dateNow = new Date()
+    currentDate = dateStart
 
     rawData = data
     newData = data.map(function(entry){
@@ -17646,7 +17647,7 @@ const draw = function draw() {
         navItem
             .on("click", function(d,i){
                 let saveTheDate =  d.values[0].values[0].date
-                showCalendar(saveTheDate, null)
+                showCalendar(requestCalendar(saveTheDate, null))
             })
 
 
@@ -17679,7 +17680,7 @@ const draw = function draw() {
 }
 
 
-const showCalendar = function showCalendar(reqDate, direction){
+const requestCalendar = function requestCalendar(reqDate, direction){
     //
     let requestedDate
 
@@ -17687,14 +17688,26 @@ const showCalendar = function showCalendar(reqDate, direction){
         requestedDate = reqDate
 
     }else if(direction === "previous" || direction === "next"){
-       requestedDate = currentDate
-        let increment = (direction === "previous") ? -1 : 1
-        requestedDate.setMonth(requestedDate.getMonth() + increment)
+        requestedDate = currentDate
+        
+        // check if there's a next or prev month in the data before
+        if(!(formatYearMonth(currentDate) === formatYearMonth(new Date(rawData[0].date))&&  (direction === "previous")) &&
+           !(formatYearMonth(currentDate) === formatYearMonth(new Date(rawData[rawData.length-1].date))&&  (direction === "next")) ){
+            let increment = (direction === "previous") ? -1 : 1
+            requestedDate.setMonth(requestedDate.getMonth() + increment)
+        }
+
     }else{
         requestedDate = dateNow
     }
+
     if(! (requestedDate >= dateStart && requestedDate <= dateEnd)) requestedDate = dateStart
 
+    return requestedDate;
+}
+
+const showCalendar = function showCalendar(requestedDate){
+    //
     let requestedFormatted = formatYearMonth(requestedDate)
     d3.selectAll("section:not(#ym"+ requestedFormatted + ")").classed("hidden", true);
     d3.select("section#ym"+ requestedFormatted + "").classed("hidden", false)
@@ -17711,16 +17724,17 @@ const showCalendar = function showCalendar(reqDate, direction){
         
 //previous and next button
 d3.select('.calendar__previous').on('click', function() {
-        showCalendar(null, "previous")
+        showCalendar(requestCalendar(null, "previous"))
     }, false)
 d3.select('.calendar__next').on('click', function() {
-        showCalendar(null, "next")
+        showCalendar(requestCalendar(null, "next"))
     }, false)
 
 module.exports = initAndLoad
 module.exports.init = init
 module.exports.draw = draw
-module.exports.show = showCalendar
+module.exports.requestCalendar = requestCalendar
+module.exports.showCalendar = showCalendar
 });
 
 ;require.register("browser/scripts/config.js", function(exports, require, module) {

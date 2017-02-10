@@ -4,8 +4,9 @@
   "description": "affichage du planning CIFRE",
   "main": "app.js",
   "scripts": {
-    "start": "brunch watch --server & nodemon",
-    "test": "mocha"
+    "start": "brunch watch --server & nodemon & npm test & npm run coverage",
+    "test": "mocha",
+    "coverage": "istanbul cover _mocha -- -R spec"
   },
   "repository": {
     "type": "git",
@@ -49,7 +50,9 @@
     "brunch": "^2.10.2",
     "chai-datetime": "^1.4.1",
     "css-brunch": "^2.6.1",
+    "istanbul": "^0.4.5",
     "javascript-brunch": "^2.0.0",
-    "mock-browser": "^0.92.12"
+    "mock-browser": "^0.92.12",
+    "zombie": "^5.0.5"
   }
 }

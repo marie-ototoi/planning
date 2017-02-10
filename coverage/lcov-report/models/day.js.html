@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for models/day.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">models/</a> day.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">69.23% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>27/39</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">5.56% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>1/18</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">85.71% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>6/7</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">69.23% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>27/39</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1458×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1458×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1458×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const mongoose = require('mongoose'),
+momentLib = require('moment'),
+momentRange = require('moment-range'),
+moment = momentRange.extendMoment(momentLib)
+&nbsp;
+mongoose.Promise = global.Promise
+&nbsp;
+const daySchema = new mongoose.Schema({
+    _id: { type: String, required: true },
+    date: { type: Date, required: true },
+    type: { type: String, required: true },
+    createdAt : { type: Date },
+    modifiedAt : { type: Date }
+})
+&nbsp;
+daySchema.statics.findOrCreate = function findOrCreate (id, type) {
+    return this.update(
+        { _id: id },
+        { $set: { date : id, type, modifiedAt : Date.now() }, $setOnInsert: { createdAt: Date.now() } },
+        { upsert: true }
+    )
+}
+&nbsp;
+daySchema.statics.getDay = function getDay (id) {
+    return this.findById(id).exec()
+}
+&nbsp;
+daySchema.statics.getDays = function getDays (properties) {
+    return this.find({}, properties).sort({_id: 1 }).exec()
+}
+&nbsp;
+daySchema.statics.getFirstDay = function getFirstDay (properties) {
+    return this.find({}, properties).limit(1).sort({_id: 1 }).exec()
+}
+&nbsp;
+daySchema.statics.getLastDay = function getLastDay (properties) {
+    return this.find({}, properties).limit(1).sort({_id: -1 }).exec()
+}
+&nbsp;
+daySchema.statics.configCalendar = function configCalendar (dayStart, dayEnd) {
+    
+    let myPromises = []
+    // delete all documents before new start
+    myPromises.push( this.remove({date: { $lt: new Date( moment(dayStart).format('YYYY-MM-DD') + 'T00:00:00.000Z') }}).exec() )
+    // delete all documents after new end
+    myPromises.push( this.remove({date: { $gt: new Date(  moment(dayEnd).format('YYYY-MM-DD') + 'T00:00:00.000Z') }}).exec() )
+    //
+    const newRange = moment.range(dayStart, dayEnd)
+    
+    //comment éviter de faire ce truc crado ici ? (pour that.update plus bas)
+    let that = this
+&nbsp;
+    for (let eachDay of newRange.by('day')) {
+       
+        // check if document already exists
+        let dayPromise = this.findById(eachDay.format('YYYY-MM-DD'))
+        .then(day =&gt;{
+            //if not, add a promise to create it in the array of promises
+            <span class="missing-if-branch" title="if path not taken" >I</span>if(! day) {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                let type </span>
+                //default rules to set the type property (location)
+<span class="cstat-no" title="statement not covered" >                let dayOfTheWeek = Number(eachDay.format('e'))</span>
+<span class="cstat-no" title="statement not covered" >                if(dayOfTheWeek === 1 || dayOfTheWeek === 2) {</span>
+<span class="cstat-no" title="statement not covered" >                    type = 'IL'</span>
+                }else <span class="cstat-no" title="statement not covered" >if(dayOfTheWeek === 4 || dayOfTheWeek === 5) {</span>
+<span class="cstat-no" title="statement not covered" >                    type = 'LO'</span>
+                }else <span class="cstat-no" title="statement not covered" >if(dayOfTheWeek === 3) {</span>
+<span class="cstat-no" title="statement not covered" >                    type = (Number(eachDay.format('W')) % 2 === 0) ? 'IL' : 'LO'</span>
+                }else <span class="cstat-no" title="statement not covered" >if(dayOfTheWeek === 0 || dayOfTheWeek === 6) {</span>
+<span class="cstat-no" title="statement not covered" >                    type = 'HO'</span>
+                }
+<span class="cstat-no" title="statement not covered" >                return that.update(</span>
+                    { _id: eachDay.format('YYYY-MM-DD') },
+                    { $set: { date : eachDay.format('YYYY-MM-DD'), type, createdAt: Date.now() }},
+                    { upsert: true }
+                )
+            }
+        })
+        myPromises.push(dayPromise)
+    }
+    return Promise.all(myPromises)
+}
+&nbsp;
+daySchema.methods.updateDay = <span class="fstat-no" title="function not covered" >function updateDay (id, type) {</span>
+<span class="cstat-no" title="statement not covered" >    return this.update(</span>
+        { _id: id },
+        { $set: { type, modifiedAt : Date.now() }}
+    )
+}
+&nbsp;
+const Model = mongoose.model('Day', daySchema)
+&nbsp;
+module.exports = Model
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri Feb 10 2017 15:07:38 GMT+0100 (CET)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>
