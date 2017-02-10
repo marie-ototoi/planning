@@ -38,15 +38,23 @@ router.post('/', function setConfig (req, res) {
 	    	})
 	    	.catch((err) => {
 	    		req.flash('error', 'Sorry, an error has occured while attempting to update the calendar ' + err)
-			    res.redirect('/config')
 			})
 	    }
-  	})
-  	
+  	})  	
 })
+
 router.get('/day/:id', function getConfig(req, res){
-	res.render('configDay.pug', {title : 'Planning CIFRE - Configuration', day: req.params.id })
-	res.end
+	Day.getDay(req.params.id)
+	.then(day =>{
+		res.render('configDay.pug', {title : 'Planning CIFRE - Configuration', day, types : [
+			{'key': 'IL', 'val' : 'ILDA'}, 
+			{'key': 'LO', 'val' : 'LOGILAB'},
+			{'key': 'CO', 'val' : 'Conference'},
+			{'key': 'SC', 'val' : 'University'},
+			{'key': 'HO', 'val' : 'Holidays'}
+		] })
+		res.end
+	})
 })
 
 
@@ -60,7 +68,7 @@ router.post('/day/:id', function setDay (req, res) {
 	      	res.redirect('/config/day/'+req.body.day)
 	    }
 	    else{
-	    	Day.setDay(req.body.day, req.body.type)
+	    	Day.findOrCreate(req.body.day, req.body.type)
 	    	.then((results) => {
 	    		req.flash('success', 'The calendar has been updated, thank you')
 	    		res.redirect('/config/day/'+req.body.day)

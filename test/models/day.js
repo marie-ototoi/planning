@@ -7,7 +7,7 @@ chai.use(require('chai-datetime'))
 
 describe('Model Day - ', function() {
 	before(function(){
-        return  Day.configCalendar("2014-04-03", "2016-03-31") 
+        return  Day.configCalendar('2014-04-03', '2016-03-31') 
     })
 	it('should return an array of days in chronological order', function() {
         Day.getDays()
@@ -21,17 +21,43 @@ describe('Model Day - ', function() {
             expect(days[0].date).to.beforeDate(days[days.length-1].date)
         })   
     })
-    it('should return the first date', function() {
-        Promise.all([Day.getDays(), Day.getFirstDay()])
-        .then(([days, firstDay]) =>{
-            expect(firstDay[0].date).to.equalDate(days[0].date)
+    it('should return requested date', function() {
+        Day.getDay('2015-04-03')
+        .then(getThisDay =>{
+            expect(getThisDay._id).to.equal('2015-04-03')
         })
+        .catch(err=>{
+            console.error(err)
+        })  
+    })
+    it('should return the first date', function() {
+        Day.getFirstDay()
+        .then(firstDay =>{
+            expect(firstDay[0]._id).to.equal('2014-04-03')
+        })
+        .catch(err=>{
+            console.error(err)
+        })  
     })
     it('should return the last date', function() {
-        Promise.all([Day.getDays(), Day.getLastDay()])
-        .then(([days, lastDay]) =>{
-            expect(lastDay[0].date).to.equalDate(days[days.length-1].date)
+        Day.getLastDay()
+        .then(lastDay =>{
+            expect(lastDay[0]._id).to.equal('2016-03-31')
+        })
+        .catch(err=>{
+            console.error(err)
+        })  
+    })
+    it('should change the type of a date', function() {
+        Day.findOrCreate('2014-04-03', 'SC')
+        .then(setThisDay =>{
+            Day.getDay(setThisDay._id)
+            .then(getThisDay =>{
+                expect(getThisDay[0].type).to.equal('SC')
+            })
+        })
+        .catch(err=>{
+            console.error(err)
         })
     })
-    
 })
