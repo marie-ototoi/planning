@@ -8,15 +8,16 @@ mongoose.Promise = global.Promise
 const daySchema = new mongoose.Schema({
     _id: { type: String, required: true },
     date: { type: Date, required: true },
-    type: { type: String, required: true },
+    morning: { type: String, required: true },
+    afternoon: { type: String, required: true },
     createdAt : { type: Date },
     modifiedAt : { type: Date }
 })
 
-daySchema.statics.findOrCreate = function findOrCreate (id, type) {
+daySchema.statics.findOrCreate = function findOrCreate (id, morning, afternoon) {
     return this.update(
         { _id: id },
-        { $set: { date : id, type, modifiedAt : Date.now() }, $setOnInsert: { createdAt: Date.now() } },
+        { $set: { date : id, morning, afternoon, modifiedAt : Date.now() }, $setOnInsert: { createdAt: Date.now() } },
         { upsert: true }
     )
 }
@@ -35,6 +36,10 @@ daySchema.statics.getFirstDay = function getFirstDay (properties) {
 
 daySchema.statics.getLastDay = function getLastDay (properties) {
     return this.find({}, properties).limit(1).sort({_id: -1 }).exec()
+}
+
+daySchema.statics.deleteAllDays = function deleteAllDays () {
+    return this.remove().exec() 
 }
 
 daySchema.statics.configCalendar = function configCalendar (dayStart, dayEnd) {
@@ -72,7 +77,7 @@ daySchema.statics.configCalendar = function configCalendar (dayStart, dayEnd) {
                 }
                 return that.update(
                     { _id: eachDay.format('YYYY-MM-DD') },
-                    { $set: { date : eachDay.format('YYYY-MM-DD'), type, createdAt: Date.now() }},
+                    { $set: { date : eachDay.format('YYYY-MM-DD'), morning: type, afternoon: type, createdAt: Date.now() }},
                     { upsert: true }
                 )
             }
@@ -82,12 +87,7 @@ daySchema.statics.configCalendar = function configCalendar (dayStart, dayEnd) {
     return Promise.all(myPromises)
 }
 
-daySchema.methods.updateDay = function updateDay (id, type) {
-    return this.update(
-        { _id: id },
-        { $set: { type, modifiedAt : Date.now() }}
-    )
-}
+
 
 const Model = mongoose.model('Day', daySchema)
 

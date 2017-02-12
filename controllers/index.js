@@ -24,9 +24,6 @@ router.get('/:requestedDate', function(req, res, next){
 		req.user.rights = isAuthorizedUser(req.user)
 		Day.getDays()
 		.then((data) => {
-		 	data = data.map((element)=>{
-		 		return {type : element.type, date: element._id}
-		 	})
 		 	res.render('calendar.pug',{
 		 		title : 'Planning CIFRE', 
 		 		requestedDate: req.params.requestedDate, 
@@ -49,9 +46,7 @@ router.get('/', function(req, res){
 		req.user.rights = isAuthorizedUser(req.user)
 		Day.getDays()
 		.then((data) => {
-		 	data = data.map((element)=>{
-		 		return {type : element.type, date: element._id}
-		 	})
+			console.log("ok",data[0])
 			res.render('calendar.pug',{
 				title : 'Planning CIFRE', 
 				user: req.user, 

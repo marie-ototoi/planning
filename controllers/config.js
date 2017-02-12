@@ -60,7 +60,8 @@ router.get('/day/:id', function getConfig(req, res){
 
 router.post('/day/:id', function setDay (req, res) {
   	req.checkBody('day', 'Invalid date').notEmpty().isDate()
-	req.checkBody('type', 'Invalid type').len(2,2)
+	req.checkBody('morning', 'Invalid morning location').len(2,2)
+	req.checkBody('afternoon', 'Invalid afternoon location').len(2,2)
 	req.getValidationResult()
 	.then((result) =>{
 	    if (!result.isEmpty()) {
@@ -68,7 +69,7 @@ router.post('/day/:id', function setDay (req, res) {
 	      	res.redirect('/config/day/'+req.body.day)
 	    }
 	    else{
-	    	Day.findOrCreate(req.body.day, req.body.type)
+	    	Day.findOrCreate(req.body.day, req.body.morning, req.body.afternoon)
 	    	.then((results) => {
 	    		req.flash('success', 'The calendar has been updated, thank you')
 	    		res.redirect('/config/day/'+req.body.day)
