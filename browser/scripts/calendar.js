@@ -106,7 +106,7 @@ const draw = function draw() {
             .append("h1")
             .text(function(d){ return formatMonthNameYear(d.values[0].values[0].date) })
 
-        calendarItem
+        let calendarRow = calendarItem
             .append("div")
             .attr("class", "calendar__rows")
             .selectAll(".calendar__row")
@@ -114,12 +114,20 @@ const draw = function draw() {
             .enter()
                 .append("div")
                 .attr("class", function(d,i){ return (i == 0) ? "calendar__row calendar__row_first" : "calendar__row"; })
-                .selectAll(".calendar__day")
-                .data(function(d){ return d.values; })
-                .enter()
-                    .append("div")
-                    .attr("class", function(d){ return  (formatDay(d.date) === formatDay(new Date()) ) ? "calendar__day calendar__day_today " + d.type : "calendar__day " + d.type; })
-                    .text(function(d){ return formatDayMonth(d.date) })        
+                
+        let calendarDay = calendarRow
+            .selectAll(".calendar__day")
+            .data(function(d){ return d.values; })
+            .enter()
+                .append("div")
+                .attr("class", function(d){ return  (formatDay(d.date) === formatDay(new Date()) ) ? "calendar__day calendar__day_today " + d.type : "calendar__day " + d.type; })
+
+        calendarDay
+            .append("div")            
+            .attr("class", 'calendar__daynumber')   
+            .text(function(d){ return formatDayMonth(d.date) })     
+
+     
 }
 
 

@@ -6839,8 +6839,8 @@ button.close {
 }
 .calendar__day{
     flex: 0 1 70px;
-    padding: 25px 0;
-    text-align: center;
+    min-height: 70px;
+    text-align: left;
     background: #e6e6e6;
     border-radius: 3px;
     border:1px solid #fff;
@@ -6850,6 +6850,24 @@ button.close {
     font-weight: bold;
     border: 1px solid #333;
 }
+
+.calendar__daynumber{
+    position: absolute;
+    padding: 4px 6px;
+    color: #555;
+}
+.calendar__events{
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+.calendar__event{
+    font-size: 0.7em;
+    overflow: hidden;
+    height: 1.5em;
+    border-bottom: 1px solid #dedede;
+}
+
 .IL {
     background: #93b9d1;
 }
@@ -6862,7 +6880,26 @@ button.close {
 .SC {
     background: #f4c954;
 }
-
+.IL_LO { background: linear-gradient(to bottom right, #93b9d1 0%, #93b9d1 50%, #b9d1b5 50%, #b9d1b5 100%); }
+.IL_CO { background: linear-gradient(to bottom right, #93b9d1 0%, #93b9d1 50%, #d38571 50%, #d38571 100%); }
+.IL_SC { background: linear-gradient(to bottom right, #93b9d1 0%, #93b9d1 50%, #f4c954 50%, #f4c954 100%); }
+.IL_HO { background: linear-gradient(to bottom right, #93b9d1 0%, #93b9d1 50%, #e6e6e6 50%, #e6e6e6 100%); }
+.LO_IL { background: linear-gradient(to bottom right, #b9d1b5 0%, #b9d1b5 50%, #93b9d1 50%, #93b9d1 100%); }
+.LO_CO { background: linear-gradient(to bottom right, #b9d1b5 0%, #b9d1b5 50%, #d38571 50%, #d38571 100%); }
+.LO_SC { background: linear-gradient(to bottom right, #b9d1b5 0%, #b9d1b5 50%, #b9d1b5 50%, #b9d1b5 100%); }
+.LO_HO { background: linear-gradient(to bottom right, #b9d1b5 0%, #b9d1b5 50%, #e6e6e6 50%, #e6e6e6 100%); }
+.CO_IL { background: linear-gradient(to bottom right, #d38571 0%, #d38571 50%, #93b9d1 50%, #93b9d1 100%); }
+.CO_LO { background: linear-gradient(to bottom right, #d38571 0%, #d38571 50%, #b9d1b5 50%, #b9d1b5 100%); }
+.CO_SC { background: linear-gradient(to bottom right, #d38571 0%, #d38571 50%, #d38571 50%, #d38571 100%); }
+.CO_HO { background: linear-gradient(to bottom right, #d38571 0%, #d38571 50%, #e6e6e6 50%, #e6e6e6 100%); }
+.SC_IL { background: linear-gradient(to bottom right, #f4c954 0%, #f4c954 50%, #93b9d1 50%, #93b9d1 100%); }
+.SC_LO { background: linear-gradient(to bottom right, #f4c954 0%, #f4c954 50%, #b9d1b5 50%, #b9d1b5 100%); }
+.SC_CO { background: linear-gradient(to bottom right, #f4c954 0%, #f4c954 50%, #d38571 50%, #d38571 100%); }
+.SC_HO { background: linear-gradient(to bottom right, #f4c954 0%, #f4c954 50%, #e6e6e6 50%, #e6e6e6 100%); }
+.HO_IL { background: linear-gradient(to bottom right, #e6e6e6 0%, #e6e6e6 50%, #93b9d1 50%, #93b9d1 100%); }
+.HO_LO { background: linear-gradient(to bottom right, #e6e6e6 0%, #e6e6e6 50%, #b9d1b5 50%, #b9d1b5 100%); }
+.HO_CO { background: linear-gradient(to bottom right, #e6e6e6 0%, #e6e6e6 50%, #d38571 50%, #d38571 100%); }
+.HO_SC { background: linear-gradient(to bottom right, #e6e6e6 0%, #e6e6e6 50%, #f4c954 50%, #f4c954 100%); }
 .legend {
     display: flex;
     justify-content: center;
