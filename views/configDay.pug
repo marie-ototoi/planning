@@ -16,9 +16,15 @@ html
 					div.col-sm-4
 						input(type='date', name='day', value=day._id)#day.form-control
 				div.form-group.row
-					label(for='type').col-sm-2.col-sm-offset-3.col-form-label Lieu
+					label(for='morning').col-sm-2.col-sm-offset-3.col-form-label Morning location
 					div.col-sm-4
-						select(name='type')#type.form-control
+						select(name='morning')#morning.form-control
 							each type in types
-								option(value=type.key, selected=(day.type === type.key))= type.val
+								option(value=type.key, selected=(day.morning === type.key))= type.val
+				div.form-group.row
+					label(for='afternoon').col-sm-2.col-sm-offset-3.col-form-label Afternoon location
+					div.col-sm-4
+						select(name='afternoon')#afternoon.form-control
+							each type in types
+								option(value=type.key, selected=(day.afternoon === type.key))= type.val
 				input(type='submit', value='Save day').btn.btn-large

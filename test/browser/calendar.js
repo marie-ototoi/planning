@@ -33,10 +33,14 @@ describe('Calendar - check data', function() {
             console.error(err)
         })     
 	})
+    after(function() {
+        return Day.deleteAllDays()
+    })
 	it('should receive an array of objects, with dates and types', function() {
         expect(initCalendar.rawData).to.be.instanceof(Array)
         expect(initCalendar.rawData[0]).to.have.property('_id').with.lengthOf(10);
-        expect(initCalendar.rawData[0]).to.have.property('type').with.lengthOf(2);
+        expect(initCalendar.rawData[0]).to.have.property('morning').with.lengthOf(2);
+        expect(initCalendar.rawData[0]).to.have.property('afternoon').with.lengthOf(2);
         expect(initCalendar.rawData[0].date).to.be.a('date')
     })
     it('should set the starting date', function() {

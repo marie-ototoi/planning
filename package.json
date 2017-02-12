@@ -4,7 +4,7 @@
   "description": "affichage du planning CIFRE",
   "main": "app.js",
   "scripts": {
-    "start": "brunch watch --server & nodemon & npm test & npm run coverage",
+    "start": "brunch watch --server & nodemon",
     "test": "mocha",
     "coverage": "istanbul cover _mocha -- -R spec"
   },

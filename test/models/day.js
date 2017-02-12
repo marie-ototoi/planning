@@ -16,7 +16,8 @@ describe('Model Day - ', function() {
             //pick random day to check properties
             let index = Math.floor(Math.random() * days.length)
             expect(days[index]).to.have.property('date').that.is.a('date')
-            expect(days[index]).to.have.property('type').with.lengthOf(2)
+            expect(days[index]).to.have.property('morning').with.lengthOf(2)
+            expect(days[index]).to.have.property('afternoon').with.lengthOf(2)
             //check if first date is before last date
             expect(days[0].date).to.beforeDate(days[days.length-1].date)
         })   
@@ -48,12 +49,13 @@ describe('Model Day - ', function() {
             console.error(err)
         })  
     })
-    it('should change the type of a date', function() {
-        Day.findOrCreate('2014-04-03', 'SC')
+    it('should change the location of a date', function() {
+        Day.findOrCreate('2014-04-03', 'SC', 'HO')
         .then(setThisDay =>{
             Day.getDay(setThisDay._id)
             .then(getThisDay =>{
-                expect(getThisDay[0].type).to.equal('SC')
+                expect(getThisDay[0].morning).to.equal('SC')
+                expect(getThisDay[0].afternoon).to.equal('HO')
             })
         })
         .catch(err=>{

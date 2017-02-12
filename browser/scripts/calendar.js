@@ -34,9 +34,9 @@ const initAndLoad = function initAndLoad(data, requestedDate){
     }
 }
 
-//if(document.data){
+
 const init = function init(data){
-         
+        
     dateStart = new Date(data[0].date);
     dateEnd = new Date(data[data.length -1].date);
     dateNow = new Date()
@@ -44,7 +44,7 @@ const init = function init(data){
 
     rawData = data
     newData = data.map(function(entry){
-        return { "date" :new Date (entry.date), "type": entry.type }
+        return { "date" :new Date (entry.date), "morning": entry.morning, "afternoon": entry.afternoon }
     })
 
     nestedData = d3.nest()
@@ -54,16 +54,6 @@ const init = function init(data){
     
     return { dateStart, dateEnd, dateNow, rawData, newData, nestedData }
 
-    
-    /*draw(data)
-    if(requestedDate && requestedDate.length==7){
-        let year = Number(requestedDate.substr(0,4))
-        let month = Number(requestedDate.substr(5,2))-1
-        showCalendar(new Date(year, month))
-
-    }else{
-        showCalendar()
-    }*/
 }
 
 
@@ -113,14 +103,18 @@ const draw = function draw() {
             .data(function(d){ return d.values })
             .enter()
                 .append("div")
-                .attr("class", function(d,i){ return (i == 0) ? "calendar__row calendar__row_first" : "calendar__row"; })
-                
+                .attr("class", function(d,i){ return (i == 0) ? "calendar__row calendar__row_first" : "calendar__row" })
+
         let calendarDay = calendarRow
             .selectAll(".calendar__day")
             .data(function(d){ return d.values; })
             .enter()
                 .append("div")
-                .attr("class", function(d){ return  (formatDay(d.date) === formatDay(new Date()) ) ? "calendar__day calendar__day_today " + d.type : "calendar__day " + d.type; })
+                .attr("class", function(d){ 
+                    let classDay = d.morning
+                    if(d.afternoon !== d.morning) classDay += '_' + d.afternoon
+                    return  (formatDay(d.date) === formatDay(new Date()) ) ? "calendar__day calendar__day_today " + classDay : "calendar__day " + classDay 
+                })
 
         calendarDay
             .append("div")            
