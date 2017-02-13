@@ -24,12 +24,14 @@ router.get('/:requestedDate', function(req, res, next){
 		req.user.rights = isAuthorizedUser(req.user)
 		Day.getDays()
 		.then((data) => {
+
 		 	res.render('calendar.pug',{
 		 		title : 'Planning CIFRE', 
 		 		requestedDate: req.params.requestedDate, 
 		 		user: req.user, 
 		 		data : JSON.stringify(data)
 		 	})
+
 			res.end()
 		 })
 		
@@ -46,7 +48,7 @@ router.get('/', function(req, res){
 		req.user.rights = isAuthorizedUser(req.user)
 		Day.getDays()
 		.then((data) => {
-			console.log("ok",data[0])
+
 			res.render('calendar.pug',{
 				title : 'Planning CIFRE', 
 				user: req.user, 

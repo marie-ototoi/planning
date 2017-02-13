@@ -49,6 +49,7 @@ describe('Model Day - ', function() {
             console.error(err)
         })  
     })
+
     it('should change the location of a date', function() {
         Day.findOrCreate('2014-04-03', 'SC', 'HO')
         .then(setThisDay =>{
@@ -56,6 +57,7 @@ describe('Model Day - ', function() {
             .then(getThisDay =>{
                 expect(getThisDay[0].morning).to.equal('SC')
                 expect(getThisDay[0].afternoon).to.equal('HO')
+
             })
         })
         .catch(err=>{

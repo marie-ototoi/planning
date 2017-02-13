@@ -69,7 +69,9 @@ router.post('/day/:id', function setDay (req, res) {
 	      	res.redirect('/config/day/'+req.body.day)
 	    }
 	    else{
+
 	    	Day.findOrCreate(req.body.day, req.body.morning, req.body.afternoon)
+
 	    	.then((results) => {
 	    		req.flash('success', 'The calendar has been updated, thank you')
 	    		res.redirect('/config/day/'+req.body.day)

@@ -14,7 +14,9 @@ const daySchema = new mongoose.Schema({
     modifiedAt : { type: Date }
 })
 
+
 daySchema.statics.findOrCreate = function findOrCreate (id, morning, afternoon) {
+
     return this.update(
         { _id: id },
         { $set: { date : id, morning, afternoon, modifiedAt : Date.now() }, $setOnInsert: { createdAt: Date.now() } },
