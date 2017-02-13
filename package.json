@@ -6,7 +6,8 @@
   "scripts": {
     "start": "brunch watch --server & nodemon",
     "test": "mocha",
-    "coverage": "istanbul cover _mocha -- -R spec"
+    "coverage": "istanbul cover _mocha -- -R spec",
+    "postinstall": "brunch build"
   },
   "repository": {
     "type": "git",
