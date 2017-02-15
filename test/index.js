@@ -4,4 +4,5 @@ require('dotenv').config()
 
 const dbConnect = require('../models/connection'),
 	calendar = require('./browser/calendar'),
-	day = require('./models/day')
+	day = require('./models/day'),
+	calendarStream = require('./models/CalendarStream')

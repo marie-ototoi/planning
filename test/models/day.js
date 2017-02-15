@@ -20,7 +20,10 @@ describe('Model Day - ', function() {
             expect(days[index]).to.have.property('afternoon').with.lengthOf(2)
             //check if first date is before last date
             expect(days[0].date).to.beforeDate(days[days.length-1].date)
-        })   
+        })
+        .catch(err=>{
+            console.error(err)
+        }) 
     })
     it('should return requested date', function() {
         Day.getDay('2015-04-03')
@@ -29,7 +32,7 @@ describe('Model Day - ', function() {
         })
         .catch(err=>{
             console.error(err)
-        })  
+        })
     })
     it('should return the first date', function() {
         Day.getFirstDay()

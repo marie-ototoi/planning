@@ -1,4 +1,5 @@
-const d3 = require('d3'),
+const 
+    d3 = require('d3'),
     timeformat = require('d3-time-format')
 
 const formatDay = d3.timeFormat("%Y-%m-%d"),
@@ -21,9 +22,10 @@ nestedData,
 currentDate
 
 
-const initAndLoad = function initAndLoad(data, requestedDate){
+const initAndLoad = function initAndLoad(data, icalData, requestedDate){
     init(data)
     draw()
+    console.log(icalData)
     if(requestedDate && requestedDate.length==7){
         let year = Number(requestedDate.substr(0,4))
         let month = Number(requestedDate.substr(5,2))-1

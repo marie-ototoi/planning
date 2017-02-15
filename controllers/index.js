@@ -1,5 +1,7 @@
-const express = require('express'), 
+const CalendarStream = require('../models/calendarStream'),
+	express = require('express'), 
 	router = express.Router(),
+	rp = require('request-promise'),
 	User = require('../models/user'),
 	Day = require('../models/day')
 
@@ -22,19 +24,23 @@ router.use('/config', require('./config'))
 router.get('/:requestedDate', function(req, res, next){
 	if(req.user && isAuthorizedUser(req.user) > 0){
 		req.user.rights = isAuthorizedUser(req.user)
-		Day.getDays()
-		.then((data) => {
-
+		Promise.all([
+			Day.getDays(),
+			CalendarStream.getCalendarData('http://p53-calendars.icloud.com/published/2/SI9lZaSUYZZCZfA4SiWgGO1gHWVCUYZV4tPi2HoWGiwM5PY5KyXgDz42F8a5dA85iyGtkqr12PjPdyaRKsqDD5wM55EkxXRfr31HIYYYy-A')
+        ])
+		.then(([data, icalData]) => {
 		 	res.render('calendar.pug',{
 		 		title : 'Planning CIFRE', 
 		 		requestedDate: req.params.requestedDate, 
 		 		user: req.user, 
-		 		data : JSON.stringify(data)
+		 		data : JSON.stringify(data),
+		 		icalData : JSON.stringify(icalData)
 		 	})
-
 			res.end()
-		 })
-		
+		})
+		.catch( err => {
+	        console.error('Error retrieving data' + err)
+	    })
 	}else{
 		req.session.redirect = '/' + req.params.requestedDate
 		//req.flash('error', 'You are not allowed to access this page. Please contact marie@ototoi.fr')
@@ -46,16 +52,22 @@ router.get('/:requestedDate', function(req, res, next){
 router.get('/', function(req, res){
 	if(req.user && isAuthorizedUser(req.user) > 0){
 		req.user.rights = isAuthorizedUser(req.user)
-		Day.getDays()
-		.then((data) => {
-
+		Promise.all([
+			Day.getDays(),
+			CalendarStream.getCalendarData('http://p53-calendars.icloud.com/published/2/SI9lZaSUYZZCZfA4SiWgGO1gHWVCUYZV4tPi2HoWGiwM5PY5KyXgDz42F8a5dA85iyGtkqr12PjPdyaRKsqDD5wM55EkxXRfr31HIYYYy-A')
+        ])
+		.then(([data, icalData]) => {
 			res.render('calendar.pug',{
 				title : 'Planning CIFRE', 
 				user: req.user, 
-				data : JSON.stringify(data)
+				data : JSON.stringify(data),
+		 		icalData : JSON.stringify(icalData)
 			})
 			res.end()
 		})
+		.catch( err => {
+	        console.error('Error retrieving data' + err)
+	    })
 	}else{
 		//req.flash('error', 'You are not allowed to access this page. Please contact marie@ototoi.fr')
   		res.redirect('/users/login')
