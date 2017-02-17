@@ -84,7 +84,9 @@ const getIcalEvents = function getIcalEvents(day){
             //console.log(formatDay(dayElement.dateStart) === formatDay(day), formatDay(dayElement.dateStart) , formatDay(day))
             return formatDay(dayElement.dateStart) === formatDay(day)
         }))
-    }, [])
+    }, []).sort((a, b) => {
+        return a.dateStart > b.dateStart
+    })
 }
 
 
