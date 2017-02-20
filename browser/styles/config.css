@@ -9,3 +9,11 @@ form {
     padding: 60px 30px 60px 30px;
     border-radius: 10px;
 }
+
+.form-group .add_cal {
+	display: none;
+}
+
+.form-group:last-of-type .add_cal {
+	display: inline-block;
+}

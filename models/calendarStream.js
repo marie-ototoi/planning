@@ -5,11 +5,22 @@ const mongoose = require('mongoose'),
 mongoose.Promise = global.Promise
 
 const calendarStreamSchema = new mongoose.Schema({
+    _id: { type: Number, required: true },
     url: { type: String, required: true },
     createdAt : { type: Date },
     modifiedAt : { type: Date }
 })
 
+calendarStreamSchema.statics.findOrCreateByURL = function findOrCreateByURL (id, url) {
+    return this.update(
+    // Recherche
+    { _id: id },
+    // Mise à jour (l'id est supposé être celui de la recherche)
+    { $set: { _id: id, url, modifiedAt:  Date.now() }, $setOnInsert: { createdAt: Date.now() } },
+    // Activation du mode upsert (insertion si non trouvé)
+    { upsert: true }
+  )
+}
 
 calendarStreamSchema.statics.getCalendar = function getCalendar (url) {
     return this.find({url}).exec()
@@ -22,6 +33,20 @@ calendarStreamSchema.statics.getCalendars = function getCalendars (properties) {
 calendarStreamSchema.statics.getAllCalendarsData = function getAllCalendarsData (url) {
     
 }
+
+calendarStreamSchema.statics.setCalendars = function setCalendars (calendars) {
+    //return this.parseCalendarData(url)
+    return Promise.all(
+        calendars.map( (calendar, index) => {
+            if (calendar === '') {
+                return this.remove({_id: index}).exec()
+            }else{
+                return this.findOrCreateByURL(index, calendar)
+            }
+        })
+    )
+}
+
 calendarStreamSchema.statics.getCalendarData = function getCalendarData (url) {
     //return this.parseCalendarData(url)
     return rp(url)
@@ -32,9 +57,11 @@ calendarStreamSchema.statics.getCalendarData = function getCalendarData (url) {
         console.error('Error loading ical data' + err)
     })
 }
+
 calendarStreamSchema.statics.normaliseDatePart = function normaliseDatePart (datePart) {
     return (Number(datePart) < 10) ? '0' + datePart : datePart
 }
+
 calendarStreamSchema.statics.parseCalendarData = function parseCalendarData (icalData) {
     return new Promise((resolve, reject) => {
         let data = icalParser.parse(icalData)

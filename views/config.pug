@@ -3,14 +3,22 @@ html
 		meta(charset='utf-8')
 		title #{title}
 		link(rel='stylesheet', href='/styles/calendar.css')
+		script(type='text/javascript' src='/scripts/calendar.js')
 		script(type='text/javascript').
-			const dateStart=#{dateStart}
-			const dateEnd=#{dateEnd}
+			const dateStart='#{dateStart}'
+			const dateEnd='#{dateEnd}'
+			const calendars='!{calendars}'
+			document.addEventListener("DOMContentLoaded", function(event) {
+				require('browser/app')
+			})
 
 	body.config
 		main.container
+
 			include _flashes
+		
 			form(action='/config', method='POST')#config
+
 				div.form-group.row
 					label(for='dateStart').col-sm-2.col-sm-offset-3.col-form-label Date start
 					div.col-sm-4
@@ -19,4 +27,23 @@ html
 					label(for='dateEnd').col-sm-2.col-sm-offset-3.col-form-label Date start
 					div.col-sm-4
 						input(type='date', name='dateEnd', value=dateEnd)#dateEnd.form-control
+
+				if calendars
+					each calendar, index in calendars
+						- let id = 'cal_' + index 
+						div.form-group.row
+							label(for=id).col-sm-2.col-sm-offset-3.col-form-label Ical stream
+							div.col-sm-4
+								input(type='url', name='calendars[]', value=calendar, id=id).form-control
+							a.button(href='#').add_cal Add a stream
+
+				unless calendars.length > 0
+					div.form-group.row
+						label(for='ical_0').col-sm-2.col-sm-offset-3.col-form-label Ical stream
+						div.col-sm-4
+							input(type='url', name='calendars[]')#ical_0.form-control
+						a.button(href='#').add_cal Add a stream
+
+
+
 				input(type='submit', value='Save config').btn.btn-large
