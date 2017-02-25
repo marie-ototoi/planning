@@ -3,15 +3,18 @@ if(!isHeroku) require('dotenv').config()
 
 
 const express = require('express'),
-	app = express(),
-	session = require('express-session'),
-	expressValidator = require('express-validator'),
-	bodyParser = require('body-parser'),
+	app = express()
 
+const 
+	bodyParser = require('body-parser'),
+	dbConnect = require('./models/connection'),
+	expressValidator = require('express-validator'),
 	flash = require('connect-flash'),
 	methodOverride = require('method-override'),
 	passport = require('passport'),
-	dbConnect = require('./models/connection')
+	session = require('express-session'),
+	validator = require('validator')
+	
 
 
 app.set('port', (process.env.PORT || 5000));
@@ -25,7 +28,16 @@ exports.startServer = function startServer(port, path, callback) {
 	app.use(bodyParser.json())
 	app.use(bodyParser.urlencoded({ extended: true }))
 	app.use(methodOverride((req) => req.body._method))
-	app.use(expressValidator())
+	app.use(expressValidator({
+		customValidators: {
+    		eachIsUrl: function(values) {
+    			console.log('values', values)
+      			return values.every(function(val) {
+        			return validator.isURL(val)
+      			})
+    		}
+ 		} 
+	}))
 
 	app.use(session({
 		name : 'otocalendar',

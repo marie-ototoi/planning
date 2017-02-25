@@ -9,12 +9,16 @@ html
 
 	body.config
 		main.container
+
 			include _flashes
+		
 			form(action='/config/day/' + day._id, method='POST')#config
+		
 				div.form-group.row
 					label(for='day').col-sm-2.col-sm-offset-3.col-form-label Date 
 					div.col-sm-4
 						input(type='date', name='day', value=day._id)#day.form-control
+	
 				div.form-group.row
 					label(for='morning').col-sm-2.col-sm-offset-3.col-form-label Morning location
 					div.col-sm-4
@@ -27,4 +31,5 @@ html
 						select(name='afternoon')#afternoon.form-control
 							each type in types
 								option(value=type.key, selected=(day.afternoon === type.key))= type.val
+
 				input(type='submit', value='Save day').btn.btn-large
