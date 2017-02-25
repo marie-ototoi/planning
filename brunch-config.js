@@ -9,7 +9,10 @@ exports.config = {
   		},
     	'stylesheets': {
       		'joinTo': 'styles/calendar.css'
-    	}
+    	},
+        'templates': {
+            'joinTo': 'scripts/calendar.js'
+        }
   	},
     'server': {
         'port': 5000,

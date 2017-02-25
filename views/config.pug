@@ -16,6 +16,7 @@ html
 		main.container
 
 			include _flashes
+			include _editCalendar
 		
 			form(action='/config', method='POST')#config
 
@@ -32,11 +33,11 @@ html
 					if calendars
 						each calendar, index in calendars
 							- let id = 'cal_' + index
-							include editCalendar
+							include _editCalendar
 
 					unless calendars.length > 0
 						- let calendar = ''
 						- let id = 'cal_0'  
-						include editCalendar
+						include _editCalendar
 
 				input(type='submit', value='Save config').btn.btn-large
