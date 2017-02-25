@@ -1,21 +1,18 @@
-const d3 = require('d3')
+const d3 = require('d3'),
+	template = require('../../views/editCalendar')
 
 
-const addIcalStream = function addIcalStream(element){
-    //
-    
-}
+d3.selectAll('.add_cal').on('click', function() {
 
-console.log('bonjour')
+    let newIndex = d3.selectAll('.row-cal').size()
 
-d3.select('.add_cal').on('click', function(e, index, elements) {
-       	let fieldset = this.parentNode
-       	let form = fieldset.parentNode
-       	//console.log(elements[0])
-       	form.insertBefore(fieldset.cloneNode(true), fieldset)
+    let newNode =  document.createElement('div')
+    newNode.innerHTML = template({ id : 'cal_'+ newIndex, calendar : ''})
+   	this.parentNode.parentNode.appendChild(newNode)
 
-        //return false
-    }, false)
+    d3.event.preventDefault()
+
+}, false)
 
 
 module.exports = this

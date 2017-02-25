@@ -10,10 +10,3 @@ form {
     border-radius: 10px;
 }
 
-.form-group .add_cal {
-	display: none;
-}
-
-.form-group:last-of-type .add_cal {
-	display: inline-block;
-}
