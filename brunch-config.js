@@ -17,7 +17,8 @@ exports.config = {
     },
     'plugins': {
         'pug': {
-            'globals': ['App']
+            'globals': ['App'],
+            'basedir': ''
         }
     }
 }
