@@ -1,17 +1,27 @@
-const util = require('util'),
+const CalendarStream = require('../models/calendarStream'),
+	Day = require('../models/day'),
 	express = require('express'), 
 	router = express.Router(),
-	Day = require('../models/day')
+	util = require('util')
+	
 	//,
 
 router.get('/', function getConfig(req, res){
 
 	Promise.all([
 	    Day.getFirstDay(),
-	    Day.getLastDay()
+	    Day.getLastDay(),
+	    CalendarStream.getCalendars()
 	])
-	.then(([dateStart, dateEnd]) => {
-	    res.render('config.pug', {title : 'Planning CIFRE - Configuration', dateStart: dateStart[0]._id, dateEnd: dateEnd[0]._id})
+	.then(([dateStart, dateEnd, calendars]) => {
+	    res.render('config.pug', {
+	    	title : 'Planning CIFRE - Configuration', 
+	    	dateStart: dateStart[0]._id, 
+	    	dateEnd: dateEnd[0]._id, 
+	    	calendars : calendars.map( calendar => {
+	    		return calendar.url
+	    	})
+	    })
 	    res.end()
 	})
 	.catch((err) => {
@@ -22,8 +32,14 @@ router.get('/', function getConfig(req, res){
 
 router.post('/', function setConfig (req, res) {
 	//console.log('query', req.query,'body', req.body,'params', req.headers)
-	req.checkBody('dateStart', 'Invalid starting date').notEmpty().isDate()
-	req.checkBody('dateEnd', 'Invalid ending date').notEmpty().isDate()
+	req.checkBody('dateStart', '%0 is an invalid starting date').notEmpty().isDate()
+	req.checkBody('dateEnd', '%0 is an invalid ending date').notEmpty().isDate()
+	if(req.body.calendars){
+		req.body.calendars.forEach( (calendar, index) => {
+			if (req.body.calendars[index] !== '') req.checkBody('calendars[' + index + ']', '%0 is an invalid url').isURL()
+		})
+		
+	}
 	req.getValidationResult()
 	.then((result) =>{
 	    if (!result.isEmpty()) {
@@ -33,6 +49,15 @@ router.post('/', function setConfig (req, res) {
 	    else{
 	    	Day.configCalendar(req.body.dateStart, req.body.dateEnd)
 	    	.then((results) => {
+	    		if(req.body.calendars && req.body.calendars[0] !== ''){
+	    			return CalendarStream.setCalendars(req.body.calendars)
+	    		}else{
+	    			return new Promise( (resolve, reject) => {
+	    				resolve()
+	    			})
+	    		}
+	    	})
+	    	.then((results) => {
 	    		req.flash('success', 'The calendar has been updated, thank you')
 	    		res.redirect('/config')
 	    	})
@@ -41,19 +66,28 @@ router.post('/', function setConfig (req, res) {
 			})
 	    }
   	})  	
-})
+})	
 
 router.get('/day/:id', function getConfig(req, res){
 	Day.getDay(req.params.id)
 	.then(day =>{
-		res.render('configDay.pug', {title : 'Planning CIFRE - Configuration', day, types : [
-			{'key': 'IL', 'val' : 'ILDA'}, 
-			{'key': 'LO', 'val' : 'LOGILAB'},
-			{'key': 'CO', 'val' : 'Conference'},
-			{'key': 'SC', 'val' : 'University'},
-			{'key': 'HO', 'val' : 'Holidays'}
-		] })
-		res.end
+		if (day){
+			res.render('configDay.pug', {title : 'Planning CIFRE - Configuration', day, types : [
+				{'key': 'IL', 'val' : 'ILDA'}, 
+				{'key': 'LO', 'val' : 'LOGILAB'},
+				{'key': 'CO', 'val' : 'Conference'},
+				{'key': 'SC', 'val' : 'University'},
+				{'key': 'HO', 'val' : 'Holidays'}
+			] })
+			res.end
+		} else{
+			req.flash('error', 'Sorry, the day ' + req.params.id + ' is not part of the timespan')
+			res.redirect('/config')
+		}
+	})
+	.catch( err =>{
+		req.flash('error', 'Sorry, an error has occured while attempting to edit a specific day ' + err)
+		res.redirect('/config')
 	})
 })
 
@@ -66,7 +100,7 @@ router.post('/day/:id', function setDay (req, res) {
 	.then((result) =>{
 	    if (!result.isEmpty()) {
 	    	req.flash('error', 'There have been validation errors: ' + util.inspect(result.array()));
-	      	res.redirect('/config/day/'+req.body.day)
+	      	res.redirect('/config/day/' + req.body.day)
 	    }
 	    else{
 
@@ -74,11 +108,11 @@ router.post('/day/:id', function setDay (req, res) {
 
 	    	.then((results) => {
 	    		req.flash('success', 'The calendar has been updated, thank you')
-	    		res.redirect('/config/day/'+req.body.day)
+	    		res.redirect('/config/day/' + req.body.day)
 	    	})
 	    	.catch((err) => {
 	    		req.flash('error', 'Sorry, an error has occured while attempting to update the calendar ' + err)
-			    res.redirect('/config/day/'+req.body.day)
+			    res.redirect('/config/day/' + req.body.day)
 			})
 	    }
   	})

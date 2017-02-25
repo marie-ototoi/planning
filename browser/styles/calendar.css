@@ -88,28 +88,36 @@
     border:1px solid #fff;
     color: #333;
 }
-.calendar__day_today {
-    font-weight: bold;
-    border: 1px solid #333;
-}
-
 .calendar__daynumber{
-    position: absolute;
-    padding: 4px 6px;
+    padding: 0 2px;
+    margin: 4px;
     color: #555;
+    display: inline-block;
 }
-.calendar__events{
+.calendar__day_today {
+    background-color:#333;
+    color: #e6e6e6;
+    border-radius: 2px;
+}
+.calendar__day__events{
     margin: 0;
     padding: 0;
     position: relative;
 }
-.calendar__event{
+.calendar__day__event{
     font-size: 0.7em;
     overflow: hidden;
     height: 1.5em;
-    border-bottom: 1px solid #dedede;
+    padding: 0 ;
+    margin: 0 4px;
+    cursor: pointer;
+    font-style: italic;
+    border-bottom: 1px solid #fff;
+    color: #fff;
 }
-
+/*.calendar__day__event:before{
+    content : '• ';
+}*/
 .IL {
     background: #93b9d1;
 }

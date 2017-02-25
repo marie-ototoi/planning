@@ -1,10 +1,13 @@
-const calendar = require('./scripts/calendar')
+const calendar = require('./scripts/calendar'),
+	config = require('./scripts/config')
 
 
 const App = {
-  	init(data, requestedDate) {
-    	calendar(data, requestedDate)
+  	init(data, icalData, requestedDate) {
+    	calendar(data, icalData, requestedDate)
   	}
+
+
 }
 
 module.exports = App

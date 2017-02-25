@@ -6,7 +6,7 @@ html
         script(type='text/javascript' src='/scripts/calendar.js')
         script(type='text/javascript').
             document.addEventListener("DOMContentLoaded", function(event) {
-                require('browser/app').init(!{data}, '#{requestedDate}')
+                require('browser/app').init(!{data}, !{icalData}, '#{requestedDate}')
             })
 
     body.container-fluid

@@ -1,6 +1,6 @@
 exports.config = {
 	'paths': {
-        'watched': ['browser'],
+        'watched': ['browser', 'views'],
         'public':'public'
     },
   	'files': {
@@ -14,5 +14,10 @@ exports.config = {
     'server': {
         'port': 5000,
         'path': 'app.js'
+    },
+    'plugins': {
+        'pug': {
+            'globals': ['App']
+        }
     }
 }
