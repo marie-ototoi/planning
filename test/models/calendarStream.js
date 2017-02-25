@@ -8,13 +8,23 @@ const CalendarStream = require('../../models/calendarStream'),
 chai.use(require('chai-datetime'))
 
 describe('Model CalendarStream - ', function() {
-    this.timeout(5000)
+    this.timeout(10000)
     
     let icalData
+    let calendars
+    
+    before(function(done){
+        calendars = [{
+            _id : '1',
+            url : 'http://p53-calendars.icloud.com/published/2/SI9lZaSUYZZCZfA4SiWgGO1gHWVCUYZV4tPi2HoWGiwM5PY5KyXgDz42F8a5dA85iyGtkqr12PjPdyaRKsqDD5wM55EkxXRfr31HIYYYy-A'}
+        ]
+        done()
+    })
 
 	it('should load remote ical stream', function(done) {     
         //
-        rp({uri : 'http://p53-calendars.icloud.com/published/2/SI9lZaSUYZZCZfA4SiWgGO1gHWVCUYZV4tPi2HoWGiwM5PY5KyXgDz42F8a5dA85iyGtkqr12PjPdyaRKsqDD5wM55EkxXRfr31HIYYYy-A'})
+
+        rp({uri : calendars[0].url})
         .then( data => {
             icalData = data
             expect(data.substring(0,15)).to.equal('BEGIN:VCALENDAR')
@@ -28,10 +38,11 @@ describe('Model CalendarStream - ', function() {
 
         CalendarStream.parseCalendarData(icalData)
         .then( calendar =>{
+
             //pick random day to check properties
             let index = Math.floor(Math.random() * calendar.length)
             expect(calendar[index]).to.have.property('summary')
-            expect(calendar[index]).to.have.property('startDate')
+            expect(calendar[index]).to.have.property('dateStart')
             done()
         })
         .catch( err =>{
@@ -40,27 +51,29 @@ describe('Model CalendarStream - ', function() {
     })
     it('should load and parse a calendar', function(done) {     
         //
-        CalendarStream.getCalendarData('http://p53-calendars.icloud.com/published/2/SI9lZaSUYZZCZfA4SiWgGO1gHWVCUYZV4tPi2HoWGiwM5PY5KyXgDz42F8a5dA85iyGtkqr12PjPdyaRKsqDD5wM55EkxXRfr31HIYYYy-A')
+        CalendarStream.getCalendarData(calendars[0].url)
         .then( calendar =>{
 
             //pick random day to check properties
             let index = Math.floor(Math.random() * calendar.length)
             expect(calendar[index]).to.have.property('summary')
-            expect(calendar[index]).to.have.property('startDate')
+            expect(calendar[index]).to.have.property('dateStart')
             done()
         })
         .catch( err =>{
             console.error('Error retrieving and parsing ical data' + err)
         })
     })
-    it('should create a calendar entry', function() {
-        CalendarStream.findOrCreate('http://p53-calendars.icloud.com/published/2/SI9lZaSUYZZCZfA4SiWgGO1gHWVCUYZV4tPi2HoWGiwM5PY5KyXgDz42F8a5dA85iyGtkqr12PjPdyaRKsqDD5wM55EkxXRfr31HIYYYy-A')
-        .then(setThisDay =>{
-            Day.getDay(setThisDay._id)
-            .then(getThisDay =>{
-                expect(getThisDay[0].morning).to.equal('SC')
-                expect(getThisDay[0].afternoon).to.equal('HO')
-
+    it('should create a calendar entry', function(done) {
+        CalendarStream.findOrCreate(calendars[0]._id, calendars[0].url)
+        .then(setThisCalendar =>{
+            CalendarStream.getCalendar(calendars[0]._id)
+            .then(getThisCalendar =>{
+                expect(getThisCalendar[0].url).to.equal(calendars[0].url)
+                done()
+            })
+            .catch(err=>{
+                console.error(err)
             })
         })
         .catch(err=>{

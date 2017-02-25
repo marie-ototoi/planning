@@ -46,13 +46,15 @@ const init = function init(data, calData){
     currentDate = dateStart
 
     if(calData){
-        icalData = [ calData.map(function(entry){
-            return { 
-                dateStart :new Date (entry.dateStart.year, entry.dateStart.month-1, entry.dateStart.day, entry.dateStart.hour, entry.dateStart.minute), 
-                dateEnd : new Date (entry.dateEnd.year, entry.dateEnd.month-1, entry.dateEnd.day, entry.dateEnd.hour, entry.dateEnd.minute),
-                summary: entry.summary
-            }
-        })]
+        icalData = calData.map(eachCal =>{
+            return eachCal.map(function(entry){
+                return { 
+                    dateStart :new Date (entry.dateStart.year, entry.dateStart.month-1, entry.dateStart.day, entry.dateStart.hour, entry.dateStart.minute), 
+                    dateEnd : new Date (entry.dateEnd.year, entry.dateEnd.month-1, entry.dateEnd.day, entry.dateEnd.hour, entry.dateEnd.minute),
+                    summary: entry.summary
+                }
+            })
+        })   
     }
 
     rawData = data

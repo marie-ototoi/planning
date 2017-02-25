@@ -26,7 +26,8 @@ router.get('/:requestedDate', function(req, res, next){
 		req.user.rights = isAuthorizedUser(req.user)
 		Promise.all([
 			Day.getDays(),
-			CalendarStream.getCalendarData('http://p53-calendars.icloud.com/published/2/SI9lZaSUYZZCZfA4SiWgGO1gHWVCUYZV4tPi2HoWGiwM5PY5KyXgDz42F8a5dA85iyGtkqr12PjPdyaRKsqDD5wM55EkxXRfr31HIYYYy-A')
+			CalendarStream.getAllCalendarsData()
+			//CalendarStream.getCalendarData('http://p53-calendars.icloud.com/published/2/SI9lZaSUYZZCZfA4SiWgGO1gHWVCUYZV4tPi2HoWGiwM5PY5KyXgDz42F8a5dA85iyGtkqr12PjPdyaRKsqDD5wM55EkxXRfr31HIYYYy-A')
         ])
 		.then(([data, icalData]) => {
 		 	res.render('calendar.pug',{
@@ -54,12 +55,13 @@ router.get('/', function(req, res){
 		req.user.rights = isAuthorizedUser(req.user)
 		Promise.all([
 			Day.getDays(),
-			CalendarStream.getCalendarData('http://p53-calendars.icloud.com/published/2/SI9lZaSUYZZCZfA4SiWgGO1gHWVCUYZV4tPi2HoWGiwM5PY5KyXgDz42F8a5dA85iyGtkqr12PjPdyaRKsqDD5wM55EkxXRfr31HIYYYy-A')
+			CalendarStream.getAllCalendarsData()
+			//CalendarStream.getCalendarData('http://p53-calendars.icloud.com/published/2/SI9lZaSUYZZCZfA4SiWgGO1gHWVCUYZV4tPi2HoWGiwM5PY5KyXgDz42F8a5dA85iyGtkqr12PjPdyaRKsqDD5wM55EkxXRfr31HIYYYy-A')
         ])
 		.then(([data, icalData]) => {
 			res.render('calendar.pug',{
 				title : 'Planning CIFRE', 
-				user: req.user, 
+				user: req.user,
 				data : JSON.stringify(data),
 		 		icalData : JSON.stringify(icalData)
 			})

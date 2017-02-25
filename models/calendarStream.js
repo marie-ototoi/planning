@@ -11,7 +11,7 @@ const calendarStreamSchema = new mongoose.Schema({
     modifiedAt : { type: Date }
 })
 
-calendarStreamSchema.statics.findOrCreateByURL = function findOrCreateByURL (id, url) {
+calendarStreamSchema.statics.findOrCreate = function findOrCreate (id, url) {
     return this.update(
     // Recherche
     { _id: id },
@@ -22,8 +22,8 @@ calendarStreamSchema.statics.findOrCreateByURL = function findOrCreateByURL (id,
   )
 }
 
-calendarStreamSchema.statics.getCalendar = function getCalendar (url) {
-    return this.find({url}).exec()
+calendarStreamSchema.statics.getCalendar = function getCalendar (id) {
+    return this.find({_id:id}).exec()
 }
 
 calendarStreamSchema.statics.getCalendars = function getCalendars (properties) {
@@ -31,7 +31,17 @@ calendarStreamSchema.statics.getCalendars = function getCalendars (properties) {
 }
 
 calendarStreamSchema.statics.getAllCalendarsData = function getAllCalendarsData (url) {
-    
+    return this.getCalendars()
+    .then(calendars =>{
+        return Promise.all(
+            calendars.map( (calendar, index) => {
+                if (calendar.url !== '') return this.getCalendarData(calendar.url)
+            })
+        )
+    })
+    .catch(err=>{
+        console.error('Error retrieving all calendars data' + err)
+    })
 }
 
 calendarStreamSchema.statics.setCalendars = function setCalendars (calendars) {
@@ -41,7 +51,7 @@ calendarStreamSchema.statics.setCalendars = function setCalendars (calendars) {
             if (calendar === '') {
                 return this.remove({_id: index}).exec()
             }else{
-                return this.findOrCreateByURL(index, calendar)
+                return this.findOrCreate(index, calendar)
             }
         })
     )
