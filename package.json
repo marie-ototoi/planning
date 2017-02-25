@@ -7,7 +7,10 @@
     "start": "brunch watch --server & nodemon",
     "test": "mocha",
     "coverage": "istanbul cover _mocha -- -R spec",
-    "postinstall": "brunch build"
+    "postinstall": "LOGGY_STACKS=true brunch build --production"
+  },
+  "engines": {
+    "node": "7.4.0"
   },
   "repository": {
     "type": "git",
@@ -25,7 +28,7 @@
   "dependencies": {
     "body-parser": "^1.16.0",
     "bootstrap": "^3.3.7",
-    "brunch": "^2.10.2",
+    "brunch": "2.2.2",
     "connect-flash": "^0.1.1",
     "cookie-session": "^2.0.0-alpha.2",
     "css-brunch": "^2.6.1",
