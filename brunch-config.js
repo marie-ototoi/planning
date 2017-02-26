@@ -23,5 +23,8 @@ exports.config = {
             'globals': ['App'],
             'basedir': ''
         }
+    },
+    'modules':{
+        nameCleaner: path => path.replace(/^..\/..\/views..\//, '/views/')
     }
 }
