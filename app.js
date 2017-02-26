@@ -24,6 +24,7 @@ exports.startServer = function startServer(port, path, callback) {
 
 	app.use(express.static(__dirname + '/public'))
 
+
 	app.use(flash())
 	app.use(bodyParser.json())
 	app.use(bodyParser.urlencoded({ extended: true }))

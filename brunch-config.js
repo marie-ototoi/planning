@@ -9,7 +9,10 @@ exports.config = {
   		},
     	'stylesheets': {
       		'joinTo': 'styles/calendar.css'
-    	}
+    	},
+        'templates': {
+            'joinTo': 'scripts/calendar.js'
+        }
   	},
     'server': {
         'port': 5000,
@@ -17,7 +20,11 @@ exports.config = {
     },
     'plugins': {
         'pug': {
-            'globals': ['App']
+            'globals': ['App'],
+            'basedir': ''
         }
+    },
+    'modules':{
+        nameCleaner: path => path.replace(/^..\/..\/views..\//, '/views/')
     }
 }

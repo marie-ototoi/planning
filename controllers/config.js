@@ -71,14 +71,23 @@ router.post('/', function setConfig (req, res) {
 router.get('/day/:id', function getConfig(req, res){
 	Day.getDay(req.params.id)
 	.then(day =>{
-		res.render('configDay.pug', {title : 'Planning CIFRE - Configuration', day, types : [
-			{'key': 'IL', 'val' : 'ILDA'}, 
-			{'key': 'LO', 'val' : 'LOGILAB'},
-			{'key': 'CO', 'val' : 'Conference'},
-			{'key': 'SC', 'val' : 'University'},
-			{'key': 'HO', 'val' : 'Holidays'}
-		] })
-		res.end
+		if (day){
+			res.render('configDay.pug', {title : 'Planning CIFRE - Configuration', day, types : [
+				{'key': 'IL', 'val' : 'ILDA'}, 
+				{'key': 'LO', 'val' : 'LOGILAB'},
+				{'key': 'CO', 'val' : 'Conference'},
+				{'key': 'SC', 'val' : 'University'},
+				{'key': 'HO', 'val' : 'Holidays'}
+			] })
+			res.end
+		} else{
+			req.flash('error', 'Sorry, the day ' + req.params.id + ' is not part of the timespan')
+			res.redirect('/config')
+		}
+	})
+	.catch( err =>{
+		req.flash('error', 'Sorry, an error has occured while attempting to edit a specific day ' + err)
+		res.redirect('/config')
 	})
 })
 
