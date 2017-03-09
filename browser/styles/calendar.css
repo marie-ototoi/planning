@@ -1,43 +1,3 @@
-.timeline {
-    margin:  0;
-    padding: 0 0 0 5px;
-    background: #333;
-}
-.timeline__list{
-    display: flex;
-    padding: 0;
-    margin: 0;
-
-}
-.timeline__item {
-    list-style-type: none;
-    font-size: 0.8em;
-    flex: 1 1 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    color: #e6e6e6;
-}
-.timeline__item span {
-    border-left: 1px solid #e6e6e6;
-    text-align: center;
-    padding-bottom: 4px;
-}
-.timeline__year {
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 5px;
-    color: #999;
-}
-.timeline__month {
-    cursor: pointer;
-}
-.timeline__item.active  {
-    color: #ff0096;
-}
-.timeline__item.active span {
-    border-color: #ff0096;
-}
 .calendar {
     padding: 15px 0;
     display: flex;
@@ -56,9 +16,10 @@
 }
 
 .calendar__list {
-    flex: 0 0 510px;     
+    flex: 0 0 510px;
+    min-height: 494px;    
 }
-.calendar__list h1 {
+.calendar__title {
     color: #c6c6c6;
     text-align: center;
     font-weight: normal;

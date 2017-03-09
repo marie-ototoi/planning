@@ -1,8 +1,11 @@
 const 
     d3 = require('d3'),
-    timeformat = require('d3-time-format')
+    timeformat = require('d3-time-format'),
+    templateDetail = require('../../views/detailCalendar')
 
 const formatDay = d3.timeFormat('%Y-%m-%d'),
+    formatDayTime = d3.timeFormat('%Y-%m-%d %H:%M'),
+    formatDayHuman = d3.timeFormat('%A %e %B %Y'),
     formatWeek = d3.timeFormat('%W'),           // Monday-based week of the year as a decimal number [00,53].
     formatMonth = d3.timeFormat('%m'),          // month as a decimal number [01,12].
     formatShortMonthName = d3.timeFormat('%b'), // abbreviated month name.
@@ -128,6 +131,7 @@ const draw = function draw() {
 
     calendarItem
         .append('h1')
+        .attr('class', 'calendar__title')
         .text(function(d){ return formatMonthNameYear(d.values[0].values[0].date) })
 
     let calendarRow = calendarItem
@@ -170,6 +174,11 @@ const draw = function draw() {
             })
             event += '</ul>'
             return event
+        })
+
+    calendarDay
+        .on('click', function(d,i){
+            showDetail(d.date, d.events)
         })
     //console.log(getIcalEvents(d.date))
 
@@ -215,6 +224,20 @@ const showCalendar = function showCalendar(requestedDate){
     
     window.history.pushState({}, formatMonthNameYear(requestedDate), '/' + formatYearMonth(requestedDate))
     
+}
+
+const showDetail= function showDetail(dateStart, events){
+    //
+    events = events.map(event => {
+        return { 
+            dateEnd: (formatDay(event.dateStart) === formatDay(event.dateEnd)) ? formatTime(event.dateStart) : formatDayTime(event.dateEnd),
+            timeStart : formatTime(event.dateStart), 
+            timeEnd : formatTime(event.dateEnd), 
+            summary: event.summary 
+        }
+    })
+    console.log(dateStart, events)
+    d3.select('.calendar__detail').html( templateDetail({ dateStart : formatDayHuman(dateStart), events }) )
 }
 
         

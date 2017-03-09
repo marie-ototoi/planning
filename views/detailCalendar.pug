@@ -1,0 +1,7 @@
+h1.calendar__title= dateStart
+
+div.calendar__detail__wrapper
+	if events.length
+		ul.calendar__detail__events
+			each event in events
+				li.calendar__detail__event= event.timeStart + ' - ' + event.dateEnd + ' : ' + event.summary
