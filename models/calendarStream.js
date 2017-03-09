@@ -64,7 +64,7 @@ calendarStreamSchema.statics.getCalendarData = function getCalendarData (url) {
         return this.parseCalendarData(icalData)
     })
     .catch(err=>{
-        console.error('Error loading ical data' + err)
+        console.error('Error loading ical data ' + err)
     })
 }
 
@@ -72,31 +72,63 @@ calendarStreamSchema.statics.normaliseDatePart = function normaliseDatePart (dat
     return (Number(datePart) < 10) ? '0' + datePart : datePart
 }
 
-calendarStreamSchema.statics.parseCalendarData = function parseCalendarData (icalData) {
+
+calendarStreamSchema.statics.parseCalendarData = function parseCalendarData (icalData, limitDate) {
     return new Promise((resolve, reject) => {
+        //console.log(icalData)
         let data = icalParser.parse(icalData)
-        if(data[0] === 'vcalendar'){
-            //console.log('toto')
-            let parser = new icalParser.ComponentParser({ parseEvent: true, parseTimezone: false })
-            let events = []
-            let normaliseDatePart = this.normaliseDatePart
-            parser.onevent = function (eventComponent) {
-                let component = new icalParser.Component(eventComponent.component.jCal)
-                let event = new ICAL.Event(component)
-                events.push({
-                    dateStart : eventComponent.startDate._time,
-                    dateEnd : eventComponent.endDate._time,
-                    summary : eventComponent.summary
+        limitDate = limitDate ? limitDate : null
+
+
+        let vcalendar = new ICAL.Component(data)
+        let vevents = vcalendar.getAllSubcomponents('vevent')
+        let events = []
+        let exceptions = []
+        vevents.forEach((vevent, i) => {
+            let _event = new icalParser.Event(vevent)
+            if (!limitDate) {
+                let thisDate = _event.startDate.toJSDate()
+                limitDate = thisDate.setDate(thisDate.getDate() + (365*3 + 1))
+            }
+            if ( _event.isRecurring() ) {
+                //nothing, will be treated in the next loop when elements are gathered
+            }else if( _event.isRecurrenceException() ) {
+                exceptions.push(_event)
+            }else{
+                //console.log("plain event", _event.summary, _event.startDate.toJSDate(), _event.endDate.toJSDate(), _event.uid)
+                events.push({dateStart: _event.startDate._time, dateEnd: _event.endDate._time, summary: _event.summary, dateStartJS:  _event.startDate.toJSDate() })
+            }
+        })
+        vevents.forEach((vevent, i) => {
+
+            let _event = new ICAL.Event(vevent)
+            
+            if ( _event.isRecurring() ) {
+                
+                exceptions.forEach((ex) => {
+                    _event.relateException(ex)
                 })
+
+                let iterator = _event.iterator()
+                for (let next = iterator.next(); next; next = iterator.next()) {
+
+                    let details = _event.getOccurrenceDetails(next);
+                    let jsDate = details.startDate.toJSDate();
+                    //console.log("occurrence event",details.item.summary, details.startDate.toJSDate(), details.endDate.toJSDate())
+                    events.push({dateStart: details.startDate._time, dateEnd: details.endDate._time, summary: details.item.summary, dateStartJS:  details.startDate.toJSDate() })
+
+                    if( details.startDate.toJSDate() > limitDate ) {
+                        //console.log( details.startDate.toJSDate(), limitDate, details.startDate.toJSDate() > limitDate)
+                        break                
+                    }
+                }
             }
-            parser.oncomplete = function () {
-                //console.log('events', events)
-                resolve(events)
-            }
-            parser.process(data)
-        }else{
-            reject()
-        }
+        })
+
+        events = events.sort(function(a, b){
+            return a.dateStartJS < b.dateStartJS
+        })
+        resolve(events)
     })
 }
 
