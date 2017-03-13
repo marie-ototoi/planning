@@ -1,7 +1,7 @@
 const 
     d3 = require('d3'),
     timeformat = require('d3-time-format'),
-    templateDetail = require('../../views/detailCalendar')
+    templateDetail = require('../../views/detailCalendar.pug')
 
 const formatDay = d3.timeFormat('%Y-%m-%d'),
     formatDayTime = d3.timeFormat('%Y-%m-%d %H:%M'),

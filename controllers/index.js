@@ -58,32 +58,31 @@ router.get('/', function(req, res){
 			CalendarStream.getAllCalendarsData()
 			//CalendarStream.getCalendarData('http://p53-calendars.icloud.com/published/2/SI9lZaSUYZZCZfA4SiWgGO1gHWVCUYZV4tPi2HoWGiwM5PY5KyXgDz42F8a5dA85iyGtkqr12PjPdyaRKsqDD5wM55EkxXRfr31HIYYYy-A')
         ])
-		.then(([data, icalData]) => {
-			res.render('calendar.pug',{
-				title : 'Planning CIFRE', 
-				user: req.user,
-				data : JSON.stringify(data),
-		 		icalData : JSON.stringify(icalData)
-			})
-			res.end()
-		})
-		.catch( err => {
+	    .then(([data, icalData]) => {
+	    	res.render('calendar.pug', {
+	    		title: 'Planning CIFRE',
+	    		user: req.user,
+	    		data: JSON.stringify(data),
+	     		icalData: JSON.stringify(icalData)
+	    	})
+	    	res.end()
+	    })
+	    .catch( err => {
 	        console.error('Error retrieving data' + err)
 	    })
-	}else{
-		//req.flash('error', 'You are not allowed to access this page. Please contact marie@ototoi.fr')
-  		res.redirect('/users/login')
+	} else {
+	    //req.flash('error', 'You are not allowed to access this page. Please contact marie@ototoi.fr')
+  	    res.redirect('/users/login')
   	}
 })
 
-
-function isAuthorizedUser(user){
-	if( process.env.admin_users && process.env.admin_users.includes(user._id)){
-		return 2
-	}else if( process.env.autorized_users && process.env.autorized_users.includes(user._id) ){
-		return 1
-	}
-	return 0
+function isAuthorizedUser (user) {
+    if (process.env.admin_users && process.env.admin_users.includes(user._id)) {
+        return 2
+    } else if (process.env.autorized_users && process.env.autorized_users.includes(user._id)) {
+        return 1
+    }
+    return 0
 }
 
 module.exports = router
