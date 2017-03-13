@@ -3,14 +3,7 @@ html
 		meta(charset='utf-8')
 		title #{title}
 		link(rel='stylesheet', href='/styles/calendar.css')
-		script(type='text/javascript' src='/scripts/calendar.js')
-		script(type='text/javascript').
-			const dateStart='#{dateStart}'
-			const dateEnd='#{dateEnd}'
-			const calendars='!{calendars}'
-			document.addEventListener("DOMContentLoaded", function(event) {
-				require('browser/app')
-			})
+		script(type='text/javascript' src='/scripts/config.js')
 
 	body.config
 		main.container

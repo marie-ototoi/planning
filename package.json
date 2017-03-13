@@ -4,7 +4,7 @@
   "description": "affichage du planning CIFRE",
   "main": "app.js",
   "scripts": {
-    "start": "webpack & heroku local web",
+    "start": "webpack --watch && heroku local web",
     "test": "mocha-webpack --webpack-config webpack.config.test.js test",
     "coverage": "nyc --silent --reporter=lcov npm test & nyc report",
     "postinstall": "webpack -p"

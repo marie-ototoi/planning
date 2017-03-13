@@ -10,19 +10,18 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.statics.findOrCreateByAuth = function findOrCreateByAuth (id, name, provider, done) {
-    this.update(
-    // Recherche
-    { _id: id, provider },
-    // Mise à jour (l'id est supposé être celui de la recherche)
-    { $set: { name }, $setOnInsert: { joinedAt: Date.now() } },
-    // Activation du mode upsert (insertion si non trouvé)
-    { upsert: true },
-    // Forwarder l'erreur éventuelle, mais à défaut transmettre l'id comme valeur résultante.
-    (err) => done(err, id)
-  )
+    return this.update(
+        // Recherche
+        { _id: id, provider },
+        // Mise à jour (l'id est supposé être celui de la recherche)
+        { $set: { name }, $setOnInsert: { joinedAt: Date.now() } },
+        // Activation du mode upsert (insertion si non trouvé)
+        { upsert: true },
+        (err) => done(err, id)
+    )
 }
 
-userSchema.statics.getEntry = function getEntry (id){
+userSchema.statics.getEntry = function getEntry (id) {
     return this.findById(id).populate('_id name provider joinedAt').exec()
 }
 
