@@ -44,7 +44,7 @@
     flex: 0 1 70px;
     min-height: 70px;
     text-align: left;
-    background: #d6d6d6;
+    background: #e6e6e6;
     border-radius: 3px;
     border:1px solid #fff;
     color: #333;
@@ -80,56 +80,56 @@
     content : '• ';
 }*/
 .IL {
-    background: #6997b9;
+    background: #99b6ce;
 }
 .LO {
-    background: #96bab1;
+    background: #b7cfc8;
 }
 .WO {
-    background: #aea3bd;
+    background: #beb5ca;
 }
 .CO {
-    background: #f5d271;
+    background: #dfb290;
 }
 .SC {
-    background: #d59360;
+    background: #f3d372;
 }
-.IL_LO { background: linear-gradient(to bottom right, #6997b9 0%, #6997b9 50%, #96bab1 50%, #96bab1 100%); }
-.IL_CO { background: linear-gradient(to bottom right, #6997b9 0%, #6997b9 50%, #eecc5a 50%, #eecc5a 100%); }
-.IL_WO { background: linear-gradient(to bottom right, #6997b9 0%, #6997b9 50%, #aea3bd 50%, #aea3bd 100%); }
-.IL_SC { background: linear-gradient(to bottom right, #6997b9 0%, #6997b9 50%, #d59360 50%, #d59360 100%); }
-.IL_HO { background: linear-gradient(to bottom right, #6997b9 0%, #6997b9 50%, #d6d6d6 50%, #d6d6d6 100%); }
-.LO_IL { background: linear-gradient(to bottom right, #96bab1 0%, #96bab1 50%, #6997b9 50%, #6997b9 100%); }
-.LO_CO { background: linear-gradient(to bottom right, #96bab1 0%, #96bab1 50%, #eecc5a 50%, #eecc5a 100%); }
-.LO_WO { background: linear-gradient(to bottom right, #96bab1 0%, #96bab1 50%, #aea3bd 50%, #aea3bd 100%); }
-.LO_SC { background: linear-gradient(to bottom right, #96bab1 0%, #96bab1 50%, #d59360 50%, #d59360 100%); }
-.LO_HO { background: linear-gradient(to bottom right, #96bab1 0%, #96bab1 50%, #d6d6d6 50%, #d6d6d6 100%); }
-.CO_IL { background: linear-gradient(to bottom right, #eecc5a 0%, #eecc5a 50%, #6997b9 50%, #6997b9 100%); }
-.CO_LO { background: linear-gradient(to bottom right, #eecc5a 0%, #eecc5a 50%, #96bab1 50%, #96bab1 100%); }
-.CO_WO { background: linear-gradient(to bottom right, #eecc5a 0%, #eecc5a 50%, #aea3bd 50%, #aea3bd 100%); }
-.CO_SC { background: linear-gradient(to bottom right, #eecc5a 0%, #eecc5a 50%, #f5d271 50%, #f5d271 100%); }
-.CO_HO { background: linear-gradient(to bottom right, #eecc5a 0%, #eecc5a 50%, #d6d6d6 50%, #d6d6d6 100%); }
-.SC_IL { background: linear-gradient(to bottom right, #d59360 0%, #d59360 50%, #6997b9 50%, #6997b9 100%); }
-.SC_LO { background: linear-gradient(to bottom right, #d59360 0%, #d59360 50%, #96bab1 50%, #96bab1 100%); }
-.SC_WO { background: linear-gradient(to bottom right, #d59360 0%, #d59360 50%, #aea3bd 50%, #aea3bd 100%); }
-.SC_CO { background: linear-gradient(to bottom right, #d59360 0%, #d59360 50%, #eecc5a 50%, #eecc5a 100%); }
-.SC_HO { background: linear-gradient(to bottom right, #d59360 0%, #d59360 50%, #d6d6d6 50%, #d6d6d6 100%); }
-.HO_IL { background: linear-gradient(to bottom right, #d6d6d6 0%, #d6d6d6 50%, #6997b9 50%, #6997b9 100%); }
-.HO_LO { background: linear-gradient(to bottom right, #d6d6d6 0%, #d6d6d6 50%, #96bab1 50%, #96bab1 100%); }
-.HO_WO { background: linear-gradient(to bottom right, #d6d6d6 0%, #d6d6d6 50%, #aea3bd 50%, #aea3bd 100%); }
-.HO_CO { background: linear-gradient(to bottom right, #d6d6d6 0%, #d6d6d6 50%, #eecc5a 50%, #eecc5a 100%); }
-.HO_SC { background: linear-gradient(to bottom right, #d6d6d6 0%, #d6d6d6 50%, #d59360 50%, #d59360 100%); }
-.WO_IL { background: linear-gradient(to bottom right, #aea3bd 0%, #aea3bd 50%, #6997b9 50%, #6997b9 100%); }
-.WO_L0 { background: linear-gradient(to bottom right, #aea3bd 0%, #aea3bd 50%, #96bab1 50%, #96bab1 100%); }
-.WO_CO { background: linear-gradient(to bottom right, #aea3bd 0%, #aea3bd 50%, #eecc5a 50%, #eecc5a 100%); }
-.WO_SC { background: linear-gradient(to bottom right, #aea3bd 0%, #aea3bd 50%, #d59360 50%, #d59360 100%); }
-.WO_HO { background: linear-gradient(to bottom right, #aea3bd 0%, #aea3bd 50%, #d6d6d6 50%, #d6d6d6 100%); }
+.IL_LO { background: linear-gradient(to bottom right, #99b6ce 0%, #99b6ce 50%, #b7cfc8 50%, #b7cfc8 100%); }
+.IL_CO { background: linear-gradient(to bottom right, #99b6ce 0%, #99b6ce 50%, #eecc5a 50%, #eecc5a 100%); }
+.IL_WO { background: linear-gradient(to bottom right, #99b6ce 0%, #99b6ce 50%, #beb5ca 50%, #beb5ca 100%); }
+.IL_SC { background: linear-gradient(to bottom right, #99b6ce 0%, #99b6ce 50%, #f3d372 50%, #f3d372 100%); }
+.IL_HO { background: linear-gradient(to bottom right, #99b6ce 0%, #99b6ce 50%, #e6e6e6 50%, #e6e6e6 100%); }
+.LO_IL { background: linear-gradient(to bottom right, #b7cfc8 0%, #b7cfc8 50%, #99b6ce 50%, #99b6ce 100%); }
+.LO_CO { background: linear-gradient(to bottom right, #b7cfc8 0%, #b7cfc8 50%, #eecc5a 50%, #eecc5a 100%); }
+.LO_WO { background: linear-gradient(to bottom right, #b7cfc8 0%, #b7cfc8 50%, #beb5ca 50%, #beb5ca 100%); }
+.LO_SC { background: linear-gradient(to bottom right, #b7cfc8 0%, #b7cfc8 50%, #f3d372 50%, #f3d372 100%); }
+.LO_HO { background: linear-gradient(to bottom right, #b7cfc8 0%, #b7cfc8 50%, #e6e6e6 50%, #e6e6e6 100%); }
+.CO_IL { background: linear-gradient(to bottom right, #eecc5a 0%, #eecc5a 50%, #99b6ce 50%, #99b6ce 100%); }
+.CO_LO { background: linear-gradient(to bottom right, #eecc5a 0%, #eecc5a 50%, #b7cfc8 50%, #b7cfc8 100%); }
+.CO_WO { background: linear-gradient(to bottom right, #eecc5a 0%, #eecc5a 50%, #beb5ca 50%, #beb5ca 100%); }
+.CO_SC { background: linear-gradient(to bottom right, #eecc5a 0%, #eecc5a 50%, #dfb290 50%, #dfb290 100%); }
+.CO_HO { background: linear-gradient(to bottom right, #eecc5a 0%, #eecc5a 50%, #e6e6e6 50%, #e6e6e6 100%); }
+.SC_IL { background: linear-gradient(to bottom right, #f3d372 0%, #f3d372 50%, #99b6ce 50%, #99b6ce 100%); }
+.SC_LO { background: linear-gradient(to bottom right, #f3d372 0%, #f3d372 50%, #b7cfc8 50%, #b7cfc8 100%); }
+.SC_WO { background: linear-gradient(to bottom right, #f3d372 0%, #f3d372 50%, #beb5ca 50%, #beb5ca 100%); }
+.SC_CO { background: linear-gradient(to bottom right, #f3d372 0%, #f3d372 50%, #eecc5a 50%, #eecc5a 100%); }
+.SC_HO { background: linear-gradient(to bottom right, #f3d372 0%, #f3d372 50%, #e6e6e6 50%, #e6e6e6 100%); }
+.HO_IL { background: linear-gradient(to bottom right, #e6e6e6 0%, #e6e6e6 50%, #99b6ce 50%, #99b6ce 100%); }
+.HO_LO { background: linear-gradient(to bottom right, #e6e6e6 0%, #e6e6e6 50%, #b7cfc8 50%, #b7cfc8 100%); }
+.HO_WO { background: linear-gradient(to bottom right, #e6e6e6 0%, #e6e6e6 50%, #beb5ca 50%, #beb5ca 100%); }
+.HO_CO { background: linear-gradient(to bottom right, #e6e6e6 0%, #e6e6e6 50%, #eecc5a 50%, #eecc5a 100%); }
+.HO_SC { background: linear-gradient(to bottom right, #e6e6e6 0%, #e6e6e6 50%, #f3d372 50%, #f3d372 100%); }
+.WO_IL { background: linear-gradient(to bottom right, #beb5ca 0%, #beb5ca 50%, #99b6ce 50%, #99b6ce 100%); }
+.WO_L0 { background: linear-gradient(to bottom right, #beb5ca 0%, #beb5ca 50%, #b7cfc8 50%, #b7cfc8 100%); }
+.WO_CO { background: linear-gradient(to bottom right, #beb5ca 0%, #beb5ca 50%, #eecc5a 50%, #eecc5a 100%); }
+.WO_SC { background: linear-gradient(to bottom right, #beb5ca 0%, #beb5ca 50%, #f3d372 50%, #f3d372 100%); }
+.WO_HO { background: linear-gradient(to bottom right, #beb5ca 0%, #beb5ca 50%, #e6e6e6 50%, #e6e6e6 100%); }
 .legend {
     display: flex;
     justify-content: center;
 }
 .legend__item{
-    border-left: 10px solid #d6d6d6;
+    border-left: 10px solid #e6e6e6;
     list-style-type: none;
     font-size: 0.8em;
     padding:5px;
@@ -145,20 +145,20 @@
     background: none;
 }
 .legend__item.IL {
-    border-color: #6997b9;
+    border-color: #99b6ce;
 }
 .legend__item.LO {
-     border-color: #a2c09d;
+    border-color: #a2c09d;
 }
 .legend__item.WO {
-     border-color: #aea3bd;
+    border-color: #beb5ca;
 }
 .legend__item.CO {
-     border-color: #eecc5a;
+    border-color: #eecc5a;
 }
 .legend__item.SC {
-     border-color: #d59360;
+    border-color: #f3d372;
 }
 .legend__item.HO {
-     border-color: #e6e6e6;
+    border-color: #e6e6e6;
 }
