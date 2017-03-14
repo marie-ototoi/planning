@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
 })
 
 userSchema.statics.findOrCreateByAuth = function findOrCreateByAuth (id, name, provider, done) {
-    return this.update(
+    this.update(
         // Recherche
         { _id: id, provider },
         // Mise à jour (l'id est supposé être celui de la recherche)

@@ -221,7 +221,7 @@ const showCalendar = function showCalendar (requestedDate) {
 const showDetail = function showDetail (dateStart, events) {
     events = events.map(event => {
         return {
-            dateEnd: (formatDay(event.dateStart) === formatDay(event.dateEnd)) ? formatTime(event.dateStart) : formatDayTime(event.dateEnd),
+            dateEnd: (formatDay(event.dateStart) === formatDay(event.dateEnd)) ? formatTime(event.dateEnd) : formatDayTime(event.dateEnd),
             timeStart: formatTime(event.dateStart),
             timeEnd: formatTime(event.dateEnd),
             summary: event.summary
