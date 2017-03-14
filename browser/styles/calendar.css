@@ -95,33 +95,33 @@
     background: #f3d372;
 }
 .IL_LO { background: linear-gradient(to bottom right, #99b6ce 0%, #99b6ce 50%, #b7cfc8 50%, #b7cfc8 100%); }
-.IL_CO { background: linear-gradient(to bottom right, #99b6ce 0%, #99b6ce 50%, #eecc5a 50%, #eecc5a 100%); }
+.IL_CO { background: linear-gradient(to bottom right, #99b6ce 0%, #99b6ce 50%, #dfb290 50%, #dfb290 100%); }
 .IL_WO { background: linear-gradient(to bottom right, #99b6ce 0%, #99b6ce 50%, #beb5ca 50%, #beb5ca 100%); }
 .IL_SC { background: linear-gradient(to bottom right, #99b6ce 0%, #99b6ce 50%, #f3d372 50%, #f3d372 100%); }
 .IL_HO { background: linear-gradient(to bottom right, #99b6ce 0%, #99b6ce 50%, #e6e6e6 50%, #e6e6e6 100%); }
 .LO_IL { background: linear-gradient(to bottom right, #b7cfc8 0%, #b7cfc8 50%, #99b6ce 50%, #99b6ce 100%); }
-.LO_CO { background: linear-gradient(to bottom right, #b7cfc8 0%, #b7cfc8 50%, #eecc5a 50%, #eecc5a 100%); }
+.LO_CO { background: linear-gradient(to bottom right, #b7cfc8 0%, #b7cfc8 50%, #dfb290 50%, #dfb290 100%); }
 .LO_WO { background: linear-gradient(to bottom right, #b7cfc8 0%, #b7cfc8 50%, #beb5ca 50%, #beb5ca 100%); }
 .LO_SC { background: linear-gradient(to bottom right, #b7cfc8 0%, #b7cfc8 50%, #f3d372 50%, #f3d372 100%); }
 .LO_HO { background: linear-gradient(to bottom right, #b7cfc8 0%, #b7cfc8 50%, #e6e6e6 50%, #e6e6e6 100%); }
-.CO_IL { background: linear-gradient(to bottom right, #eecc5a 0%, #eecc5a 50%, #99b6ce 50%, #99b6ce 100%); }
-.CO_LO { background: linear-gradient(to bottom right, #eecc5a 0%, #eecc5a 50%, #b7cfc8 50%, #b7cfc8 100%); }
-.CO_WO { background: linear-gradient(to bottom right, #eecc5a 0%, #eecc5a 50%, #beb5ca 50%, #beb5ca 100%); }
-.CO_SC { background: linear-gradient(to bottom right, #eecc5a 0%, #eecc5a 50%, #dfb290 50%, #dfb290 100%); }
-.CO_HO { background: linear-gradient(to bottom right, #eecc5a 0%, #eecc5a 50%, #e6e6e6 50%, #e6e6e6 100%); }
+.CO_IL { background: linear-gradient(to bottom right, #dfb290 0%, #dfb290 50%, #99b6ce 50%, #99b6ce 100%); }
+.CO_LO { background: linear-gradient(to bottom right, #dfb290 0%, #dfb290 50%, #b7cfc8 50%, #b7cfc8 100%); }
+.CO_WO { background: linear-gradient(to bottom right, #dfb290 0%, #dfb290 50%, #beb5ca 50%, #beb5ca 100%); }
+.CO_SC { background: linear-gradient(to bottom right, #dfb290 0%, #dfb290 50%, #dfb290 50%, #dfb290 100%); }
+.CO_HO { background: linear-gradient(to bottom right, #dfb290 0%, #dfb290 50%, #e6e6e6 50%, #e6e6e6 100%); }
 .SC_IL { background: linear-gradient(to bottom right, #f3d372 0%, #f3d372 50%, #99b6ce 50%, #99b6ce 100%); }
 .SC_LO { background: linear-gradient(to bottom right, #f3d372 0%, #f3d372 50%, #b7cfc8 50%, #b7cfc8 100%); }
 .SC_WO { background: linear-gradient(to bottom right, #f3d372 0%, #f3d372 50%, #beb5ca 50%, #beb5ca 100%); }
-.SC_CO { background: linear-gradient(to bottom right, #f3d372 0%, #f3d372 50%, #eecc5a 50%, #eecc5a 100%); }
+.SC_CO { background: linear-gradient(to bottom right, #f3d372 0%, #f3d372 50%, #dfb290 50%, #dfb290 100%); }
 .SC_HO { background: linear-gradient(to bottom right, #f3d372 0%, #f3d372 50%, #e6e6e6 50%, #e6e6e6 100%); }
 .HO_IL { background: linear-gradient(to bottom right, #e6e6e6 0%, #e6e6e6 50%, #99b6ce 50%, #99b6ce 100%); }
 .HO_LO { background: linear-gradient(to bottom right, #e6e6e6 0%, #e6e6e6 50%, #b7cfc8 50%, #b7cfc8 100%); }
 .HO_WO { background: linear-gradient(to bottom right, #e6e6e6 0%, #e6e6e6 50%, #beb5ca 50%, #beb5ca 100%); }
-.HO_CO { background: linear-gradient(to bottom right, #e6e6e6 0%, #e6e6e6 50%, #eecc5a 50%, #eecc5a 100%); }
+.HO_CO { background: linear-gradient(to bottom right, #e6e6e6 0%, #e6e6e6 50%, #dfb290 50%, #dfb290 100%); }
 .HO_SC { background: linear-gradient(to bottom right, #e6e6e6 0%, #e6e6e6 50%, #f3d372 50%, #f3d372 100%); }
 .WO_IL { background: linear-gradient(to bottom right, #beb5ca 0%, #beb5ca 50%, #99b6ce 50%, #99b6ce 100%); }
 .WO_L0 { background: linear-gradient(to bottom right, #beb5ca 0%, #beb5ca 50%, #b7cfc8 50%, #b7cfc8 100%); }
-.WO_CO { background: linear-gradient(to bottom right, #beb5ca 0%, #beb5ca 50%, #eecc5a 50%, #eecc5a 100%); }
+.WO_CO { background: linear-gradient(to bottom right, #beb5ca 0%, #beb5ca 50%, #dfb290 50%, #dfb290 100%); }
 .WO_SC { background: linear-gradient(to bottom right, #beb5ca 0%, #beb5ca 50%, #f3d372 50%, #f3d372 100%); }
 .WO_HO { background: linear-gradient(to bottom right, #beb5ca 0%, #beb5ca 50%, #e6e6e6 50%, #e6e6e6 100%); }
 .legend {
@@ -154,7 +154,7 @@
     border-color: #beb5ca;
 }
 .legend__item.CO {
-    border-color: #eecc5a;
+    border-color: #dfb290;
 }
 .legend__item.SC {
     border-color: #f3d372;
