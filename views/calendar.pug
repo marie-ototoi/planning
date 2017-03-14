@@ -6,7 +6,7 @@ html
         script(type='text/javascript' src='/scripts/calendar.js')
         script(type='text/javascript').
             document.addEventListener("DOMContentLoaded", function(event) {
-                require('browser/app').init(!{data}, !{icalData}, '#{requestedDate}')
+                EntryPoint(!{data}, !{icalData}, '#{requestedDate}')
             })
 
     body.container-fluid
@@ -29,6 +29,7 @@ html
             ul.legend
                 li.legend__item.IL ILDA
                 li.legend__item.LO Logilab
+                li.legend__item.WO Workshop / meeting
                 li.legend__item.SC University
                 li.legend__item.CO Conference
                 li.legend__item.HO Off

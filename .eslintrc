@@ -1,0 +1,24 @@
+{
+    "env": {
+        "es6": true,
+        "mocha": true
+    },
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "arrowFunctions": true,
+            "blockBindings": true,
+            "modules": true
+        },
+        "ecmaVersion": 6
+    },
+    "extends": [
+        "eslint:recommended",
+        "standard"
+    ],
+    "rules": {
+        "no-unused-vars": 1,
+        "no-console": 1,
+        "indent": ["error", 4]
+      }
+}

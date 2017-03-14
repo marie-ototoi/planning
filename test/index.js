@@ -1,8 +1,8 @@
-process.env.NODE_ENV = "test"
+process.env.NODE_ENV = 'test'
 
 require('dotenv').config()
 
 const dbConnect = require('../models/connection'),
-	calendar = require('./browser/calendar'),
-	day = require('./models/day'),
-	calendarStream = require('./models/CalendarStream')
+const calendar = require('./browser/calendar'),
+const day = require('./models/day'),
+const calendarStream = require('./models/CalendarStream')
