@@ -14,6 +14,7 @@ const formatYear = d3.timeFormat('%Y')            // year with century as a deci
 const formatYearMonth = d3.timeFormat('%Y-%m')
 const formatMonthNameYear = d3.timeFormat('%B %Y')
 const formatTime = d3.timeFormat('%H:%M')
+const formatHour = d3.timeFormat('%H')
 
 let dateStart
 let dateEnd
@@ -176,7 +177,7 @@ const draw = function draw () {
 
     calendarDay
         .on('click', function (d, i) {
-            showDetail(d.date, d.events)
+            showDetail({date : d.date, events : d.events, morning : d.morning, afternoon : d.afternoon})
         })
     // console.log(getIcalEvents(d.date))
 }
@@ -218,17 +219,37 @@ const showCalendar = function showCalendar (requestedDate) {
     window.history.pushState({}, formatMonthNameYear(requestedDate), '/' + formatYearMonth(requestedDate))
 }
 
-const showDetail = function showDetail (dateStart, events) {
-    events = events.map(event => {
+const showDetail = function showDetail (day) {
+    let events = day.events.map(event => {
+        let period
+        let hourStart = formatHour(event.dateStart)
+        if (hourStart < 12) {
+            period = 'morning'
+        } else if (hourStart < 14) {
+            period = 'lunch'
+        } else if (hourStart < 18) {
+            period = 'afternoon'
+        } else {
+            period = 'evening'
+        }
         return {
             dateEnd: (formatDay(event.dateStart) === formatDay(event.dateEnd)) ? formatTime(event.dateEnd) : formatDayTime(event.dateEnd),
             timeStart: formatTime(event.dateStart),
             timeEnd: formatTime(event.dateEnd),
+            period,
             summary: event.summary
         }
     })
     // console.log(dateStart, events)
-    d3.select('.calendar__detail').html(templateDetail({ dateStart: formatDayHuman(dateStart), events }))
+    d3.select('.calendar__detail').html(templateDetail({
+        dateStart: formatDayHuman(day.date),
+        events_morning: events.filter(function (element) { return element.period === 'morning' }),
+        events_lunch: events.filter(function (element) { return element.period === 'lunch' }),
+        events_afternoon: events.filter(function (element) { return element.period === 'afternoon' }),
+        events_evening: events.filter(function (element) { return element.period === 'evening' }),
+        morning: day.morning,
+        afternoon: day.afternoon
+    }))
 }
 
 module.exports = initAndLoad

@@ -11,10 +11,55 @@
 }
 
 .calendar__detail__events{
-    padding: 10px 0 0 25px;
+    padding: 90px 20px 10px 35px;
+    position: absolute;
+    margin: 0;
+    width: 360px;
+}
+.calendar__detail__morning,
+.calendar__detail__lunch,
+.calendar__detail__afternoon,
+.calendar__detail__evening{
+    margin: 0;
+    padding: 0;
+}
+.calendar__detail__morning{
+    min-height: 115px;
+}
+.calendar__detail__lunch{
+    min-height: 30px;
+}
+.calendar__detail__afternoon{
+    min-height: 120px;
 }
 
 .calendar__detail__event{
     font-size: 0.85em;
-    color : #333;
+    line-height: 1.45em;
+    color : #555;
+}
+
+.calendar__detail__hours{
+	padding: 10px;
+	border-top: 2px solid #fff;
+	margin: 0;
+}
+
+.calendar__detail__hour{
+    list-style-type: none;
+    border-bottom: 2px solid #fff;
+    font-size: 1px;
+    min-height: 8px;
+}
+
+.h_0, .h_1, .h_2, .h_3, .h_4, .h_5, .h_6, .h_7, .h_8, .h_18, .h_19, .h_20, .h_21, .h_22, .h_23 {
+
+}
+
+.h_9, .h_14 {
+	border-bottom-width: 0;
+	min-height: 120px;
+}
+.h_13 {
+	min-height: 26px;
 }
