@@ -15,6 +15,7 @@ const formatYearMonth = d3.timeFormat('%Y-%m')
 const formatMonthNameYear = d3.timeFormat('%B %Y')
 const formatTime = d3.timeFormat('%H:%M')
 const formatHour = d3.timeFormat('%H')
+const formatMinutes = d3.timeFormat('%M')
 
 let dateStart
 let dateEnd
@@ -222,10 +223,11 @@ const showCalendar = function showCalendar (requestedDate) {
 const showDetail = function showDetail (day) {
     let events = day.events.map(event => {
         let period
-        let hourStart = formatHour(event.dateStart)
+        // this is a very unclean way of handling time
+        let hourStart = Number(formatHour(event.dateStart) + '.' + formatMinutes(event.dateStart))
         if (hourStart < 12) {
             period = 'morning'
-        } else if (hourStart < 14) {
+        } else if (hourStart < 13.30) {
             period = 'lunch'
         } else if (hourStart < 18) {
             period = 'afternoon'
