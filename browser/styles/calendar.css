@@ -72,9 +72,8 @@
     padding: 0 ;
     margin: 0 4px;
     cursor: pointer;
-    font-style: italic;
-    border-bottom: 1px solid #fff;
-    color: #fff;
+    border-bottom: 1px solid #555;
+    color: #555;
 }
 /*.calendar__day__event:before{
     content : '• ';
