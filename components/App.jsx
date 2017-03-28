@@ -1,68 +1,114 @@
-const d3 = require('d3')
-const React = require('react')
-const timeformat = require('d3-time-format')
-const Timeline = require('./Timeline').default
+import * as d3 from 'd3'
+import { default as Day }  from './Day'
+import { default as Month }  from './Month'
+import * as timeformat from 'd3-time-format'
+import React from 'react'
+import { default as Timeline } from './Timeline'
 
-const formatDay = d3.timeFormat('%Y-%m-%d')
-const formatMonthNameYear = d3.timeFormat('%B %Y')
-const formatYearMonth = d3.timeFormat('%Y-%m')
-const formatWeek = d3.timeFormat('%W')
+let formatDay = d3.timeFormat('%Y-%m-%d')
+let formatMonthNameYear = d3.timeFormat('%B %Y')
+let formatYearMonth = d3.timeFormat('%Y-%m')
+let formatWeek = d3.timeFormat('%W')
+let formatWeekMonthYear = d3.timeFormat('%W-%m-%Y')
 
 class App extends React.Component {
     constructor (props) {
         super(props)
         this.getNestedData = this.getNestedData.bind(this)
-        this.requestDate = this.requestDate.bind(this)
-        let requestedDate = null
-        if (props.requestedDate && props.requestedDate.length === 7) {
-            let year = Number(props.requestedDate.substr(0, 4))
-            let month = Number(props.requestedDate.substr(5, 2)) - 1
-            requestedDate = new Date(year, month)
-        }
+        this.requestMonth = this.requestMonth.bind(this)
+        this.requestDay = this.requestDay.bind(this)
+        this.handleClickPrevious = this.handleClickPrevious.bind(this)
+        this.handleClickNext = this.handleClickNext.bind(this)
+        this.getMonthData = this.getMonthData.bind(this)
         this.state = {
-            currentDate: null,
+            currentDay: {},
+            currentMonth: [],
             dateNow: new Date(),
             dateStart: new Date(props.data[0].date),
             dateEnd: new Date(props.data[props.data.length - 1].date),
             data: props.data,
             icalData: props.icalData,
             nestedData: this.getNestedData(props.data, props.icalData),
-            requestedDate: requestedDate,
-            requestDate: this.requestDate
+            requestedMonth: props.requestedMonth,
+            requestMonth: this.requestMonth,
+            requestDay: this.requestDay
         }
     }
 
     componentDidMount () {
-        if (this.state.currentDate === null) this.requestDate(this.state.requestedDate, null)
-        // console.log('component will mount', this.state.nestedData)
+        if (!this.state.currentDay.date) this.requestMonth(this.state.requestedMonth, null)
     }
 
     render () {
-        // console.log('rerender app', this.state)
-        return (<Timeline nestedData = { this.state.nestedData } currentDate = { this.state.currentDate } requestDate = { this.state.requestDate } />)
+        return (<div>
+            <Timeline nestedData = { this.state.nestedData } currentMonth = { this.state.currentMonth } requestMonth = { this.state.requestMonth } />
+            <main className = "calendar">
+                <div className = "calendar__previous" id = "previous" onClick = { this.handleClickPrevious }>&lsaquo;</div>
+                <Month currentMonth = { this.state.currentMonth } currentDay = { this.state.currentDay } requestDay = { this.state.requestDay } />
+                { this.state.currentDay.date ? (<Day currentDay = { this.state.currentDay } />) : (<br />) }
+                <div className = "calendar__next" id = "next" onClick = { this.handleClickNext }>&rsaquo;</div>
+            </main>
+        </div>)
     }
 
-    requestDate (whichDate, whichDirection) {
-        let requestedDate
+    handleClickPrevious () {
+        this.requestMonth(null, 'previous')
+    }
 
-        if (whichDate) {
-            requestedDate = whichDate
+    handleClickNext () {
+        this.requestMonth(null, 'next')
+    }
+
+    requestMonth (whichMonth, whichDirection) {
+        let requestedMonth
+
+        if (whichMonth) {
+            requestedMonth = this.monthToDate(whichMonth)
         } else if (whichDirection === 'previous' || whichDirection === 'next') {
-            requestedDate = this.state.currentDate
+            // new Date neccessary, otherwise React updates this.state.currentDay automatically when requestedMonth is chenged
+            requestedMonth = this.state.currentMonth.date
             // check if there's a next or prev month in the data before
-            if (!(formatYearMonth(this.state.currentDate) === formatYearMonth(new Date(this.state.data[0].date)) && (whichDirection === 'previous')) &&
-               !(formatYearMonth(this.state.currentDate) === formatYearMonth(new Date(this.state.data[this.state.data.length - 1].date)) && (whichDirection === 'next'))) {
+            if (!(formatYearMonth(requestedMonth) === formatYearMonth(new Date(this.state.data[0].date)) && whichDirection === 'previous') &&
+               !(formatYearMonth(requestedMonth) === formatYearMonth(new Date(this.state.data[this.state.data.length - 1].date)) && whichDirection === 'next')) {
                 let increment = (whichDirection === 'previous') ? -1 : 1
-                requestedDate.setMonth(requestedDate.getMonth() + increment)
+                requestedMonth.setMonth(requestedMonth.getMonth() + increment)
             }
         } else {
-            requestedDate = this.state.dateNow
+            requestedMonth = this.state.dateNow
         }
-        if (!(requestedDate >= this.state.dateStart && requestedDate <= this.state.dateEnd)) requestedDate = this.state.dateStart
-        if (this.state.currentDate !== requestedDate) {
-            this.setState({ currentDate: requestedDate })
-            window.history.pushState({}, formatMonthNameYear(requestedDate), '/' + formatYearMonth(requestedDate))
+        // out of range
+        if (!(requestedMonth >= this.state.dateStart && requestedMonth <= this.state.dateEnd)) {
+            requestedMonth = this.state.dateStart
         }
+        if (this.state.currentMonth.key !== formatYearMonth(requestedMonth)) {
+            let currentMonth = this.getMonthData(requestedMonth, this.state.nestedData)
+            currentMonth.date = requestedMonth
+            this.setState({
+                currentMonth
+            })
+            window.history.pushState({}, formatMonthNameYear(requestedMonth), '/' + formatYearMonth(requestedMonth))
+        }
+    }
+
+    requestDay (whichDay) {
+        if (whichDay) {
+            let requestedDay = this.dayToDate(whichDay)
+            if (formatDay(this.state.currentDay.date) !== whichDay) {
+                let currentMonth = this.getMonthData(requestedDay, this.state.nestedData)
+                let currentDay = this.getDayData(whichDay, currentMonth.values)
+                this.setState({
+                    currentDay
+                })
+            }
+        }
+    }
+
+    monthToDate (month) {
+        return new Date(month.substr(0, 4), (month.substr(5, 2) - 1))
+    }
+
+    dayToDate (month) {
+        return new Date(month.substr(0, 4), (month.substr(5, 2) - 1), month.substr(8, 2))
     }
 
     getNestedData (days, icalData) {
@@ -78,21 +124,35 @@ class App extends React.Component {
 
         days = days.map(entry => {
             let date = new Date(entry.date)
-            let events = this.getIcalEvents(date, icalData)
             return {
                 date,
                 morning: entry.morning,
                 afternoon: entry.afternoon,
-                events
+                events: this.getIcalEvents(date, icalData)
             }
         })
 
         return d3.nest()
             .key(function (d) { return formatYearMonth(d.date) })
-            .key(function (d) { return formatWeek(d.date) })
+            .key(function (d) { return formatWeekMonthYear(d.date) })
             .entries(days)
     }
-
+    getMonthData (requestedDate, nestedData) {
+        return nestedData.filter(element => {
+            return element.key === formatYearMonth(requestedDate)
+        })[0]
+    }
+    getDayData (requestedDate, monthNestedData) {
+        let findDay
+        monthNestedData.forEach(week => {
+            week.values.forEach(element => {
+                if (formatDay(element.date) === (requestedDate)) {
+                    findDay = element
+                }
+            })
+        })
+        return findDay
+    }
     getIcalEvents (day, icalData) {
         return icalData.reduce((accumulator, currentValue) => {
             return accumulator.concat(currentValue.filter(function (dayElement) {

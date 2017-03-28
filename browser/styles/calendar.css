@@ -1,5 +1,5 @@
 .calendar {
-    padding: 15px 0;
+    padding: 40px 0 0 0;
     display: flex;
     justify-content: space-between;   
     align-items: center;
@@ -15,7 +15,7 @@
     cursor: pointer;
 }
 
-.calendar__list {
+.monthDetail {
     flex: 0 0 510px;  
 }
 .calendar__title {

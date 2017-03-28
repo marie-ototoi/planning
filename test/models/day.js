@@ -43,10 +43,10 @@ describe('Model Day - ', function () {
     it('should change the location of a date', function () {
         return Day.findOrCreate('2014-04-03', 'SC', 'HO')
         .then(setThisDay => {
-            return Day.getDay(setThisDay._id)
+            return Day.getDay('2014-04-03')
             .then(getThisDay => {
-                expect(getThisDay[0].morning).to.equal('SC')
-                expect(getThisDay[0].afternoon).to.equal('HO')
+                expect(getThisDay.morning).to.equal('SC')
+                expect(getThisDay.afternoon).to.equal('HO')
             })
         })
     })

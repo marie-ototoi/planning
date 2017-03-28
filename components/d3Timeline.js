@@ -1,9 +1,10 @@
-const d3 = require('d3')
-const timeformat = require('d3-time-format')
+import * as d3 from 'd3'
+import * as timeformat from 'd3-time-format'
+
+let formatShortMonthName = d3.timeFormat('%b')
+let formatYearMonth = d3.timeFormat('%Y-%m')
 
 let d3Timeline = {}
-const formatShortMonthName = d3.timeFormat('%b')
-const formatYearMonth = d3.timeFormat('%Y-%m')
 
 d3Timeline.create = function (el, state) {
     this.update(el, state)
@@ -13,7 +14,8 @@ d3Timeline.update = function (el, state) {
     // Re-compute
     // render
     this._drawNav(el, state)
-    let requestFormatted = formatYearMonth(state.currentDate)
+    // let requestFormatted = formatYearMonth(state.currentDay.date)
+    let requestFormatted = state.currentMonth.key
     d3.select(el).selectAll('li.timeline__item:not(.ym' + requestFormatted + ')').classed('active', false)
     d3.select(el).selectAll('li.timeline__item.ym' + requestFormatted + '').classed('active', true)
 }
@@ -24,7 +26,7 @@ d3Timeline.destroy = function (el) {
 
 d3Timeline._drawNav = function (el, state) {
     let listItem = d3.select(el).selectAll('.timeline__item')
-        .data(state.nestedData, function (d) { return d.id })
+        .data(state.nestedData, function (d) { return d.key })
 
     // ENTER
     let listItemEnter = listItem
@@ -43,14 +45,13 @@ d3Timeline._drawNav = function (el, state) {
     listItemEnter
         .on('click', function (d, i) {
             let saveTheDate = d.values[0].values[0].date
-            state.requestDate(saveTheDate, null)
+            state.requestMonth(saveTheDate, null)
         })
 
     // ENTER & UPDATE
     listItem
         .on('click', function (d, i) {
-            let saveTheDate = d.values[0].values[0].date
-            state.requestDate(saveTheDate, null)
+            state.requestMonth(d.key, null)
         })
 
     // EXIT
