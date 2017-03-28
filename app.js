@@ -15,6 +15,7 @@ const app = express()
 app.set('port', (process.env.PORT || 5000))
 app.set('view engine', 'pug')
 
+
 exports.startServer = function startServer (port, path, callback) {
     app.use(express.static(__dirname + '/public'))
     app.use(flash())

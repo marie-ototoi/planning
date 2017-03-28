@@ -6,7 +6,7 @@ const User = require('../models/user')
 const router = express.Router()
 
 router.get('/login', function (req, res) {
-    res.render('login.pug', { title: 'Planning CIFRE - Authentification' })
+    res.render('login', { title: 'Planning CIFRE - Authentification' })
 })
 
 passport.use(new TwitterStrategy({

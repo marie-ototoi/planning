@@ -1,6 +1,5 @@
 const CalendarStream = require('../../models/calendarStream')
 const chai = require('chai')
-const fs = require('fs')
 const rp = require('request-promise')
 
 const expect = chai.expect
@@ -16,8 +15,8 @@ describe('Model CalendarStream - ', function () {
     before(function () {
         calendars = [{
             _id: '1',
-            url: 'http://p53-calendars.icloud.com/published/2/SI9lZaSUYZZCZfA4SiWgGO1gHWVCUYZV4tPi2HoWGiwM5PY5KyXgDz42F8a5dA85iyGtkqr12PjPdyaRKsqDD5wM55EkxXRfr31HIYYYy-A'}
-        ]
+            url: 'http://p53-calendars.icloud.com/published/2/SI9lZaSUYZZCZfA4SiWgGO1gHWVCUYZV4tPi2HoWGiwM5PY5KyXgDz42F8a5dA85iyGtkqr12PjPdyaRKsqDD5wM55EkxXRfr31HIYYYy-A'
+        }]
         return rp({uri: calendars[0].url})
         .then(data => {
             icalData = data
@@ -36,23 +35,21 @@ describe('Model CalendarStream - ', function () {
             expect(calendar[index]).to.have.property('dateStart')
         })
     })
-    it('should load and parse a calendar', function (done) {
+    it('should load and parse a calendar', function () {
         return CalendarStream.getCalendarData(calendars[0].url)
         .then(calendar => {
             // pick random day to check properties
             let index = Math.floor(Math.random() * calendar.length)
             expect(calendar[index]).to.have.property('summary')
             expect(calendar[index]).to.have.property('dateStart')
-            done()
         })
     })
-    it('should create a calendar entry', function (done) {
+    it('should create a calendar entry', function () {
         return CalendarStream.findOrCreate(calendars[0]._id, calendars[0].url)
         .then(setThisCalendar => {
             return CalendarStream.getCalendar(calendars[0]._id)
             .then(getThisCalendar => {
                 expect(getThisCalendar[0].url).to.equal(calendars[0].url)
-                done()
             })
         })
     })

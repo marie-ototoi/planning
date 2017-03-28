@@ -5,31 +5,9 @@ html
         link(rel='stylesheet', href='/styles/calendar.css')
         script(type='text/javascript' src='/scripts/calendar.js')
         script(type='text/javascript').
-            document.addEventListener("DOMContentLoaded", function(event) {
-                EntryPoint(!{data}, !{icalData}, '#{requestedDate}')
+            document.addEventListener('DOMContentLoaded', function () {
+                Calendar.init(!{data}, !{icalData}, '#{requestedDate}')
             })
 
     body.container-fluid
-        header
-            nav.timeline
-            if user
-                p.welcome Welcome, #{user.name}! 
-                    if user.rights == 1
-                    - let mailto =  'mailto:marie@ototoi.fr?subject=[otoplanning]%20Change%20in%20your%20schedule&body=Dear%20Marie,%0D%0A%0D%0AWould%20you%20please%20consider%20working%20at%20...%20instead%20of%20...%20on%20the%20../../20..?%0D%0A%0D%0A...%0D%0A%0D%0AHave%20a%20nice%20day,%0D%0AThank%20you!%0D%0A%0D%0A' + user.name
-                    a(href=mailto).change.btn.btn-info.btn-sm Change request
-                    a(href='/users/logout').btn.btn-link.btn-sm logout 
-        
-        main.calendar
-            div#previous.calendar__previous &lsaquo;
-            div.calendar__list
-            div.calendar__detail
-            div#next.calendar__next &rsaquo;
-        
-        footer
-            ul.legend
-                li.legend__item.IL ILDA
-                li.legend__item.LO Logilab
-                li.legend__item.WO Workshop / meeting
-                li.legend__item.SC University
-                li.legend__item.CO Conference
-                li.legend__item.HO Off
+        div#app
