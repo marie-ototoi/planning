@@ -75,7 +75,12 @@
   "homepage": "https://github.com/marie-ototoi/planning#readme",
   "devDependencies": {
     "chai-datetime": "^1.4.1",
+    "chai-enzyme": "^0.6.1",
+    "enzyme": "^2.8.0",
     "mock-browser": "^0.92.12",
+    "react-addons-test-utils": "^15.4.2",
+    "sinon": "^2.1.0",
+    "sinon-chai": "^2.9.0",
     "zombie": "^5.0.5"
   }
 }

@@ -6,13 +6,14 @@ const util = require('util')
 const router = express.Router()
 
 router.get('/', function getConfig (req, res) {
+    console.log("ohhhhhhhhh")
     Promise.all([
         Day.getFirstDay(),
         Day.getLastDay(),
         CalendarStream.getCalendars()
     ])
     .then(([dateStart, dateEnd, calendars]) => {
-        res.render('config.pug', {
+        res.render('config', {
             title: 'Planning CIFRE - Configuration',
             dateStart: dateStart[0]._id,
             dateEnd: dateEnd[0]._id,
@@ -24,7 +25,7 @@ router.get('/', function getConfig (req, res) {
     })
     .catch((err) => {
         req.flash('error', 'Error while getting the data ' + err)
-        res.render('config.pug', {title: 'Planning CIFRE - Configuration'})
+        res.render('config', {title: 'Planning CIFRE - Configuration'})
     })
 })
 
@@ -68,7 +69,7 @@ router.get('/day/:id', function getConfig (req, res) {
     Day.getDay(req.params.id)
     .then(day => {
         if (day) {
-            res.render('configDay.pug', {
+            res.render('configDay', {
                 title: 'Planning CIFRE - Configuration',
                 day: {
                     _id: day.id,

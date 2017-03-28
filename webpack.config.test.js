@@ -6,10 +6,14 @@ module.exports = {
     devtool: 'source-map',
     module: {
         loaders: [
-            { test: /\.pug$/, loader: 'pug-loader' }
+            { test: /\.pug$/, loader: 'pug-loader' },
+            { test: /\.jsx?/, loader: 'babel-loader', exclude: /node_modules/ }
         ]
     },
     output: {
         devtoolModuleFilenameTemplate: '[absolute-resource-path]'
+    },
+    resolve: {
+        extensions: ['.js', '.jsx']
     }
 }

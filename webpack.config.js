@@ -3,9 +3,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
     entry: {
-        calendar: './browser/calendar',
-        config: './browser/scripts/config',
-        styles: './browser/scripts/styles'
+        calendar: './views/calendar',
+        styles: './views/styles/styles'
     },
     output: {
         path: './public',
