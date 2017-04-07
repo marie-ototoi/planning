@@ -5,8 +5,15 @@ const util = require('util')
 
 const router = express.Router()
 
+router.use('/', function (req, res, next) {
+    if (req.user.rights.includes('admin')) {
+        next()
+    } else {
+        req.session.redirect = '/config' + req.path
+        res.redirect('/users/login')
+    }
+})
 router.get('/', function getConfig (req, res) {
-    console.log("ohhhhhhhhh")
     Promise.all([
         Day.getFirstDay(),
         Day.getLastDay(),

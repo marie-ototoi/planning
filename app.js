@@ -11,39 +11,36 @@ const passport = require('passport')
 const session = require('express-session')
 const validator = require('validator')
 
-const app = express()
-app.set('port', (process.env.PORT || 5000))
-app.set('view engine', 'pug')
-
+const router = express()
+router.set('port', (process.env.PORT || 5000))
+router.set('view engine', 'pug')
 
 exports.startServer = function startServer (port, path, callback) {
-    app.use(express.static(__dirname + '/public'))
-    app.use(flash())
-    app.use(bodyParser.json())
-    app.use(bodyParser.urlencoded({ extended: true }))
-    app.use(methodOverride((req) => req.body._method))
-    app.use(expressValidator({
+    router.use(express.static(__dirname + '/public'))
+    router.use(flash())
+    router.use(bodyParser.json())
+    router.use(bodyParser.urlencoded({ extended: true }))
+    router.use(methodOverride((req) => req.body._method))
+    router.use(expressValidator({
         customValidators: {
             eachIsUrl: function (values) {
-                // console.log('values', values)
                 return values.every(function (val) {
                     return validator.isURL(val)
                 })
             }
         }
     }))
-    app.use(session({
+    router.use(session({
         name: 'otocalendar',
         secret: 'totoi',
         resave: true,
         saveUninitialized: true,
         cookie: { }
     }))
+    router.use(passport.initialize())
+    router.use(passport.session())
 
-    app.use(passport.initialize())
-    app.use(passport.session())
-
-    app.use('/', function (req, res, next) {
+    router.use('/', function (req, res, next) {
         if (req.path === '/favicon.ico') {
             res.writeHead(200, { 'Content-Type': 'image/x-icon' })
             res.end()
@@ -59,10 +56,10 @@ exports.startServer = function startServer (port, path, callback) {
         next()
     })
 
-    app.use(require('./controllers'))
+    router.use(require('./controllers'))
 
-    app.listen(app.get('port'), function () {
-        console.log('Node app is running on port', app.get('port'))
+    router.listen(router.get('port'), function () {
+        console.log('Node app is running on port', router.get('port'))
     })
 
     if (callback) callback()
