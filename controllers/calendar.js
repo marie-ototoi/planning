@@ -4,6 +4,8 @@ const Day = require('../models/day')
 
 const router = express.Router()
 
+// check user rights and save them in req.user object
+// applied to all routes
 router.use('/', function (req, res, next) {
     if (!req.user) req.user = {}
     req.user.rights = getUserRights(req.user._id, {
@@ -13,45 +15,47 @@ router.use('/', function (req, res, next) {
     next()
 })
 
+// if a date (YY-mm) is specified in main route
 router.get('/:requestedDate', function (req, res, next) {
-    if (req.user.rights.includes('view')) {
-        renderHome(req, res, req.params.requestedDate)
-    } else {
-        req.session.redirect = '/' + req.params.requestedDate
-        req.flash('error', 'You are not allowed to access this page. Please contact marie@ototoi.fr')
-        res.redirect('/users/login')
-    }
+    renderHome(req, res, req.params.requestedDate)
 })
 
+// if no date is specified in main route
 router.get('/', function (req, res) {
+    renderHome(req, res, '')
+})
+
+/**
+ * Get data and renders home if the user has permission
+ * @param {Object} user_id - Unique identifier of the user.
+ * @param {Object} authorized - Lists of authorized users coming from environment variables.
+ * @param {string} requestedDate - YY-mm date or ''.
+ */
+function renderHome (req, res, requestedDate) {
     if (req.user.rights.includes('view')) {
-        renderHome(req, res, null)
+        Promise.all([
+            Day.getDays(),
+            CalendarStream.getAllCalendarsData()
+        ])
+        .then(([data, icalData]) => {
+            res.render('calendar', {
+                title: 'Planning CIFRE',
+                user: req.user,
+                data: JSON.stringify(data),
+                icalData: JSON.stringify(icalData),
+                requestedDate
+            })
+            res.end()
+        })
+        .catch(err => {
+            req.flash('error', 'Error retrieving data' + err)
+            res.redirect('/users/login')
+        })
     } else {
+        req.session.redirect = '/' + requestedDate
         req.flash('error', 'You are not allowed to access this page. Please contact marie@ototoi.fr')
         res.redirect('/users/login')
     }
-})
-
-function renderHome (req, res, requestedDate) {
-    Promise.all([
-        Day.getDays(),
-        CalendarStream.getAllCalendarsData()
-        // CalendarStream.getCalendarData('http://p53-calendars.icloud.com/published/2/SI9lZaSUYZZCZfA4SiWgGO1gHWVCUYZV4tPi2HoWGiwM5PY5KyXgDz42F8a5dA85iyGtkqr12PjPdyaRKsqDD5wM55EkxXRfr31HIYYYy-A')
-    ])
-    .then(([data, icalData]) => {
-        res.render('calendar', {
-            title: 'Planning CIFRE',
-            user: req.user,
-            data: JSON.stringify(data),
-            icalData: JSON.stringify(icalData),
-            requestedDate
-        })
-        res.end()
-    })
-    .catch(err => {
-        req.flash('error', 'Error retrieving data' + err)
-        res.redirect('/users/login')
-    })
 }
 
 /**
