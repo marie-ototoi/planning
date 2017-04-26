@@ -15,7 +15,7 @@ calendarStreamSchema.statics.findOrCreate = function findOrCreate (id, url) {
     return this.update(
     // Recherche
     { _id: id },
-    // Mise à jour (l'id est supposé être celui de la recherche)
+    // Mise à jour
     { $set: { _id: id, url, modifiedAt: Date.now() }, $setOnInsert: { createdAt: Date.now() } },
     // Activation du mode upsert (insertion si non trouvé)
     { upsert: true }

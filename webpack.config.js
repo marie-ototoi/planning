@@ -4,13 +4,14 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 module.exports = {
     entry: {
         calendar: './views/calendar',
+        config: './views/config',
         styles: './views/styles/styles'
     },
     output: {
         path: './public',
         filename: 'scripts/[name].js',
         devtoolModuleFilenameTemplate: 'webpack:///[resource-path]',
-        library: 'Calendar'
+        library: '[name]'
     },
     devtool: 'source-map',
     module: {

@@ -1,34 +1,17 @@
 html
-	head
-		meta(charset='utf-8')
-		title #{title}
-		link(rel='stylesheet', href='/styles/calendar.css')
+    head
+        meta(charset='utf-8')
+        title #{title}
+        link(rel='stylesheet', href='/styles/calendar.css')
+        script(type='text/javascript' src='/scripts/config.js')
+        script(type='text/javascript').
+            document.addEventListener('DOMContentLoaded', function () {
+                config.init('#{dateStart}', '#{dateEnd}', !{calendarUrls})
+            })
 
-	body.config
-		main.container
+    body.config
+        main.container
 
-			include _flashes
-		
-			form(action='/config', method='POST')#config
+            include _flashes
 
-				div 
-					div.form-group.row
-						label(for='dateStart').col-sm-2.col-sm-offset-3.col-form-label Date start
-						div.col-sm-4
-							input(type='date', name='dateStart', value=dateStart)#dateStart.form-control
-					div.form-group.row
-						label(for='dateEnd').col-sm-2.col-sm-offset-3.col-form-label Date start
-						div.col-sm-4
-							input(type='date', name='dateEnd', value=dateEnd)#dateEnd.form-control
-
-					if calendars
-						each calendar, index in calendars
-							- let id = 'cal_' + index
-							include editCalendar
-
-					unless calendars.length > 0
-						- let calendar = ''
-						- let id = 'cal_0'  
-						include editCalendar
-
-				input(type='submit', value='Save config').btn.btn-large
+            div#app

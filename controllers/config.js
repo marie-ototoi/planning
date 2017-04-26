@@ -1,11 +1,12 @@
-const CalendarStream = require('../models/calendarStream')
-const Day = require('../models/day')
 const express = require('express')
 const util = require('util')
+const CalendarStream = require('../models/calendarStream')
+const Day = require('../models/day')
 
 const router = express.Router()
 
-router.use('/', function (req, res, next) {
+// check user rights
+router.all('/', function (req, res, next) {
     if (req.user.rights.includes('admin')) {
         next()
     } else {
@@ -13,6 +14,8 @@ router.use('/', function (req, res, next) {
         res.redirect('/users/login')
     }
 })
+
+// display main config : starting and ending dates + cal
 router.get('/', function getConfig (req, res) {
     Promise.all([
         Day.getFirstDay(),
@@ -24,9 +27,7 @@ router.get('/', function getConfig (req, res) {
             title: 'Planning CIFRE - Configuration',
             dateStart: dateStart[0]._id,
             dateEnd: dateEnd[0]._id,
-            calendars: calendars.map(calendar => {
-                return calendar.url
-            })
+            calendarUrls: JSON.stringify(calendars.map(calendar => calendar.url))
         })
         res.end()
     })

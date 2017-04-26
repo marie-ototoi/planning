@@ -3,7 +3,7 @@ process.env.NODE_ENV = 'test'
 //require('dotenv').config()
 //require('../models/connection')
 
-/*let jsdom = require('jsdom').jsdom
+let jsdom = require('jsdom').jsdom
 
 let exposedProperties = ['window', 'navigator', 'document']
 
@@ -20,10 +20,11 @@ global.navigator = {
     userAgent: 'node.js'
 }
 
-let documentRef = document*/
+let documentRef = document
 
-
-require('./controllers/app.spec')
+require('./controllers/router.spec')
+require('./components/AddCalendarUrl.spec')
+require('./components/Config.spec')
 //require('./models/day')
 //require('./models/CalendarStream')
 //require('./components/Timeline.spec')

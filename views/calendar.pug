@@ -6,8 +6,11 @@ html
         script(type='text/javascript' src='/scripts/calendar.js')
         script(type='text/javascript').
             document.addEventListener('DOMContentLoaded', function () {
-                Calendar.init(!{data}, !{icalData}, '#{requestedDate}')
+                calendar.init(!{data}, !{icalData}, '#{requestedDate}')
             })
 
     body.container-fluid
+
+        include _flashes
+
         div#app

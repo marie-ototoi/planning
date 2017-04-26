@@ -34,6 +34,7 @@
     "body-parser": "^1.16.0",
     "bootstrap": "^3.3.7",
     "brunch": "2.10.2",
+    "classnames": "^2.2.5",
     "connect-flash": "^0.1.1",
     "cookie-session": "^2.0.0-alpha.2",
     "css-brunch": "^2.6.1",
