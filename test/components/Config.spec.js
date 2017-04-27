@@ -39,7 +39,7 @@ describe('<Config />', function () {
                 calendarUrls = { calendarUrls }
             />
         )
-        expect(wrapper.find('input.add-calendar')).to.have.length(3)
+        expect(wrapper.find('input[type="url"]')).to.have.length(3)
     })
 
     it('should have exactly one <AddCalendarUrl /> component if no urls are given', function () {
@@ -50,10 +50,10 @@ describe('<Config />', function () {
                 calendarUrls = { [] }
             />
         )
-        expect(wrapper.find('input.add-calendar')).to.have.length(1)
+        expect(wrapper.find('input[type="url"]')).to.have.length(1)
     })
 
-    it('should display error if the date is not valid', function () {
+    it('should display an error message if the date is not valid', function () {
         const wrapper = mount(
             <Config
                 dateStart = "2037-03"
@@ -65,69 +65,21 @@ describe('<Config />', function () {
                 } }
             />
         )
-        expect(wrapper.find('input#dateStart')).to.have.className('error')
-        expect(wrapper.find('input#dateEnd')).to.have.className('error')
         expect(wrapper.find('div.error-messages')).to.contain.text('The date is not valid')
     })
 
-    it('should display no error if the date is valid', function () {
-        const wrapper = mount(
-            <Config
-                dateStart = { dateStart }
-                dateEnd = { dateEnd }
-                calendarUrls = { [] }
-            />
-        )
-        expect(wrapper.find('input#dateStart')).not.to.have.className('error')
-        expect(wrapper.find('input#dateEnd')).not.to.have.className('error')
-    })
-
-    it('when date changes, should display error if the date is not valid', function () {
-        const wrapper = mount(
-            <Config
-                dateStart = { dateStart }
-                dateEnd = { dateEnd }
-                calendarUrls = { [] }
-            />
-        )
-        let inputStart = wrapper.find('input#dateStart')
-        inputStart.simulate('change', { target: { value: '2037-03' } })
-        expect(inputStart).to.have.className('error')
-        let inputEnd = wrapper.find('input#dateEnd')
-        inputEnd.simulate('change', { target: { value: '203-09-03' } })
-        expect(inputEnd).to.have.className('error')
-    })
-
-    it('when date changes, should display no error if the date is valid', function () {
-        const wrapper = mount(
-            <Config
-                dateStart = { dateStart }
-                dateEnd = { dateEnd }
-                calendarUrls = { [] }
-            />
-        )
-        let inputStart = wrapper.find('input#dateStart')
-        inputStart.simulate('change', { target: { value: '2018-03-15' } })
-        expect(inputStart).not.to.have.className('error')
-        let inputEnd = wrapper.find('input#dateEnd')
-        inputEnd.simulate('change', { target: { value: '2018-03-15' } })
-        expect(inputEnd).not.to.have.className('error')
-    })
-
-    it('should display error if a url is not valid', function () {
+    it('should display an error message if a url is not valid', function () {
         const wrapper = mount(
             <Config
                 dateStart = "2037-03"
                 dateEnd = "203-09-03"
-                calendarUrls = { ['http://www.toto'] }
+                calendarUrls = { ['http://wwwtoto', 'http://www.ototoi.fr'] }
                 errorLabels = { {
                     url: 'The url is not valid',
                     date: 'The date is not valid'
                 } }
             />
         )
-        expect(wrapper.find('input#dateStart')).to.have.className('error')
-        expect(wrapper.find('input#dateEnd')).to.have.className('error')
         expect(wrapper.find('div.error-messages')).to.contain.text('The url is not valid')
     })
 })
