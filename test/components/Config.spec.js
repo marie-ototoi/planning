@@ -8,7 +8,11 @@ import sinonChai from 'sinon-chai'
 chai.use(sinonChai)
 import { default as Config } from '../../views/components/Config'
 
-const calendarUrls = ['http://www.test.fr', 'http://www.autre_test.fr', 'http://www.autre-autre-test.com']
+const calendarUrls = [
+    'http://www.test.fr',
+    'http://www.autre_test.fr',
+    'http://www.autre-autre-test.com'
+]
 const dateStart = '2017-04-01'
 const dateEnd = '2020-03-31'
 

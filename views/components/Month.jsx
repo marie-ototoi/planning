@@ -9,9 +9,11 @@ let formatYearMonth = d3.timeFormat('%Y-%m')
 class Month extends Component {
     componentDidMount () {
         // console.log('component did mount', this.props)
+
         d3Month.create(this.refs.month, this.props)
     }
     componentDidUpdate () {
+        console.log('on logge update', this.props.currentMonth)
         // console.log('ben là on update', this.props)
         d3Month.update(this.refs.month, this.props)
     }

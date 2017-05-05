@@ -15,8 +15,8 @@ class App extends React.Component {
     constructor (props) {
         super(props)
         this.getNestedData = this.getNestedData.bind(this)
-        this.requestMonth = this.requestMonth.bind(this)
-        this.requestDay = this.requestDay.bind(this)
+        this.displayMonth = this.displayMonth.bind(this)
+        this.displayDay = this.displayDay.bind(this)
         this.handleClickPrevious = this.handleClickPrevious.bind(this)
         this.handleClickNext = this.handleClickNext.bind(this)
         this.getMonthData = this.getMonthData.bind(this)
@@ -29,22 +29,20 @@ class App extends React.Component {
             data: props.data,
             icalData: props.icalData,
             nestedData: this.getNestedData(props.data, props.icalData),
-            requestedMonth: props.requestedMonth,
-            requestMonth: this.requestMonth,
-            requestDay: this.requestDay
+            requestedMonth: props.requestedMonth
         }
     }
 
     componentDidMount () {
-        if (!this.state.currentDay.date) this.requestMonth(this.state.requestedMonth, null)
+        if (!this.state.currentDay.date) this.displayMonth(this.state.requestedMonth, null)
     }
 
     render () {
         return (<div>
-            <Timeline nestedData = { this.state.nestedData } currentMonth = { this.state.currentMonth } requestMonth = { this.state.requestMonth } />
+            <Timeline nestedData = { this.state.nestedData } currentMonth = { this.state.currentMonth } displayMonth = { this.displayMonth } />
             <main className = "calendar">
                 <div className = "calendar__previous" id = "previous" onClick = { this.handleClickPrevious }>&lsaquo;</div>
-                <Month currentMonth = { this.state.currentMonth } currentDay = { this.state.currentDay } requestDay = { this.state.requestDay } />
+                <Month currentMonth = { this.state.currentMonth } displayDay = { this.displayDay } />
                 { this.state.currentDay.date ? (<Day currentDay = { this.state.currentDay } />) : (<br />) }
                 <div className = "calendar__next" id = "next" onClick = { this.handleClickNext }>&rsaquo;</div>
             </main>
@@ -52,14 +50,14 @@ class App extends React.Component {
     }
 
     handleClickPrevious () {
-        this.requestMonth(null, 'previous')
+        this.displayMonth(null, 'previous')
     }
 
     handleClickNext () {
-        this.requestMonth(null, 'next')
+        this.displayMonth(null, 'next')
     }
 
-    requestMonth (whichMonth, whichDirection) {
+    displayMonth (whichMonth, whichDirection) {
         let requestedMonth
 
         if (whichMonth) {
@@ -90,7 +88,7 @@ class App extends React.Component {
         }
     }
 
-    requestDay (whichDay) {
+    displayDay (whichDay) {
         if (whichDay) {
             let requestedDay = this.dayToDate(whichDay)
             if (formatDay(this.state.currentDay.date) !== whichDay) {

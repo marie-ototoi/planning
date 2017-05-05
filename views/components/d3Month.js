@@ -71,7 +71,7 @@ d3Month._drawMonth = function (el, state) {
     // ENTER & UPDATE
     d3.select(el).selectAll('.calendar__day')
         .on('click', function (d, i) {
-            state.requestDay(formatDay(d.date))
+            state.displayDay(formatDay(d.date))
         })
 
     // EXIT

@@ -9,11 +9,13 @@ import sinonChai from 'sinon-chai'
 chai.use(sinonChai)
 import { default as d3Timeline } from '../../views/components/d3Timeline'
 
-const nestedData = [{ key: '2017-10', values: [] },
+const nestedData = [
+    { key: '2017-10', values: [] },
     { key: '2017-11', values: [] },
     { key: '2017-12', values: [] },
     { key: '2018-01', values: [] },
-    { key: '2018-02', values: [] }]
+    { key: '2018-02', values: [] }
+]
 
 const currentMonth = { key: '2018-01' }
 

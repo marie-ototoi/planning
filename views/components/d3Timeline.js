@@ -45,13 +45,13 @@ d3Timeline._drawNav = function (el, state) {
     listItemEnter
         .on('click', function (d, i) {
             let saveTheDate = d.values[0].values[0].date
-            state.requestMonth(saveTheDate, null)
+            state.displayMonth(saveTheDate, null)
         })
 
     // ENTER & UPDATE
     listItem
         .on('click', function (d, i) {
-            state.requestMonth(d.key, null)
+            state.displayMonth(d.key, null)
         })
 
     // EXIT

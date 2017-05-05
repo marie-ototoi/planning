@@ -17,29 +17,9 @@ const nestedData = [{ key: '2017-10', values: [] },
 const currentMonth = { key: '2018-01' }
 
 describe('<Timeline />', function () {
-    /*it('should render with a list of dates', function () {
+    it('should render the given list of month/year', function () {
         const wrapper = mount(<Timeline nestedData = { nestedData } currentMonth = { currentMonth } />)
-        expect(wrapper.find('li')).to.have.exactly(5).descendants('li')
-    })*/
-
-    it('should render the given choices', function () {
-        const wrapper = mount(<Timeline nestedData = { nestedData }  currentMonth = { currentMonth } />)
         expect(wrapper).to.contain.text('2017')
         expect(wrapper).to.contain.text('2018')
     })
-
-    /* it('should be clickable when activated', function () {
-        var spyFunction = sinon.spy()
-        const wrapper = shallow(
-            <EnumFacet
-                title='test'
-                choices={choices}
-                addFilter={spyFunction}
-                disabled={false}
-            />
-        )
-        const button = wrapper.find('button').first()
-        button.simulate('click', {target: {name: 'outward'}})
-        expect(spyFunction).to.have.been.called
-    }) */
 })
