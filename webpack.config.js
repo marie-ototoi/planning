@@ -1,5 +1,6 @@
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const nodeExternals = require('webpack-node-externals')
 
 module.exports = {
     entry: {
@@ -14,6 +15,7 @@ module.exports = {
         library: '[name]'
     },
     devtool: 'source-map',
+    externals: [nodeExternals()],
     module: {
         loaders: [
             { test: /\.pug$/, loader: 'pug-loader' },

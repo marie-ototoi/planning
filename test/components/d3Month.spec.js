@@ -56,13 +56,12 @@ const currentMonth = {
         }
     ]
 }
-const spyFunction = sinon.spy()
 
 describe('d3Month', function () {
     before(function () {
         document.body.innerHTML = '<div className = "calendar__rows" id = "calendar__rows"></div>'
         let timelineElement = document.getElementById('calendar__rows')
-        d3Month.create(timelineElement, { currentMonth, displayMonth: spyFunction })
+        d3Month.create(timelineElement, { currentMonth })
     })
     after(function () {
         document.body.innerHTML = ''

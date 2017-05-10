@@ -1,7 +1,5 @@
-process.env.NODE_ENV = 'test'
-
-//require('dotenv').config()
-//require('../models/connection')
+require('babel-register')()
+// process.env.NODE_ENV = 'test'
 
 let jsdom = require('jsdom').jsdom
 
@@ -21,13 +19,3 @@ global.navigator = {
 }
 
 let documentRef = document
-
-require('./controllers/router.spec')
-require('./components/Config.spec')
-require('./components/Field.spec')
-require('./components/Month.spec')
-require('./components/d3Month.spec')
-//require('./models/day')
-//require('./models/CalendarStream')
-require('./components/Timeline.spec')
-require('./components/d3Timeline.spec')

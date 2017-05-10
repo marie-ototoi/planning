@@ -6,6 +6,7 @@ chai.use(chaiEnzyme())
 import sinon from 'sinon'
 import sinonChai from 'sinon-chai'
 chai.use(sinonChai)
+
 import { default as Timeline } from '../../views/components/Timeline'
 
 const nestedData = [{ key: '2017-10', values: [] },
