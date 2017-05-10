@@ -9,7 +9,7 @@ module.exports = {
         styles: './views/styles/styles'
     },
     output: {
-        path: './public',
+        path: path.join(__dirname, 'public'),
         filename: 'scripts/[name].js',
         devtoolModuleFilenameTemplate: 'webpack:///[resource-path]',
         library: '[name]'
