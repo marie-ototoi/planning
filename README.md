@@ -4,3 +4,6 @@ useful when you have several work locations and need to know at first sight wher
 
 No edition tool for events, reads and displays ics streams
 
+![Calendar view](screenshots/otocalendar.png "Calendar view")
+![Calendar main config](screenshots/otocalendar_edit.png "Calendar main config")
+![Calendar day config](screenshots/otocalendar_editday.png "Calendar day config")
