@@ -15,7 +15,6 @@ module.exports = {
         library: '[name]'
     },
     devtool: 'source-map',
-    externals: [nodeExternals()],
     module: {
         loaders: [
             { test: /\.pug$/, loader: 'pug-loader' },

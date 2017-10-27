@@ -50,7 +50,7 @@ describe('<Month />', function () {
     it('should render the given list of days', function () {
         const spyFunction = sinon.spy()
         const wrapper = mount(<Month currentMonth = { currentMonth } displayDay = { spyFunction } />)
-        expect(wrapper).to.contain.text('1')
+        expect(wrapper).to.contain.text('2')
         expect(wrapper).to.contain.text('17')
     })
 })

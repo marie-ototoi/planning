@@ -7,7 +7,8 @@
     "start": "webpack & heroku local web",
     "test": "NODE_ENV=test mocha --require test/setup.js --compilers js:babel-core/register --recursive",
     "coverage": "nyc npm test",
-    "postinstall": "webpack -p"
+    "postinstall": "webpack -p",
+    "all": "webpack && coverage"
   },
   "engines": {
     "node": "7.4.0"

@@ -74,7 +74,7 @@ describe('d3Month', function () {
         expect(d3.selectAll('.calendar__row-22-06-2018 .calendar__day').size()).to.equal(7)
     })
     it('should highlight current day', function () {
-        expect(Number(d3.select('.calendar__day_today').node().innerHTML.trim())).to.equal(today.getDay())
+        expect(Number(d3.select('.calendar__day_today').node().innerHTML.trim())).to.equal(today.getDate())
     })
     it('should display events', function () {
         expect(d3.selectAll('.calendar__day__event').size()).to.equal(2)
