@@ -63,12 +63,8 @@ daySchema.statics.configCalendar = function configCalendar (dayStart, dayEnd) {
                 let type
                 // default rules to set the type property (location)
                 let dayOfTheWeek = Number(eachDay.format('e'))
-                if (dayOfTheWeek === 1 || dayOfTheWeek === 2) {
+                if (dayOfTheWeek >= 1 && dayOfTheWeek <= 5) {
                     type = 'IL'
-                } else if (dayOfTheWeek === 4 || dayOfTheWeek === 5) {
-                    type = 'LO'
-                } else if (dayOfTheWeek === 3) {
-                    type = (Number(eachDay.format('W')) % 2 === 0) ? 'IL' : 'LO'
                 } else if (dayOfTheWeek === 0 || dayOfTheWeek === 6) {
                     type = 'HO'
                 }
