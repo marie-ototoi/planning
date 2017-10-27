@@ -86,11 +86,12 @@ router.get('/day/:id', function getConfig (req, res) {
                 },
                 types: [
                     { key: 'IL', val: 'ILDA' },
-                    { key: 'LO', val: 'Teaching' },
+                    { key: 'TE', val: 'Teaching' },
                     { key: 'WO', val: 'External Meeting' },
                     { key: 'CO', val: 'Conference' },
                     { key: 'SC', val: 'Workshop / Seminar' },
-                    { key: 'HO', val: 'Holidays' }
+                    { key: 'HO', val: 'Holidays' },
+                    { key: 'LO', val: 'Logilab' }
                 ]
             })
             res.end()
