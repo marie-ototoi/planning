@@ -137,6 +137,7 @@
 }
 .legend__item.IL,
 .legend__item.LO,
+.legend__item.TE,
 .legend__item.WO,
 .legend__item.CO,
 .legend__item.SC,
@@ -146,7 +147,8 @@
 .legend__item.IL {
     border-color: #99b6ce;
 }
-.legend__item.LO {
+.legend__item.LO,
+.legend__item.TE {
     border-color: #a2c09d;
 }
 .legend__item.WO {
